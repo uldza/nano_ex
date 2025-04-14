@@ -13,10 +13,6 @@ defmodule NanoWeb.Router do
     plug :fetch_current_user
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
-  end
-
   scope "/", NanoWeb do
     pipe_through :browser
 
