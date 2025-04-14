@@ -91,6 +91,8 @@ defmodule Nano.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
+      # CORS
+      {:cors_plug, "~> 3.0"},
       # Code quality libs
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},

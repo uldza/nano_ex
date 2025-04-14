@@ -25,6 +25,9 @@ defmodule NanoWeb.Endpoint do
     gzip: false,
     only: NanoWeb.static_paths()
 
+  # For CORS:
+  plug CORSPlug, origin: ["https://pikabu.lv", "https://test-streams.mux.dev"]
+
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
   if code_reloading? do

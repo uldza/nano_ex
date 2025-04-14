@@ -31,28 +31,32 @@
         <div class="aspect-w-16 aspect-h-9">
           <!-- Replace this with actual video player component when available -->
           <div class="bg-black relative flex items-center justify-center">
-            <img
-              src="/images/video-preview.jpg"
-              alt="Video Preview"
-              class="w-full h-full object-cover opacity-80"
-              onerror="this.src='https://placekitten.com/800/450'; this.onerror=null;"
-            />
-            <div class="absolute inset-0 flex items-center justify-center">
-              <button class="rounded-full bg-pink-500 w-20 h-20 flex items-center justify-center shadow-lg transform hover:scale-110 transition">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-10 w-10 text-white"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </button>
-            </div>
+            <script src="https://cdn.jsdelivr.net/npm/hls.js@1">
+            </script>
+            <video id="video"></video>
+            <script>
+              var video = document.getElementById('video');
+              if (Hls.isSupported()) {
+                var hls = new Hls({
+                  debug: true,
+                });
+                hls.loadSource('https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8');
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+                  video.muted = true;
+                  video.play();
+                });
+              }
+              // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
+              // When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element through the `src` property.
+              // This is using the built-in support of the plain video element, without using hls.js.
+              else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
+                video.addEventListener('canplay', function () {
+                  video.play();
+                });
+              }
+            </script>
             <div class="absolute bottom-2 left-2 bg-pink-500 text-white px-2 py-1 text-xs rounded-lg">
               Free Preview • 10 min
             </div>
