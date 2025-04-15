@@ -1,9 +1,10 @@
 defmodule NanoWeb.PageController do
   use NanoWeb, :controller
 
+  alias Nano.ChatRooms
+
   def home(conn, _params) do
-    # The home page is often custom made,
-    # so skip the default app layout.
-    render(conn, :home)
+    rooms = ChatRooms.list_rooms()
+    render(conn, :home, rooms: rooms)
   end
 end

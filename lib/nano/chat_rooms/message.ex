@@ -6,7 +6,8 @@ defmodule Nano.ChatRooms.Message do
   @min_length 1
 
   schema "chat_messages" do
-    field :message, :string
+    field :content, :string
+    field :type, :string, default: "text"
     field :user_id, :integer
     field :chat_room_id, :integer
 
@@ -15,8 +16,8 @@ defmodule Nano.ChatRooms.Message do
 
   def changeset(chat_message, attrs) do
     chat_message
-    |> cast(attrs, [:message, :user_id, :room_id])
-    |> validate_required([:message, :user_id, :room_id])
-    |> validate_length(:message, min: @min_length, max: @max_length)
+    |> cast(attrs, [:content, :user_id, :room_id])
+    |> validate_required([:content, :user_id, :room_id])
+    |> validate_length(:content, min: @min_length, max: @max_length)
   end
 end
