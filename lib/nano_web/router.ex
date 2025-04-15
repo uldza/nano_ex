@@ -17,6 +17,7 @@ defmodule NanoWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/room/:id", PlayerController, :show
   end
 
   # Other scopes may use custom stacks.
