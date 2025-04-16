@@ -58,6 +58,44 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+# Subscription plans configuration
+config :nano, :subscription_plans,
+  monthly: %{
+    id: "price_monthly",
+    name: "Monthly Plan",
+    price: 9.99,
+    interval: "month",
+    features: [
+      "Access to all premium video rooms",
+      "Access to chat",
+      "Access to games"
+    ]
+  },
+  quarterly: %{
+    id: "price_quarterly",
+    name: "Quarterly Plan",
+    price: 24.99,
+    interval: "3 months",
+    features: [
+      "Access to all premium video rooms",
+      "Access to chat",
+      "Access to games",
+      "Save 17% compared to monthly"
+    ]
+  },
+  semiannual: %{
+    id: "price_semiannual",
+    name: "Semi-Annual Plan",
+    price: 44.99,
+    interval: "6 months",
+    features: [
+      "Access to all premium video rooms",
+      "Access to chat",
+      "Access to games",
+      "Save 25% compared to monthly"
+    ]
+  }
+
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 

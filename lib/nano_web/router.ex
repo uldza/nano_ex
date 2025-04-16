@@ -18,6 +18,7 @@ defmodule NanoWeb.Router do
 
     get "/", PageController, :home
     get "/subscribe", PageController, :subscribe
+    get "/subscribe/checkout/:plan", PageController, :checkout
   end
 
   ## Authentication routes
