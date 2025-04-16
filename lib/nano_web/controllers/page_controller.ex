@@ -2,7 +2,6 @@ defmodule NanoWeb.PageController do
   use NanoWeb, :controller
 
   alias Nano.ChatRooms
-  alias Nano.Accounts
 
   def home(conn, _params) do
     rooms = ChatRooms.list_rooms()
