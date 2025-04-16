@@ -6,7 +6,7 @@ defmodule Nano.Accounts do
   import Ecto.Query, warn: false
   alias Nano.Repo
 
-  alias Nano.Accounts.{User, UserToken, UserNotifier}
+  alias Nano.Accounts.{User, UserToken, UserNotifier, Subscription}
 
   ## Database getters
 
@@ -349,5 +349,10 @@ defmodule Nano.Accounts do
       {:ok, %{user: user}} -> {:ok, user}
       {:error, :user, changeset, _} -> {:error, changeset}
     end
+  end
+
+  def get_subscription_status(user_id) do
+    sub = Repo.get_by(Subscription, user_id: user_id)
+    sub && sub.status
   end
 end

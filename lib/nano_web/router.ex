@@ -17,6 +17,7 @@ defmodule NanoWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/subscribe", PageController, :subscribe
   end
 
   ## Authentication routes
@@ -37,11 +38,15 @@ defmodule NanoWeb.Router do
   scope "/", NanoWeb do
     pipe_through [:browser, :require_authenticated_user]
 
-    get "/rooms/:room_id", PlayerController, :show
-
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
+  end
+
+  scope "/rooms", NanoWeb do
+    pipe_through [:browser, :require_active_subscription]
+
+    get "/:room_id", PlayerController, :show
   end
 
   scope "/", NanoWeb do

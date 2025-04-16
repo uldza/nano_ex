@@ -37,7 +37,15 @@ defmodule Nano.Accounts.Subscription do
       :current_period_end,
       :user_id
     ])
-    |> validate_inclusion(:status, ["active", "canceled", "incomplete", "incomplete_expired", "past_due", "trialing", "unpaid"])
+    |> validate_inclusion(:status, [
+      "active",
+      "canceled",
+      "incomplete",
+      "incomplete_expired",
+      "past_due",
+      "trialing",
+      "unpaid"
+    ])
     |> unique_constraint(:stripe_subscription_id)
     |> unique_constraint(:stripe_customer_id)
     |> foreign_key_constraint(:user_id)

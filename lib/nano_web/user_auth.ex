@@ -93,7 +93,11 @@ defmodule NanoWeb.UserAuth do
   def fetch_current_user(conn, _opts) do
     {user_token, conn} = ensure_user_token(conn)
     user = user_token && Accounts.get_user_by_session_token(user_token)
-    assign(conn, :current_user, user)
+    subscription_status = user && Accounts.get_subscription_status(user.id)
+
+    conn
+    |> assign(:current_user, user)
+    |> assign(:subscription_status, subscription_status)
   end
 
   defp ensure_user_token(conn) do
@@ -209,6 +213,21 @@ defmodule NanoWeb.UserAuth do
       |> put_flash(:error, "You must log in to access this page.")
       |> maybe_store_return_to()
       |> redirect(to: ~p"/users/log_in")
+      |> halt()
+    end
+  end
+
+  @doc """
+  Used for routes that require the user to have an active subscription.
+  """
+  def require_active_subscription(conn, _opts) do
+    if conn.assigns[:subscription_status] == "active" do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You must have subscribed to access this page.")
+      |> maybe_store_return_to()
+      |> redirect(to: ~p"/subscribe")
       |> halt()
     end
   end
