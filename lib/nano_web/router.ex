@@ -17,7 +17,6 @@ defmodule NanoWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-    get "/rooms/:room_id", PlayerController, :show
   end
 
   ## Authentication routes
@@ -37,6 +36,8 @@ defmodule NanoWeb.Router do
 
   scope "/", NanoWeb do
     pipe_through [:browser, :require_authenticated_user]
+
+    get "/rooms/:room_id", PlayerController, :show
 
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
@@ -64,5 +65,4 @@ defmodule NanoWeb.Router do
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
   end
-
 end

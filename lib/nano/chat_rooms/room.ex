@@ -22,7 +22,14 @@ defmodule Nano.ChatRooms.Room do
 
   def changeset(chat_room, attrs) do
     chat_room
-    |> cast(attrs, [:name, :description, :video_url, :video_thumbnail_url, :free_minutes, :requires_subscription])
+    |> cast(attrs, [
+      :name,
+      :description,
+      :video_url,
+      :video_thumbnail_url,
+      :free_minutes,
+      :requires_subscription
+    ])
     |> validate_required([:name, :video_url, :video_thumbnail_url])
     |> validate_length(:name, max: 100)
     |> validate_length(:video_url, min: 10)

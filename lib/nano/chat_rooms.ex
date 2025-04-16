@@ -10,11 +10,12 @@ defmodule Nano.ChatRooms do
   end
 
   def get_messages_for_room(room_id) do
-    Repo.all(from m in Message,
-              where: m.chat_room_id == ^room_id,
-              order_by: [desc: m.inserted_at],
-              limit: 100
-              )
+    Repo.all(
+      from m in Message,
+        where: m.chat_room_id == ^room_id,
+        order_by: [desc: m.inserted_at],
+        limit: 100
+    )
   end
 
   def create_room(attrs) do
@@ -34,9 +35,16 @@ defmodule Nano.ChatRooms do
     |> Repo.insert()
     |> case do
       {:ok, message} ->
-        Phoenix.PubSub.broadcast(Nano.PubSub, "room:#{message.chat_room_id}", {:message_created, message})
+        Phoenix.PubSub.broadcast(
+          Nano.PubSub,
+          "room:#{message.chat_room_id}",
+          {:message_created, message}
+        )
+
         {:ok, message}
-      error -> error
+
+      error ->
+        error
     end
   end
 

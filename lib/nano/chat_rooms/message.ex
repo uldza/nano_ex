@@ -16,8 +16,8 @@ defmodule Nano.ChatRooms.Message do
 
   def changeset(chat_message, attrs) do
     chat_message
-    |> cast(attrs, [:content, :user_id, :room_id])
-    |> validate_required([:content, :user_id, :room_id])
+    |> cast(attrs, [:content, :user_id, :chat_room_id])
+    |> validate_required([:content, :user_id, :chat_room_id])
     |> validate_length(:content, min: @min_length, max: @max_length)
   end
 end

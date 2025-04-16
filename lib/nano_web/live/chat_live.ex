@@ -1,8 +1,12 @@
 defmodule NanoWeb.ChatLive do
   use NanoWeb, :live_view
   alias Nano.ChatRooms
+  alias NanoWeb.UserAuth
 
-  def mount(_, %{"room_id" => room_id}, socket) do
+  def mount(_, %{"room_id" => room_id, "user_token" => _user_token} = session, socket) do
+    # Mount the current user from the session
+    socket = UserAuth.mount_current_user(socket, session)
+
     if connected?(socket) do
       ChatRooms.subscribe_to_room(room_id)
     end
@@ -22,7 +26,8 @@ defmodule NanoWeb.ChatLive do
     if message != "" do
       ChatRooms.create_message(%{
         content: message,
-        room_id: socket.assigns.room.id,
+        type: "text",
+        chat_room_id: socket.assigns.room.id,
         user_id: socket.assigns.current_user.id
       })
     end

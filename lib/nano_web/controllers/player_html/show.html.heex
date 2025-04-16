@@ -2,11 +2,7 @@
   <!-- Video Player Section -->
   <div class="w-3/4 p-4">
     <div class="bg-black rounded-lg overflow-hidden aspect-video">
-      <video 
-        id="video-player" 
-        controls
-        class="w-full h-full object-cover"
-      ></video>
+      <video id="video-player" controls class="w-full h-full object-cover"></video>
       <script>
         var video = document.getElementById('video-player');
         if (Hls.isSupported()) {
@@ -29,11 +25,16 @@
       </script>
     </div>
     <div class="mt-4">
-      <h1 class="text-2xl font-bold"><%= @video_room.name %></h1>
-      <p class="text-gray-600"><%= @video_room.description %></p>
+      <h1 class="text-2xl font-bold">{@video_room.name}</h1>
+      <p class="text-gray-600">{@video_room.description}</p>
     </div>
   </div>
-
-  <!-- Chat Section -->
-  {live_render(@conn, NanoWeb.ChatLive, session: %{"room_id" => @video_room.id})}
+  
+<!-- Chat Section -->
+  {live_render(@conn, NanoWeb.ChatLive,
+    session: %{
+      "room_id" => @video_room.id,
+      "user_token" => @user_token
+    }
+  )}
 </div>
