@@ -14,7 +14,8 @@ defmodule Nano.ChatRooms do
       from m in Message,
         where: m.chat_room_id == ^room_id,
         order_by: [desc: m.inserted_at],
-        limit: 100
+        limit: 100,
+        preload: [:user]
     )
   end
 
@@ -32,20 +33,17 @@ defmodule Nano.ChatRooms do
   def create_message(attrs) do
     %Message{}
     |> Message.changeset(attrs)
-    |> Repo.insert()
-    |> case do
-      {:ok, message} ->
-        Phoenix.PubSub.broadcast(
-          Nano.PubSub,
-          "room:#{message.chat_room_id}",
-          {:message_created, message}
-        )
+    |> Repo.insert!()
+    |> Repo.preload(:user)
+    |> then(fn message ->
+      Phoenix.PubSub.broadcast(
+        Nano.PubSub,
+        "room:#{message.chat_room_id}",
+        {:message_created, message}
+      )
 
-        {:ok, message}
-
-      error ->
-        error
-    end
+      {:ok, message}
+    end)
   end
 
   def subscribe_to_room(room_id) do

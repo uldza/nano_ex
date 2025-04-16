@@ -2,14 +2,18 @@ defmodule Nano.ChatRooms.Message do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Nano.ChatRooms.Room
+  alias Nano.Accounts.User
+
   @max_length 500
   @min_length 1
 
   schema "chat_messages" do
     field :content, :string
     field :type, :string, default: "text"
-    field :user_id, :integer
-    field :chat_room_id, :integer
+
+    belongs_to :user, User
+    belongs_to :chat_room, Room
 
     timestamps(type: :utc_datetime)
   end
