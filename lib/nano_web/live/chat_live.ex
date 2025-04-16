@@ -36,6 +36,6 @@ defmodule NanoWeb.ChatLive do
   end
 
   def handle_info({:message_created, message}, socket) do
-    {:noreply, update(socket, :messages, &(&1 ++ [message]))}
+    {:noreply, stream_insert(socket, :messages, message, at: 0)}
   end
 end
