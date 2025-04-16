@@ -20,6 +20,10 @@ if System.get_env("PHX_SERVER") do
   config :nano, NanoWeb.Endpoint, server: true
 end
 
+config :stripity_stripe,
+  api_key: System.get_env("NANO_STRIPE_SECRET_KEY"),
+  public_key: System.get_env("NANO_STRIPE_PUBLIC_KEY")
+
 if config_env() == :prod do
   database_path =
     System.get_env("DATABASE_PATH") ||
