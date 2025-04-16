@@ -27,4 +27,20 @@ defmodule Nano.ChatRooms do
     q = from r in Room, order_by: [desc: r.inserted_at]
     Repo.all(q)
   end
+
+  def create_message(attrs) do
+    %Message{}
+    |> Message.changeset(attrs)
+    |> Repo.insert()
+    |> case do
+      {:ok, message} ->
+        Phoenix.PubSub.broadcast(Nano.PubSub, "room:#{message.chat_room_id}", {:message_created, message})
+        {:ok, message}
+      error -> error
+    end
+  end
+
+  def subscribe_to_room(room_id) do
+    Phoenix.PubSub.subscribe(Nano.PubSub, "room:#{room_id}")
+  end
 end
