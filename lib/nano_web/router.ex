@@ -45,7 +45,7 @@ defmodule NanoWeb.Router do
   end
 
   scope "/rooms", NanoWeb do
-    pipe_through [:browser, :require_active_subscription]
+    pipe_through [:browser, :require_authenticated_user, :require_active_subscription]
 
     get "/:room_id", PlayerController, :show
   end
