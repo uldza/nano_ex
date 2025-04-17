@@ -11,6 +11,7 @@ defmodule Nano.Accounts.User do
     field :hashed_password, :string, redact: true
     field :current_password, :string, virtual: true, redact: true
     field :confirmed_at, :utc_datetime
+    field :stripe_customer_id, :string
 
     has_one :subscription, Subscription
 
@@ -46,6 +47,16 @@ defmodule Nano.Accounts.User do
     |> validate_username(opts)
     |> validate_email(opts)
     |> validate_password(opts)
+  end
+
+  @doc """
+  A changeset for updating user fields.
+  """
+  def customer_changeset(user, attrs) do
+    user
+    |> cast(attrs, [:stripe_customer_id])
+    |> validate_required([:stripe_customer_id])
+    |> unique_constraint(:stripe_customer_id)
   end
 
   defp validate_username(changeset, _opts) do

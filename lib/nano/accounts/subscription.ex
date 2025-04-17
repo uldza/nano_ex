@@ -6,7 +6,6 @@ defmodule Nano.Accounts.Subscription do
 
   schema "subscriptions" do
     field :stripe_subscription_id, :string
-    field :stripe_customer_id, :string
     field :status, :string
     field :current_period_start, :utc_datetime
     field :current_period_end, :utc_datetime
@@ -22,7 +21,6 @@ defmodule Nano.Accounts.Subscription do
     subscription
     |> cast(attrs, [
       :stripe_subscription_id,
-      :stripe_customer_id,
       :status,
       :current_period_start,
       :current_period_end,
@@ -31,7 +29,6 @@ defmodule Nano.Accounts.Subscription do
     ])
     |> validate_required([
       :stripe_subscription_id,
-      :stripe_customer_id,
       :status,
       :current_period_start,
       :current_period_end,
@@ -47,7 +44,6 @@ defmodule Nano.Accounts.Subscription do
       "unpaid"
     ])
     |> unique_constraint(:stripe_subscription_id)
-    |> unique_constraint(:stripe_customer_id)
     |> foreign_key_constraint(:user_id)
   end
 end

@@ -22,6 +22,10 @@ defmodule Nano.Services.StripeService do
     {:ok, %Stripe.Customer{id: customer_id}} =
       create_customer(%{email: user.email, metadata: %{"user_id" => user.id}})
 
+    # Update user with stripe customer id
+    changeset = User.customer_changeset(user, %{stripe_customer_id: customer_id})
+    {:ok, _user} = Nano.Repo.update(changeset)
+
     session_params = %{
       customer: customer_id,
       client_reference_id: user.id,

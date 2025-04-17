@@ -18,6 +18,7 @@ defmodule NanoWeb.Router do
 
     get "/", PageController, :home
     get "/subscribe", PageController, :subscribe
+    get "/subscribe/success", PageController, :success
     get "/subscribe/checkout/:plan", PageController, :checkout
     post "/stripe/webhook", StripeWebhookController, :webhook
   end

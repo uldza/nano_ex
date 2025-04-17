@@ -14,6 +14,12 @@ defmodule NanoWeb.PageController do
     render(conn, :subscribe, plans: plans)
   end
 
+  def success(conn, _params) do
+
+    rooms = ChatRooms.list_rooms()
+    render(conn, :success, rooms: rooms)
+  end
+
   def checkout(conn, %{"plan" => plan_key}) do
     plans = Application.get_env(:nano, :subscription_plans)
     plan_id = String.to_existing_atom(plan_key)
