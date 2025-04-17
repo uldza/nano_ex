@@ -61,7 +61,8 @@ config :logger, :console,
 # Subscription plans configuration
 config :nano, :subscription_plans,
   monthly: %{
-    id: "price_monthly",
+    stripe_product_id: "prod_S95pACSGSukvj1",
+    stripe_price_id: "price_1REmiOCuqw9GoveV1yDplloG",
     name: "Monthly Plan",
     price: 9.99,
     interval: "month",
@@ -72,7 +73,8 @@ config :nano, :subscription_plans,
     ]
   },
   quarterly: %{
-    id: "price_quarterly",
+    stripe_product_id: "prod_S95pACSGSukvj1",
+    stripe_price_id: "price_1REneGCuqw9GoveVhcPNSi0E",
     name: "Quarterly Plan",
     price: 24.99,
     interval: "3 months",
@@ -84,7 +86,8 @@ config :nano, :subscription_plans,
     ]
   },
   semiannual: %{
-    id: "price_semiannual",
+    stripe_product_id: "prod_S95sZEZ9N8o4tv",
+    stripe_price_id: "price_1REngvCuqw9GoveVK12Kaa2a",
     name: "Semi-Annual Plan",
     price: 44.99,
     interval: "6 months",

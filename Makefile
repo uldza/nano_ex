@@ -27,6 +27,9 @@ compile:
 	mix compile --warnings-as-errors --force
 
 shell:
+	@if [ -f .env.local ]; then \
+		export $$(cat .env.local | grep -v '^#' | xargs); \
+	fi; \
 	iex -S mix phx.server
 
 test:

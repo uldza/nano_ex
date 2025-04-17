@@ -21,8 +21,9 @@ if System.get_env("PHX_SERVER") do
 end
 
 config :stripity_stripe,
-  api_key: System.get_env("NANO_STRIPE_SECRET_KEY"),
-  public_key: System.get_env("NANO_STRIPE_PUBLIC_KEY")
+  api_key: System.get_env("NANO_STRIPE_API_KEY"),
+  public_key: System.get_env("NANO_STRIPE_PUBLIC_KEY"),
+  webhook_secret: System.get_env("NANO_STRIPE_WEBHOOK_SECRET")
 
 if config_env() == :prod do
   database_path =

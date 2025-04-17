@@ -2,6 +2,7 @@ defmodule NanoWeb.PageController do
   use NanoWeb, :controller
 
   alias Nano.ChatRooms
+  alias Nano.Services.StripeService
 
   def home(conn, _params) do
     rooms = ChatRooms.list_rooms()
@@ -15,23 +16,30 @@ defmodule NanoWeb.PageController do
 
   def checkout(conn, %{"plan" => plan_key}) do
     plans = Application.get_env(:nano, :subscription_plans)
+    plan_id = String.to_existing_atom(plan_key)
 
-    case Keyword.get(plans, String.to_existing_atom(plan_key)) do
+    case Keyword.get(plans, plan_id) do
       nil ->
         conn
         |> put_flash(:error, "Invalid subscription plan")
         |> redirect(to: ~p"/subscribe")
 
       plan ->
-        # Here you would typically:
-        # 1. Create a Stripe checkout session
-        # 2. Redirect to Stripe checkout
-        # 3. Handle the webhook for successful payment
+        case StripeService.create_checkout_session(%{user: conn.assigns.current_user, plan: plan}) do
+          {:ok, checkout_url} ->
+            conn
+            |> redirect(external: checkout_url)
 
-        # For now, we'll just show a message
-        conn
-        |> put_flash(:info, "Redirecting to payment for #{plan.name}...")
-        |> redirect(to: ~p"/subscribe")
+          {:error, :invalid_plan} ->
+            conn
+            |> put_flash(:error, "Invalid subscription plan")
+            |> redirect(to: ~p"/subscribe")
+
+          {:error, _reason} ->
+            conn
+            |> put_flash(:error, "Failed to create checkout session. Please try again later.")
+            |> redirect(to: ~p"/subscribe")
+        end
     end
   end
 end
