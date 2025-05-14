@@ -355,4 +355,20 @@ defmodule Nano.Accounts do
     sub = Repo.get_by(Subscription, user_id: user_id)
     sub && sub.status
   end
+
+  @doc """
+  Gets a user's active subscription.
+
+  ## Examples
+
+      iex> get_user_subscription(user)
+      %Subscription{}
+
+      iex> get_user_subscription(user)
+      nil
+
+  """
+  def get_user_subscription(%User{} = user) do
+    Repo.get_by(Subscription, user_id: user.id, status: "active")
+  end
 end

@@ -41,8 +41,9 @@ defmodule Nano.Services.StripeService do
       ],
       metadata: %{
         "user_id" => user.id,
-        "plan_name" => plan.name,
-        "stripe_product_id" => plan.stripe_product_id
+        "plan_id" => plan.id,
+        "stripe_product_id" => plan.stripe_product_id,
+        "stripe_price_id" => plan.stripe_price_id
       },
       automatic_tax: %{enabled: true},
       customer_update: %{address: :auto}
@@ -67,6 +68,10 @@ defmodule Nano.Services.StripeService do
 
   def retrieve_subscription(provider_subscription_id) do
     Stripe.Subscription.retrieve(provider_subscription_id)
+  end
+
+  def list_checkout_sessions(params) do
+    Stripe.Checkout.Session.list(params)
   end
 
   def cancel_subscription(subscription) do
@@ -116,16 +121,15 @@ defmodule Nano.Services.StripeService do
     end
   end
 
-  # Private functions
-
-  defp handle_checkout_completed(session) do
+  def handle_checkout_completed(session) do
     user_id = String.to_integer(session.metadata["user_id"])
-    _plan_key = String.to_existing_atom(session.metadata["plan_key"])
+    plan_key = String.to_existing_atom(session.metadata["plan_id"])
 
     subscription_params = %{
       stripe_subscription_id: session.subscription,
       stripe_customer_id: session.customer,
       user_id: user_id,
+      plan_id: plan_key,
       status: "active",
       current_period_start: DateTime.utc_now(),
       current_period_end: DateTime.utc_now() |> DateTime.add(30, :day),
@@ -134,16 +138,20 @@ defmodule Nano.Services.StripeService do
 
     case Nano.Repo.insert(Subscription.changeset(%Subscription{}, subscription_params)) do
       {:ok, _subscription} -> :ok
-      {:error, _changeset} -> {:error, :failed_to_create_subscription}
+      {:error, changeset} ->
+        require IEx; IEx.pry
+        {:error, :failed_to_create_subscription}
     end
   end
 
-  defp handle_subscription_updated(subscription) do
+  def handle_subscription_updated(subscription) do
     case Nano.Repo.get_by(Subscription, stripe_subscription_id: subscription.id) do
       nil -> {:error, :subscription_not_found}
       sub -> update_subscription_status(sub, subscription)
     end
   end
+
+  # Private functions
 
   defp handle_subscription_deleted(subscription) do
     case Nano.Repo.get_by(Subscription, stripe_subscription_id: subscription.id) do

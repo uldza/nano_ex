@@ -10,6 +10,7 @@ defmodule Nano.Accounts.Subscription do
     field :current_period_start, :utc_datetime
     field :current_period_end, :utc_datetime
     field :cancel_at_period_end, :boolean, default: false
+    field :plan_id, Ecto.Enum, values: [:monthly, :quarterly, :semiannual]
 
     belongs_to :user, User
 
@@ -25,14 +26,16 @@ defmodule Nano.Accounts.Subscription do
       :current_period_start,
       :current_period_end,
       :cancel_at_period_end,
-      :user_id
+      :user_id,
+      :plan_id
     ])
     |> validate_required([
       :stripe_subscription_id,
       :status,
       :current_period_start,
       :current_period_end,
-      :user_id
+      :user_id,
+      :plan_id
     ])
     |> validate_inclusion(:status, [
       "active",
