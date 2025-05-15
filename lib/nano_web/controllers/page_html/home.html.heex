@@ -1,28 +1,22 @@
 <.flash_group flash={@flash} />
 
-<div class="bg-gradient-to-b from-indigo-100 via-purple-100 to-pink-100 min-h-screen">
+<div class="bg-white min-h-screen">
   
-<!-- Hero Section -->
-  <section class="container mx-auto px-4 py-12 flex flex-col md:flex-row items-center">
+<!-- Hero Section (Yellow Special Section) -->
+  <section class="yellow-normal rounded-xl container mx-auto px-4 py-12 flex flex-col md:flex-row items-center my-8">
     <div class="md:w-1/2 mb-10 md:mb-0">
-      <h1 class="text-4xl md:text-5xl font-bold mb-4 text-indigo-800">
-        Watch Fun Videos <span class="text-pink-500">Together!</span>
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 text-blue-normal">
+        Watch Fun Videos <span class="text-orange-normal">Together!</span>
       </h1>
-      <p class="text-lg mb-6 text-indigo-700">
+      <p class="text-lg mb-6 text-blue-dark">
         Jump into a world of amazing videos, chat with friends, and create unforgettable moments with Pikabu video rooms.
       </p>
       <div class="flex space-x-4">
-        <.link
-          href={~p"/users/register"}
-          class="inline-block px-8 py-3 bg-pink-500 text-white rounded-full font-bold hover:bg-pink-600 transform hover:scale-105 transition shadow-lg"
-        >
+        <.link href={~p"/users/register"} class="btn-primary">
           Start Your Adventure!
         </.link>
 
-        <a
-          href="#how-it-works"
-          class="inline-block px-8 py-3 bg-transparent border-2 border-indigo-600 text-indigo-600 rounded-full font-bold hover:bg-indigo-50 transition"
-        >
+        <a href="#how-it-works" class="btn-secondary">
           Learn More
         </a>
       </div>
@@ -53,14 +47,14 @@
                 });
               }
             </script>
-            <div class="absolute bottom-2 left-2 bg-pink-500 text-white px-2 py-1 text-xs rounded-lg">
+            <div class="absolute bottom-2 left-2 bg-orange-normal text-white px-2 py-1 text-xs rounded-lg">
               Free Preview • 10 min
             </div>
           </div>
         </div>
       </div>
-      <div class="absolute -bottom-4 -right-4 bg-yellow-300 rounded-full w-24 h-24 flex items-center justify-center transform rotate-12 shadow-lg z-10">
-        <div class="text-center font-bold text-indigo-800">
+      <div class="absolute -bottom-4 -right-4 bg-yellow-normal rounded-full w-24 h-24 flex items-center justify-center transform rotate-12 shadow-lg z-10">
+        <div class="text-center font-bold text-blue-normal">
           <div class="text-lg leading-none">Try</div>
           <div class="text-xl leading-none">FREE</div>
           <div class="text-xs">10 min</div>
@@ -69,16 +63,16 @@
     </div>
   </section>
   
-<!-- Features Section -->
+<!-- Features Section (Default White) -->
   <section id="how-it-works" class="container mx-auto px-4 py-16">
-    <h2 class="text-3xl font-bold text-center mb-12 text-indigo-800">Fun Things You Can Do!</h2>
+    <h2 class="text-3xl font-bold text-center mb-12 text-blue-normal">Fun Things You Can Do!</h2>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <div class="bg-white rounded-xl p-6 shadow-lg transform hover:-translate-y-2 transition">
-        <div class="w-16 h-16 mx-auto mb-4 bg-blue-100 rounded-full flex items-center justify-center">
+        <div class="w-16 h-16 mx-auto mb-4 bg-blue-light rounded-full flex items-center justify-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-8 w-8 text-blue-600"
+            class="h-8 w-8 text-blue-normal"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -91,17 +85,17 @@
             />
           </svg>
         </div>
-        <h3 class="text-xl font-bold mb-2 text-center text-indigo-700">Video Rooms</h3>
-        <p class="text-gray-600 text-center">
+        <h3 class="text-xl font-bold mb-2 text-center text-blue-dark">Video Rooms</h3>
+        <p class="text-blue-dark text-center">
           Join exciting video rooms with different themes and activities!
         </p>
       </div>
 
       <div class="bg-white rounded-xl p-6 shadow-lg transform hover:-translate-y-2 transition">
-        <div class="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center">
+        <div class="w-16 h-16 mx-auto mb-4 bg-green-light rounded-full flex items-center justify-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-8 w-8 text-green-600"
+            class="h-8 w-8 text-green-normal"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -114,17 +108,17 @@
             />
           </svg>
         </div>
-        <h3 class="text-xl font-bold mb-2 text-center text-indigo-700">Fun Chat</h3>
-        <p class="text-gray-600 text-center">
+        <h3 class="text-xl font-bold mb-2 text-center text-green-dark">Fun Chat</h3>
+        <p class="text-green-dark text-center">
           Chat with friends and send cool stickers and reactions!
         </p>
       </div>
 
       <div class="bg-white rounded-xl p-6 shadow-lg transform hover:-translate-y-2 transition">
-        <div class="w-16 h-16 mx-auto mb-4 bg-purple-100 rounded-full flex items-center justify-center">
+        <div class="w-16 h-16 mx-auto mb-4 bg-blue-light rounded-full flex items-center justify-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-8 w-8 text-purple-600"
+            class="h-8 w-8 text-blue-normal"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -137,17 +131,17 @@
             />
           </svg>
         </div>
-        <h3 class="text-xl font-bold mb-2 text-center text-indigo-700">Cool Reactions</h3>
-        <p class="text-gray-600 text-center">
+        <h3 class="text-xl font-bold mb-2 text-center text-blue-dark">Cool Reactions</h3>
+        <p class="text-blue-dark text-center">
           Show how you feel with awesome animated reactions!
         </p>
       </div>
     </div>
   </section>
   
-<!-- Available Rooms Section -->
+<!-- Available Rooms Section (Default White) -->
   <section class="container mx-auto px-4 py-16">
-    <h2 class="text-3xl font-bold text-center mb-12 text-indigo-800">Available Video Rooms</h2>
+    <h2 class="text-3xl font-bold text-center mb-12 text-blue-normal">Available Video Rooms</h2>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       <%= for room <- @rooms do %>
@@ -155,18 +149,15 @@
           <div class="relative">
             <img src={room.video_thumbnail_url} alt={room.name} class="w-full h-48 object-cover" />
             <%= if room.requires_subscription do %>
-              <div class="absolute top-2 right-2 bg-yellow-400 text-black px-2 py-1 text-xs rounded-full font-bold">
+              <div class="absolute top-2 right-2 yellow-normal text-black px-2 py-1 text-xs rounded-full font-bold">
                 Premium
               </div>
             <% end %>
           </div>
           <div class="p-6">
-            <h3 class="text-xl font-bold mb-2 text-indigo-700">{room.name}</h3>
-            <p class="text-gray-600 mb-4">{room.description}</p>
-            <.link
-              href={~p"/rooms/#{room.id}"}
-              class="inline-block w-full text-center px-4 py-2 bg-pink-500 text-white rounded-lg font-bold hover:bg-pink-600 transition"
-            >
+            <h3 class="text-xl font-bold mb-2 text-blue-dark">{room.name}</h3>
+            <p class="text-blue-dark mb-4">{room.description}</p>
+            <.link href={~p"/rooms/#{room.id}"} class="btn-primary w-full text-center">
               Join Room
             </.link>
           </div>
@@ -175,21 +166,16 @@
     </div>
   </section>
   
-<!-- Call to Action -->
-  <section class="container mx-auto px-4 py-16">
-    <div class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl p-8 md:p-12 shadow-xl">
-      <div class="text-center">
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Ready to join the fun?</h2>
-        <p class="text-xl text-indigo-100 mb-8">
-          Start your adventure today with a free 10-minute trial!
-        </p>
-        <.link
-          href={~p"/users/register"}
-          class="inline-block px-8 py-4 bg-pink-500 text-white rounded-full font-bold hover:bg-pink-600 transform hover:scale-105 transition shadow-lg text-lg"
-        >
-          Join Pikabu Now!
-        </.link>
-      </div>
+<!-- Call to Action (Blue Special Section) -->
+  <section class="blue-normal rounded-2xl container mx-auto px-4 py-16 my-8 shadow-xl">
+    <div class="text-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Ready to join the fun?</h2>
+      <p class="text-xl text-blue-light mb-8">
+        Start your adventure today with a free 10-minute trial!
+      </p>
+      <.link href={~p"/users/register"} class="btn-secondary text-lg">
+        Join Pikabu Now!
+      </.link>
     </div>
   </section>
 </div>

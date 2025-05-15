@@ -2,23 +2,23 @@
 <html lang="en" class="scroll-smooth focus:scroll-auto" data-theme={theme(@conn)}>
   <.head conn={@conn} />
 
-  <body class="antialiased bg-gradient-to-b from-indigo-100 via-purple-100 to-pink-100 min-h-screen">
+  <body class="antialiased bg-white min-h-screen">
     <!-- Header Section -->
     <header class="container mx-auto py-4 px-4 flex justify-between items-center">
       <div class="flex items-center">
-        <div class="text-3xl font-bold text-indigo-600">
-          <span class="text-pink-500">P</span><span class="text-yellow-500">i</span><span class="text-green-500">k</span><span class="text-blue-500">a</span><span class="text-purple-500">b</span><span class="text-orange-500">u</span>
+        <div class="text-3xl font-bold text-blue-normal">
+          <span class="text-orange-normal">P</span><span class="text-yellow-normal">i</span><span class="text-green-normal">k</span><span class="text-blue-normal">a</span><span class="text-brown-normal">b</span><span class="text-orange-normal">u</span>
         </div>
       </div>
       <ul class="relative z-10 flex items-center gap-4 px-4 sm:px-6 lg:px-8 justify-end">
         <%= if @current_user do %>
-          <li class="text-[0.8125rem] leading-6 text-zinc-900">
+          <li class="text-[0.8125rem] leading-6 text-blue-dark">
             {@current_user.email}
           </li>
           <li>
             <.link
               href={~p"/users/settings"}
-              class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+              class="nav-btn bg-blue-light border-blue-normal text-blue-normal"
             >
               Settings
             </.link>
@@ -27,7 +27,7 @@
             <.link
               href={~p"/users/log_out"}
               method="delete"
-              class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+              class="nav-btn bg-blue-light border-blue-normal text-blue-normal"
             >
               Log out
             </.link>
@@ -36,7 +36,7 @@
           <li>
             <.link
               href={~p"/users/register"}
-              class="px-4 py-2 text-sm rounded-full bg-indigo-600 text-white hover:bg-indigo-700 font-medium transition"
+              class="nav-btn bg-blue-light border-blue-normal text-blue-normal"
             >
               Register
             </.link>
@@ -44,7 +44,7 @@
           <li>
             <.link
               href={~p"/users/log_in"}
-              class="px-4 py-2 text-sm rounded-full bg-white text-indigo-600 hover:bg-indigo-100 font-medium transition"
+              class="nav-btn bg-blue-light border-blue-normal text-blue-normal"
             >
               Log in
             </.link>
@@ -56,14 +56,14 @@
     {@inner_content}
     
 <!-- Footer -->
-    <footer class="bg-indigo-900 py-8">
+    <footer class="bg-blue-dark py-8">
       <div class="container mx-auto px-4">
-        <div class="text-center text-indigo-200">
+        <div class="text-center text-blue-light">
           <p>© 2025 Pikabu Video. All rights reserved.</p>
           <div class="mt-4 space-x-4">
-            <a href="/privacy" class="text-indigo-200 hover:text-white">Privacy Policy</a>
-            <a href="/terms" class="text-indigo-200 hover:text-white">Terms of Service</a>
-            <a href="/contact" class="text-indigo-200 hover:text-white">Contact Us</a>
+            <a href="/privacy" class="text-blue-light hover:text-white">Privacy Policy</a>
+            <a href="/terms" class="text-blue-light hover:text-white">Terms of Service</a>
+            <a href="/contact" class="text-blue-light hover:text-white">Contact Us</a>
           </div>
         </div>
       </div>

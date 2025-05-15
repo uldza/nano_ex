@@ -3,6 +3,7 @@ defmodule Nano.Repo.Migrations.RemoveStripeCustomerIdFromSubscriptions do
 
   def change do
     drop index(:subscriptions, [:stripe_customer_id])
+
     alter table(:subscriptions) do
       remove :stripe_customer_id
     end

@@ -137,9 +137,12 @@ defmodule Nano.Services.StripeService do
     }
 
     case Nano.Repo.insert(Subscription.changeset(%Subscription{}, subscription_params)) do
-      {:ok, _subscription} -> :ok
+      {:ok, _subscription} ->
+        :ok
+
       {:error, changeset} ->
-        require IEx; IEx.pry
+        require IEx
+        IEx.pry()
         {:error, :failed_to_create_subscription}
     end
   end
@@ -176,14 +179,16 @@ defmodule Nano.Services.StripeService do
   end
 
   defp success_url do
+    proto = Application.get_env(:nano, NanoWeb.Endpoint)[:url][:scheme]
     base_url = Application.get_env(:nano, NanoWeb.Endpoint)[:url][:host]
     port = Application.get_env(:nano, NanoWeb.Endpoint)[:url][:port]
-    "https://#{base_url}:#{port}/subscribe/success"
+    "#{proto}://#{base_url}:#{port}/subscribe/success"
   end
 
   defp cancel_url do
+    proto = Application.get_env(:nano, NanoWeb.Endpoint)[:url][:scheme]
     base_url = Application.get_env(:nano, NanoWeb.Endpoint)[:url][:host]
     port = Application.get_env(:nano, NanoWeb.Endpoint)[:url][:port]
-    "https://#{base_url}:#{port}/subscribe"
+    "#{proto}://#{base_url}:#{port}/subscribe"
   end
 end

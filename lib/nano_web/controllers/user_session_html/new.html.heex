@@ -1,5 +1,5 @@
-<div class="mx-auto max-w-sm">
-  <.header class="text-center">
+<div class="mx-auto max-w-sm bg-white p-8 rounded-xl shadow text-blue-normal">
+  <.header class="text-center text-blue-normal">
     Log in to account
   </.header>
 
@@ -11,12 +11,15 @@
 
     <:actions :let={f}>
       <.input field={f[:remember_me]} type="checkbox" label="Keep me logged in" />
-      <.link href={~p"/users/reset_password"} class="text-sm font-semibold">
+      <.link href={~p"/users/reset_password"} class="text-sm font-semibold text-blue-normal">
         Forgot your password?
       </.link>
     </:actions>
     <:actions>
-      <.button phx-disable-with="Logging in..." class="w-full">
+      <.button
+        phx-disable-with="Logging in..."
+        class="btn-primary bg-blue-normal border-blue-normal w-full"
+      >
         Log in <span aria-hidden="true">→</span>
       </.button>
     </:actions>
