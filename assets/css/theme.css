@@ -11,43 +11,62 @@
     --green-dark-hover: #006557;
     --green-dark-active: #004c41;
     --green-darker: #003b33;
-  }
-
-/* Brown Theme */
-.brown-light { background-color: #f9f7f4; }
-.brown-light-hover { background-color: #f6f3ee; }
-.brown-light-active { background-color: #ece8dc; }
-.brown-normal { background-color: #c3af8d; }
-.brown-normal-hover { background-color: #b09e7f; }
-.brown-normal-active { background-color: #9b8c71; }
-.brown-dark { background-color: #92836a; }
-.brown-dark-hover { background-color: #756955; }
-.brown-dark-active { background-color: #584f3f; }
-.brown-darker { background-color: #443d31; }
-
-/* Yellow Theme */
-.yellow-light { background-color: #fffaf0; }
-.yellow-light-hover { background-color: #fff8e9; }
-.yellow-light-active { background-color: #fff0d1; }
-.yellow-normal { background-color: #ffcD6c; }
-.yellow-normal-hover { background-color: #e6b961; }
-.yellow-normal-active { background-color: #cca456; }
-.yellow-dark { background-color: #bf9a51; }
-.yellow-dark-hover { background-color: #997b41; }
-.yellow-dark-active { background-color: #735c31; }
-.yellow-darker { background-color: #594826; }
-
-/* Orange Theme */
-.orange-light { background-color: #eceef4; }
-.orange-light-hover { background-color: #f8e5e1; }
-.orange-light-active { background-color: #f1cac1; }
-.orange-normal { background-color: #d35437; }
-.orange-normal-hover { background-color: #be4c32; }
-.orange-normal-active { background-color: #a94326; }
-.orange-dark { background-color: #943c22; }
-.orange-dark-hover { background-color: #723321; }
-.orange-dark-active { background-color: #521619; }
-.orange-darker { background-color: #4a1d13; }
+    /* Blue Theme */
+    --blue-light: #eceef4;
+    --blue-light-hover: #e3e5ef;
+    --blue-light-active: #c4c9de;
+    --blue-normal: #415095;
+    --blue-normal-hover: #3b4886;
+    --blue-normal-active: #344077;
+    --blue-dark: #313c70;
+    --blue-dark-hover: #273059;
+    --blue-dark-active: #1d2443;
+    --blue-darker: #171c34;
+    /* Teal Theme */
+    --teal-light: #eaf5fe;
+    --teal-light-hover: #dff0fd;
+    --teal-light-active: #bde0fa;
+    --teal-normal: #299af0;
+    --teal-normal-hover: #258bd8;
+    --teal-normal-active: #217bc0;
+    --teal-dark: #1f74b4;
+    --teal-dark-hover: #195c90;
+    --teal-dark-active: #12456c;
+    --teal-darker: #0e3654;
+    /* Orange Theme */
+    --orange-light: #fbeee8;
+    --orange-light-hover: #f8e5e1;
+    --orange-light-active: #f1cac1;
+    --orange-normal: #d35437;
+    --orange-normal-hover: #be4c32;
+    --orange-normal-active: #a9432c;
+    --orange-dark: #9e3f29;
+    --orange-dark-hover: #7f3321;
+    --orange-dark-active: #5f2619;
+    --orange-darker: #4a1d13;
+    /* Yellow Theme */
+    --yellow-light: #fffaf0;
+    --yellow-light-hover: #fff8e9;
+    --yellow-light-active: #fff0d1;
+    --yellow-normal: #ffcd6c;
+    --yellow-normal-hover: #e6b961;
+    --yellow-normal-active: #cca456;
+    --yellow-dark: #bf9a51;
+    --yellow-dark-hover: #997b41;
+    --yellow-dark-active: #735c31;
+    --yellow-darker: #594826;
+    /* Brown Theme */
+    --brown-light: #f9f7f4;
+    --brown-light-hover: #f6f3ee;
+    --brown-light-active: #ece8dc;
+    --brown-normal: #c3af8d;
+    --brown-normal-hover: #b09e7f;
+    --brown-normal-active: #9b8c71;
+    --brown-dark: #92836a;
+    --brown-dark-hover: #756955;
+    --brown-dark-active: #584f3f;
+    --brown-darker: #443d31;
+}
 
 /* Green Theme */
 .green-light { background-color: var(--green-light); }
@@ -59,49 +78,131 @@
 .green-dark { background-color: var(--green-dark); }
 .green-dark-hover { background-color: var(--green-dark-hover); }
 .green-dark-active { background-color: var(--green-dark-active); }
-.green-darker { background-color: var(--green-darker); } 
+.green-darker { background-color: var(--green-darker); }
+
+/* Teal Theme */
+.teal-light { background-color: var(--teal-light); }
+.teal-light-hover { background-color: var(--teal-light-hover); }
+.teal-light-active { background-color: var(--teal-light-active); }
+.teal-normal { background-color: var(--teal-normal); }
+.teal-normal-hover { background-color: var(--teal-normal-hover); }
+.teal-normal-active { background-color: var(--teal-normal-active); }
+.teal-dark { background-color: var(--teal-dark); }
+.teal-dark-hover { background-color: var(--teal-dark-hover); }
+.teal-dark-active { background-color: var(--teal-dark-active); }
+.teal-darker { background-color: var(--teal-darker); }
 
 /* Blue Theme */
-.blue-light { background-color: #eaf5fe; }
-.blue-light-hover { background-color: #dff0fd; }
-.blue-light-active { background-color: #bde0fa; }
-.blue-normal { background-color: #299af0; }
-.blue-normal-hover { background-color: #258bd8; }
-.blue-normal-active { background-color: #217bc0; }
-.blue-dark { background-color: #1f74b4; }
-.blue-dark-hover { background-color: #195c90; }
-.blue-dark-active { background-color: #12456c; }
-.blue-darker { background-color: #0e3654; }
+.blue-light { background-color: var(--blue-light); }
+.blue-light-hover { background-color: var(--blue-light-hover); }
+.blue-light-active { background-color: var(--blue-light-active); }
+.blue-normal { background-color: var(--blue-normal); }
+.blue-normal-hover { background-color: var(--blue-normal-hover); }
+.blue-normal-active { background-color: var(--blue-normal-active); }
+.blue-dark { background-color: var(--blue-dark); }
+.blue-dark-hover { background-color: var(--blue-dark-hover); }
+.blue-dark-active { background-color: var(--blue-dark-active); }
+.blue-darker { background-color: var(--blue-darker); }
+
+
+/* Yellow Theme */
+.yellow-light { background-color: var(--yellow-light); }
+.yellow-light-hover { background-color: var(--yellow-light-hover); }
+.yellow-light-active { background-color: var(--yellow-light-active); }
+.yellow-normal { background-color: var(--yellow-normal); }
+.yellow-normal-hover { background-color: var(--yellow-normal-hover); }
+.yellow-normal-active { background-color: var(--yellow-normal-active); }
+.yellow-dark { background-color: var(--yellow-dark); }
+.yellow-dark-hover { background-color: var(--yellow-dark-hover); }
+.yellow-dark-active { background-color: var(--yellow-dark-active); }
+.yellow-darker { background-color: var(--yellow-darker); }
+
+/* Orange Theme */
+.orange-light { background-color: var(--orange-light); }
+.orange-light-hover { background-color: var(--orange-light-hover); }
+.orange-light-active { background-color: var(--orange-light-active); }
+.orange-normal { background-color: var(--orange-normal); }
+.orange-normal-hover { background-color: var(--orange-normal-hover); }
+.orange-normal-active { background-color: var(--orange-normal-active); }
+.orange-dark { background-color: var(--orange-dark); }
+.orange-dark-hover { background-color: var(--orange-dark-hover); }
+.orange-dark-active { background-color: var(--orange-dark-active); }
+.orange-darker { background-color: var(--orange-darker); }
+
+/* Brown Theme */
+.brown-light { background-color: var(--brown-light); }
+.brown-light-hover { background-color: var(--brown-light-hover); }
+.brown-light-active { background-color: var(--brown-light-active); }
+.brown-normal { background-color: var(--brown-normal); }
+.brown-normal-hover { background-color: var(--brown-normal-hover); }
+.brown-normal-active { background-color: var(--brown-normal-active); }
+.brown-dark { background-color: var(--brown-dark); }
+.brown-dark-hover { background-color: var(--brown-dark-hover); }
+.brown-dark-active { background-color: var(--brown-dark-active); }
+.brown-darker { background-color: var(--brown-darker); }
 
 /* Text Color Utilities */
-.text-brown-light { color: #f9f7f4; }
-.text-brown-normal { color: #c3af8d; }
-.text-brown-dark { color: #92836a; }
-.text-yellow-normal { color: #ffcD6c; }
-.text-yellow-dark { color: #bf9a51; }
-.text-blue-light { color: #eceef4; }
-.text-blue-normal { color: #415095; }
-.text-blue-dark { color: #313c70; }
-.text-orange-normal { color: #d35437; }
-.text-orange-dark { color: #943c22; }
+.text-brown-light { color: var(--brown-light); }
+.text-brown-normal { color: var(--brown-normal); }
+.text-brown-dark { color: var(--brown-dark); }
+.text-yellow-normal { color: var(--yellow-normal); }
+.text-yellow-dark { color: var(--yellow-dark); }
 .text-green-normal { color: var(--green-normal); }
-.text-green-dark { color: #007f6d; }
+.text-green-dark { color: var(--green-dark); }
+.text-blue-light { color: var(--blue-light); }
+.text-blue-normal { color: var(--blue-normal); }
+.text-blue-dark { color: var(--blue-dark); }
+.text-orange-normal { color: var(--orange-normal); }
+.text-orange-dark { color: var(--orange-dark); }
+.text-teal-light { color: var(--teal-light); }
+.text-teal-normal { color: var(--teal-normal); }
+.text-teal-dark { color: var(--teal-dark); }
 
-/* Green Ball Button */
-.btn-ball-green {
+/* Ball Button */
+.btn-ball {
   width: 5em;
   height: 5em;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at 60% 35%, #ffffff 1%, #ffffff 3%, var(--green-normal) 10%, var(--green-normal-hover) 35%, var(--green-darker) 75%, var(--dark) 100%);
   box-shadow: 0 2px 6px 0 rgba(0,0,0,0.18);
   position: relative;
   border: none;
   cursor: pointer;
   transition: box-shadow 0.2s;
 }
-.btn-ball-green:hover {
+.btn-green {
+  background: radial-gradient(circle at 60% 35%, #ffffff 1%, #ffffff 3%, var(--green-normal) 10%, var(--green-normal-hover) 35%, var(--green-darker) 75%, var(--dark) 100%);
+}
+.btn-green:hover {
   background: radial-gradient(circle at 60% 35%, #ffffff 1%, #ffffff 3%, var(--green-normal-hover) 10%, var(--green-normal-active) 35%, var(--green-darker) 75%, var(--dark) 100%);
+}
+
+.btn-blue {
+  background: radial-gradient(circle at 60% 35%, #ffffff 1%, #ffffff 3%, var(--blue-normal) 10%, var(--blue-normal-hover) 35%, var(--blue-darker) 75%, var(--dark) 100%);
+}
+.btn-blue:hover {
+  background: radial-gradient(circle at 60% 35%, #ffffff 1%, #ffffff 3%, var(--blue-normal-hover) 10%, var(--blue-normal-active) 35%, var(--blue-darker) 75%, var(--dark) 100%);
+}
+
+.btn-orange {
+  background: radial-gradient(circle at 60% 35%, #ffffff 1%, #ffffff 3%, var(--orange-normal) 10%, var(--orange-normal-hover) 35%, var(--orange-darker) 75%, var(--dark) 100%);
+}
+.btn-orange:hover {
+  background: radial-gradient(circle at 60% 35%, #ffffff 1%, #ffffff 3%, var(--orange-normal-hover) 10%, var(--orange-normal-active) 35%, var(--orange-darker) 75%, var(--dark) 100%);
+}
+
+.btn-yellow {
+  background: radial-gradient(circle at 60% 35%, #ffffff 1%, #ffffff 3%, var(--yellow-normal) 10%, var(--yellow-normal-hover) 35%, var(--yellow-darker) 75%, var(--dark) 100%);
+}
+.btn-yellow:hover {
+  background: radial-gradient(circle at 60% 35%, #ffffff 1%, #ffffff 3%, var(--yellow-normal-hover) 10%, var(--yellow-normal-active) 35%, var(--yellow-darker) 75%, var(--dark) 100%);
+}
+
+.btn-brown {
+  background: radial-gradient(circle at 60% 35%, #ffffff 1%, #ffffff 3%, var(--brown-normal) 10%, var(--brown-normal-hover) 35%, var(--brown-darker) 75%, var(--dark) 100%);
+}
+.btn-brown:hover {
+  background: radial-gradient(circle at 60% 35%, #ffffff 1%, #ffffff 3%, var(--brown-normal-hover) 10%, var(--brown-normal-active) 35%, var(--brown-darker) 75%, var(--dark) 100%);
 }
