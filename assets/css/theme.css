@@ -50,16 +50,16 @@
 .orange-darker { background-color: #4a1d13; }
 
 /* Green Theme */
-.green-light { background-color: #e6f6f4; }
-.green-light-hover { background-color: #d9f2ef; }
-.green-light-active { background-color: #b0e4dd; }
-.green-normal { background-color: #00a991; }
-.green-normal-hover { background-color: #009883; }
-.green-normal-active { background-color: #008774; }
-.green-dark { background-color: #007f6d; }
-.green-dark-hover { background-color: #006557; }
-.green-dark-active { background-color: #004c41; }
-.green-darker { background-color: #003b33; } 
+.green-light { background-color: var(--green-light); }
+.green-light-hover { background-color: var(--green-light-hover); }
+.green-light-active { background-color: var(--green-light-active); }
+.green-normal { background-color: var(--green-normal); }
+.green-normal-hover { background-color: var(--green-normal-hover); }
+.green-normal-active { background-color: var(--green-normal-active); }
+.green-dark { background-color: var(--green-dark); }
+.green-dark-hover { background-color: var(--green-dark-hover); }
+.green-dark-active { background-color: var(--green-dark-active); }
+.green-darker { background-color: var(--green-darker); } 
 
 /* Blue Theme */
 .blue-light { background-color: #eaf5fe; }
