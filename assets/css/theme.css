@@ -1,3 +1,18 @@
+:root {
+    --dark: #000000;
+    /* Green Theme */
+    --green-light: #e6f6f4;
+    --green-light-hover: #d9f2ef;
+    --green-light-active: #b0e4dd;
+    --green-normal: #00a991;
+    --green-normal-hover: #009883;
+    --green-normal-active: #008774;
+    --green-dark: #007f6d;
+    --green-dark-hover: #006557;
+    --green-dark-active: #004c41;
+    --green-darker: #003b33;
+  }
+
 /* Brown Theme */
 .brown-light { background-color: #f9f7f4; }
 .brown-light-hover { background-color: #f6f3ee; }
@@ -69,5 +84,24 @@
 .text-blue-dark { color: #313c70; }
 .text-orange-normal { color: #d35437; }
 .text-orange-dark { color: #943c22; }
-.text-green-normal { color: #00a991; }
+.text-green-normal { color: var(--green-normal); }
 .text-green-dark { color: #007f6d; }
+
+/* Green Ball Button */
+.btn-ball-green {
+  width: 5em;
+  height: 5em;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 60% 35%, #ffffff 1%, #ffffff 3%, var(--green-normal) 10%, var(--green-normal-hover) 35%, var(--green-darker) 75%, var(--dark) 100%);
+  box-shadow: 0 2px 6px 0 rgba(0,0,0,0.18);
+  position: relative;
+  border: none;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+.btn-ball-green:hover {
+  background: radial-gradient(circle at 60% 35%, #ffffff 1%, #ffffff 3%, var(--green-normal-hover) 10%, var(--green-normal-active) 35%, var(--green-darker) 75%, var(--dark) 100%);
+}

@@ -10,6 +10,10 @@ defmodule NanoWeb.PageController do
     render(conn, :home, rooms: rooms)
   end
 
+  def elements(conn, _params) do
+    render(conn, :elements)
+  end
+
   def subscribe(conn, _params) do
     plans = Application.get_env(:nano, :subscription_plans)
     render(conn, :subscribe, plans: plans)

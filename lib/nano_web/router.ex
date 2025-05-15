@@ -17,6 +17,7 @@ defmodule NanoWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/elements", PageController, :elements
     get "/subscribe", PageController, :subscribe
     get "/subscribe/success", PageController, :success
     get "/subscribe/checkout/:plan", PageController, :checkout
