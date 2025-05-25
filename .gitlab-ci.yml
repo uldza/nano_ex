@@ -1,0 +1,55 @@
+# .gitlab-ci.yml
+stages:
+  - test
+  - build
+
+image: elixir:1.15-otp-26
+
+before_script:
+  - mix local.hex --force
+  - mix local.rebar --force
+  - mix deps.get --only $MIX_ENV
+
+test:
+  stage: test
+  variables:
+    MIX_ENV: test
+  script:
+    - make compile
+    - make lint
+    #- make dialyzer
+    - make test
+
+build:
+  stage: build
+  variables:
+    MIX_ENV: prod
+    ARCH: amd64
+  script:
+    - apt-get update && apt-get install -y pandoc
+    - TAG="$(make tag)"
+    - project_url=$(echo $CI_PROJECT_URL | sed 's/https:\/\///')
+    - git remote set-url origin https://oauth2:$CD_SECRET@$project_url
+    - git config --global user.email "gitlab-ci-bot@kood.pro"
+    - git config --global user.name "GitLab CI Bot"
+    - make release
+    - mv _build/prod/nano-${TAG}.tar.gz release/nano.tar.gz
+    - git add release/
+    - git commit -m "Update artefact for v${TAG}"
+    - git push origin HEAD:main -o ci.skip
+    - git tag v${TAG}
+    - git push origin v${TAG}
+  only:
+    - main
+
+#deploy:
+#  stage: deploy
+#  image: python:3.8
+#  script:
+#    - version=$(make tag)
+#    - apt-get update && apt-get install -y ansible
+#    - cd ansible && ansible-playbook --extra-vars app_version=${version} deploy.yml
+#  environment: production
+#  only:
+#    - main
+#  when: on_success
