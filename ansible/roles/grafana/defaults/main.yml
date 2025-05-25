@@ -1,0 +1,4 @@
+---
+grafana_version: "10.2.6"
+grafana_service: "grafana-server"
+grafana_user: "grafana"

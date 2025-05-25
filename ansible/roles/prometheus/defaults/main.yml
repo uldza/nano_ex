@@ -1,0 +1,5 @@
+---
+prometheus_version: "2.51.1"
+prometheus_service: "prometheus"
+prometheus_user: "prometheus"
+prometheus_exec: "/usr/local/bin/prometheus --config.file=/etc/prometheus/prometheus.conf --storage.tsdb.path=/data/prometheus --storage.tsdb.retention.time=30d"

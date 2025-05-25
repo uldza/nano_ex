@@ -1,0 +1,32 @@
+---
+- name: Update packages
+  apt:
+    update_cache: yes
+
+- name: Install basic packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - sudo
+    - htop
+    - git
+    - vim
+    - curl
+    - unzip
+    - zip
+    - ufw
+    - fail2ban
+
+- name: Set timezone
+  timezone:
+    name: 'UTC'
+
+- name: Ensure the locale exists
+  locale_gen:
+    name: en_US.UTF-8
+    state: present
+
+- name: Set default locale
+  command: localectl set-locale LANG=en_US.UTF-8
+

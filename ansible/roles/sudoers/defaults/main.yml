@@ -1,0 +1,7 @@
+---
+# To remove users that has been previously added, list them here
+remove_users: []
+
+# To add new users add them here, not copy the public_key file to file, file name should be
+# in format `username.key.pub`
+add_users: []

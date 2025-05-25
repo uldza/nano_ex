@@ -1,0 +1,14 @@
+---
+- name: restart docker
+  become: true
+  systemd:
+    name: docker
+    state: restarted
+    daemon_reload: true
+
+- name: restart docker container
+  become: true
+  docker_container:
+    name: "{{ container_name }}"
+    state: restarted
+  when: container_name is defined

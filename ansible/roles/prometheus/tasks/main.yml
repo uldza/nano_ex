@@ -1,0 +1,85 @@
+---
+
+- name: Check if needed variables are defined
+  assert:
+    that:
+      - prometheus_version is defined
+      - prometheus_service is defined
+      - prometheus_user is defined
+      - prometheus_exec is defined
+    fail_msg: " 'item' is not defined or empty"
+
+- name: Ensure prometheus group exists
+  group:
+    name: "{{ prometheus_user }}"
+    state: present
+
+- name: Ensure prometheus user exists
+  user:
+    name: "{{ prometheus_user }}"
+    group: "{{ prometheus_user }}"
+    system: yes
+    shell: "/sbin/nologin"
+    comment: "{{ prometheus_user }} nologin user"
+    createhome: "no"
+    state: present
+
+- name: Install prometheus
+  unarchive:
+    src: "https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz"
+    dest: /tmp/
+    remote_src: yes
+
+- name: Copy prometheus file to bin
+  copy:
+    src: "/tmp/prometheus-{{ prometheus_version }}.linux-amd64/prometheus"
+    dest: "/usr/local/bin/prometheus"
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_user }}"
+    remote_src: yes
+    mode: 0755
+
+- name: Delete prometheus tmp folder
+  file:
+    path: '/tmp/prometheus-{{ prometheus_version }}.linux-amd64'
+    state: absent
+
+- name: Create needed directories for configs and data
+  become: true
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_user }}"
+  with_items:
+    - "/data/prometheus/"
+    - "/etc/prometheus/"
+
+- name: Add application's config
+  become: true
+  template:
+    src: "prometheus.conf.j2"
+    dest: "/etc/prometheus/prometheus.conf"
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_user }}"
+    mode: 0644
+  notify: restart app
+
+- name: Copy systemd service file
+  template:
+    src: init.service.j2
+    dest: /etc/systemd/system/prometheus.service
+  notify: systemd daemon reload
+
+- name: Start systemd service
+  service:
+    name: "{{ prometheus_service }}"
+    state: started
+    enabled: yes
+
+- name: Check if prometheus is accessible
+  uri:
+    url: http://127.0.0.1:9090
+    method: GET
+    status_code: 200

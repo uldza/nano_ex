@@ -1,0 +1,85 @@
+---
+
+- name: Check if needed variables are defined
+  assert:
+    that:
+      - alert_version is defined
+      - alert_service is defined
+      - alert_user is defined
+      - alert_exec is defined
+    fail_msg: " 'item' is not defined or empty"
+
+- name: Ensure alertmanager group exists
+  group:
+    name: "{{ alert_user }}"
+    state: present
+
+- name: Ensure alertmanager user exists
+  user:
+    name: "{{ alert_user }}"
+    group: "{{ alert_user }}"
+    system: yes
+    shell: "/sbin/nologin"
+    comment: "{{ alert_user }} nologin user"
+    createhome: "no"
+    state: present
+
+- name: Install alertmanager
+  unarchive:
+    src: "https://github.com/prometheus/alertmanager/releases/download/v{{ alert_version }}/alertmanager-{{ alert_version }}.linux-amd64.tar.gz"
+    dest: /tmp/
+    remote_src: yes
+
+- name: Copy binary file to bin
+  copy:
+    src: "/tmp/alertmanager-{{ alert_version }}.linux-amd64/alertmanager"
+    dest: "/usr/local/bin/alertmanager"
+    owner: "{{ alert_user }}"
+    group: "{{ alert_user }}"
+    remote_src: yes
+    mode: 0755
+
+- name: Delete tmp data
+  file:
+    path: '/tmp/alert-{{ alert_version }}.linux-amd64'
+    state: absent
+
+- name: Create needed directories for configs and data
+  become: true
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+    owner: "{{ alert_user }}"
+    group: "{{ alert_user }}"
+  with_items:
+    - "/data/alertmanager/"
+    - "/etc/alertmanager/"
+
+- name: Add application's config
+  become: true
+  template:
+    src: "alertmanager.yml.j2"
+    dest: "/etc/alertmanager/alertmanager.yml"
+    owner: "{{ alert_user }}"
+    group: "{{ alert_user }}"
+    mode: 0644
+  notify: restart app
+
+- name: Copy systemd service file
+  template:
+    src: init.service.j2
+    dest: /etc/systemd/system/alertmanager.service
+  notify: systemd daemon reload
+
+- name: Start systemd service
+  service:
+    name: "{{ alert_service }}"
+    state: started
+    enabled: yes
+
+- name: Check if it is accessible from web
+  uri:
+    url: http://127.0.0.1:9093
+    method: GET
+    status_code: 200

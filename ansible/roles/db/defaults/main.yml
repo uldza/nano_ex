@@ -1,0 +1,3 @@
+---
+db_path: /var/lib/sqlite
+db_file: "test.db"

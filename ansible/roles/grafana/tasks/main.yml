@@ -1,0 +1,67 @@
+---
+
+- name: Check if needed variables are defined
+  assert:
+    that:
+      - grafana_version is defined
+      - grafana_service is defined
+      - grafana_user is defined
+    fail_msg: " 'item' is not defined or empty"
+
+- name: Install needed packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - adduser
+    - libfontconfig1
+    - musl
+    - wget
+
+- name: Download grafana .deb file
+  get_url:
+    url: "https://dl.grafana.com/oss/release/grafana_{{ grafana_version }}_amd64.deb"
+    dest: /tmp
+
+- name: Ensure grafana group exists
+  group:
+    name: "{{ grafana_user }}"
+    state: present
+
+- name: Ensure grafana user exists
+  user:
+    name: "{{ grafana_user }}"
+    group: "{{ grafana_user }}"
+    system: yes
+    shell: "/sbin/nologin"
+    comment: "{{ grafana_user }} nologin user"
+    createhome: "no"
+    state: present
+
+- name: Install grafana
+  apt:
+    deb: "/tmp/grafana_{{ grafana_version }}_amd64.deb"
+
+- name: Delete tmp file
+  file:
+    path: "/tmp/grafana_{{ grafana_version }}_amd64.deb"
+    state: absent
+
+- name: Add application's config
+  become: true
+  template:
+    src: "grafana.conf.j2"
+    dest: "/etc/grafana/grafana.ini"
+  notify: restart app
+
+- name: Start systemd service
+  service:
+    name: "{{ grafana_service }}"
+    state: started
+    enabled: yes
+
+- name: "Check if Grafana is accessible."
+  uri:
+    url: http://127.0.0.1:3000/login
+    method: GET
+    status_code: 200

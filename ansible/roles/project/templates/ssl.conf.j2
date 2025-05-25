@@ -1,0 +1,22 @@
+FQDN = {{ app_domain }}
+ORGNAME = {{ app_user }}
+
+[ req ]
+default_bits = 2048
+default_md = sha256
+prompt = no
+encrypt_key = no
+distinguished_name = dn
+req_extensions = req_ext
+
+[ dn ]
+C = GB
+O = {{ app_user }}
+CN = {{ app_domain }}
+
+[ req_ext ]
+subjectAltName = @alt_names
+
+[ alt_names ]
+DNS.1 = {{ app_domain }}
+DNS.2 = *.{{ app_domain }}

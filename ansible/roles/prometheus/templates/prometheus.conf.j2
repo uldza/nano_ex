@@ -1,0 +1,15 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'kood.pro'
+    metrics_path: '/metrics'  # Path to scrape for metrics.
+    scheme: 'https'
+    static_configs:
+      - targets: ['www.kood.pro']
+
+    # Basic authentication configuration
+    basic_auth:
+      username: 'user'
+      password: 'password'
+

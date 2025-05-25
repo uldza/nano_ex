@@ -1,0 +1,5 @@
+---
+alert_version: "0.27.0"
+alert_service: "alertmanager"
+alert_user: "alertmanager"
+alert_exec: "/usr/local/bin/alertmanager --config.file=/etc/alertmanager/alertmanager.yml --storage.path=/data/alertmanager"

@@ -1,0 +1,17 @@
+- name: "Create sudo user accounts"
+  user:
+    name: "{{ item }}"
+    groups: sudo
+  with_items: "{{ add_users }}"
+
+- name: "Remove old user accounts"
+  user:
+    name: "{{ item }}"
+    state: "absent"
+  with_items: "{{ remove_users }}"
+
+- name: "Add authorized keys"
+  authorized_key:
+  user: "{{ item }}"
+    key: "{{ lookup('file', 'files/'+ item.username + '.key.pub') }}"
+  with_items: "{{ add_users }}"

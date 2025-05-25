@@ -1,0 +1,32 @@
+---
+- name: Install SQlite
+  apt:
+    name: sqlite3
+    state: present
+    force: yes
+    update_cache: yes
+
+- name: Ensure db user exists
+  become: true
+  user:
+    name: "{{ db_user }}"
+    state: present
+    shell: "/bin/bash"
+    system: false
+
+- name: Create database directory
+  file:
+    path: "{{ db_path }}"
+    state: directory
+    mode: 0755
+    owner: "{{ db_user }}"
+    group: "{{ db_user }}"
+
+- name: Create database
+  file:
+    path: "{{ db_path }}/{{ db_file }}"
+    state: touch
+    mode: 0644
+    owner: "{{ db_user }}"
+    group: "{{ db_user }}"
+
