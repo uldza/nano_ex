@@ -53,11 +53,22 @@ defmodule NanoWeb.Router do
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
-  end
+    get "/admin", AdminController, :dashboard
+    get "/admin/rooms/:room_id", AdminController, :room_management
+    put "/admin/rooms/:room_id", AdminController, :update_room
+    post "/admin/rooms/:room_id/questions", AdminController, :create_question
+    put "/admin/rooms/:room_id/questions/:question_id", AdminController, :update_question
+    delete "/admin/rooms/:room_id/questions/:question_id", AdminController, :delete_question
 
-  scope "/admin", NanoWeb do
-    pipe_through [:browser, :admin]
-    get "/", AdminController, :dashboard
+    post "/admin/rooms/:room_id/questions/:question_id/activate",
+         AdminController,
+         :activate_question
+
+    post "/admin/rooms/:room_id/questions/:question_id/deactivate",
+         AdminController,
+         :deactivate_question
+
+    post "/admin/users/:id/make-admin", AdminController, :make_admin
   end
 
   scope "/rooms", NanoWeb do
