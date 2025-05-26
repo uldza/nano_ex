@@ -4,6 +4,8 @@ defmodule NanoWeb.PageController do
   alias Nano.ChatRooms
   alias Nano.Services.StripeService
   alias Nano.Accounts
+  alias Nano.Newsletter
+  alias Nano.Newsletter.SubscriptionForm
 
   def home(conn, _params) do
     rooms = ChatRooms.list_rooms()
@@ -97,6 +99,41 @@ defmodule NanoWeb.PageController do
             |> put_flash(:error, "Failed to create checkout session. Please try again later.")
             |> redirect(to: ~p"/subscribe")
         end
+    end
+  end
+
+  def subscription_page(conn, _params) do
+    form = %SubscriptionForm{}
+    changeset = SubscriptionForm.changeset(form)
+    render(conn, :subscription_page, form: Phoenix.Component.to_form(changeset))
+  end
+
+  def handle_subscription(conn, %{"subscription_form" => params}) do
+    form = %SubscriptionForm{}
+    changeset = SubscriptionForm.changeset(form, params)
+
+    case Ecto.Changeset.apply_action(changeset, :insert) do
+      {:ok, %{email: email, unsubscribe: unsubscribe}} ->
+        case Newsletter.handle_subscription(email, unsubscribe) do
+          :ok ->
+            message =
+              if unsubscribe,
+                do: "Successfully unsubscribed from our newsletter.",
+                else: "Thank you for subscribing to our newsletter!"
+
+            conn
+            |> put_flash(:info, message)
+            |> redirect(to: ~p"/")
+
+          {:error, _changeset} ->
+            conn
+            |> put_flash(:error, "Something went wrong. Please try again later.")
+            |> render(:subscription_page, form: Phoenix.Component.to_form(changeset))
+        end
+
+      {:error, changeset} ->
+        conn
+        |> render(:subscription_page, form: Phoenix.Component.to_form(changeset))
     end
   end
 end
