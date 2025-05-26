@@ -314,3 +314,44 @@
   flex-direction: column;
   align-items: center;
 }
+
+/* Blob Cards */
+.blob-card {
+  width: 320px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.2;
+  /* Organic blob shape using clip-path */
+  clip-path: path('M60,20 Q90,0 160,30 Q230,60 220,120 Q210,180 120,190 Q30,200 20,120 Q10,60 60,20 Z');
+  border-radius: 50% 40% 60% 50% / 60% 50% 40% 50%;
+  transition: transform 0.2s;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  margin: 0 8px;
+}
+
+.blob-card span {
+  display: block;
+  width: 80%;
+}
+
+.blob-red {
+  background: var(--red-dark);
+}
+
+.blob-green {
+  background: var(--green-dark);
+}
+
+.blob-blue {
+  background: var(--blue-dark);
+}
+
+.blob-card:hover {
+  transform: scale(1.04) rotate(-2deg);
+}
