@@ -1,0 +1,25 @@
+[Unit]
+Description=deploy a new version of {{ app_name }}
+After=network.target {{ app_name }}.service
+
+[Service]
+Type=oneshot
+User={{ app_user }}
+Group={{ app_group }}
+SyslogIdentifier=deploy-app
+ExecStart=/bin/bash -c 'cd {{ app_path }} && git pull && \
+  if [ -n "{{ app_version | default("") }}" ]; then \
+    git checkout {{ app_version }}; \
+  else \
+    git checkout $(git rev-parse HEAD); \
+  fi && \
+  echo "deploying app commit $(git -C {{ app_path }} log -n 1 --format=%H)" && \
+  cd assets && npm install && cd .. && \
+  mix deps.get --only prod && \
+  mix assets.deploy && \
+  mix phx.digest && \
+  mix release --overwrite && \
+  systemctl stop {{ app_name }} || true && \
+  {{ app_path }}/bin/{{ app_name }} eval {{ app_deploy_eval }} && \
+  systemctl start {{ app_name }}'
+RemainAfterExit=yes

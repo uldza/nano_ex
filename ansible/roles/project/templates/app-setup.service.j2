@@ -1,0 +1,30 @@
+[Unit]
+Description=first time setup of Elixir App {{ app_name }}
+After=network.target
+WantedBy=multi-user.target
+
+[Service]
+Type=oneshot
+User={{ app_user }}
+Group={{ app_group }}
+SyslogIdentifier=setup-app-{{ app_name }}
+{% for package in app_required_packages %}
+ExecStartPre=/bin/bash -c 'command -v {{ package.name }} >/dev/null 2>&1 || { echo "{{ package.description }} ({{ package.package }}) is not installed"; exit 1; }'
+{% endfor %}
+ExecStart=/bin/bash -c 'if [ -z "$(ls -A {{ app_path }}" ]; then \
+  ssh-keyscan github.com >> ~/.ssh/known_hosts && \
+  git clone --single-branch --branch main --depth 1 git@{{ app_git }} {{ app_path }} && \
+  mix local.hex --force && \
+  mix local.rebar --force && \
+  source {{ app_path }}/etc/env && \
+  cd {{ app.path }} && \
+  mix deps.get --only prod && \
+  mix deps.compile && \
+  mix ecto.load --quiet -r {{ app_ecto_repo }} && \
+  mix ecto.migrate -r {{ app_ecto_repo }} && \
+  cd assets && \
+  npm install && cd .. && \
+  mix assets.deploy && \
+  mix release --overwrite; \
+fi'
+RemainAfterExit=yes

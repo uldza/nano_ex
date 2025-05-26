@@ -1,1 +1,13 @@
 ---
+app_required_packages:
+  - name: erl
+    package: erlang
+    description: "Erlang runtime"
+  - name: elixir
+    package: elixir
+    description: "Elixir programming language"
+  - name: sqlite3
+    package: sqlite3
+    description: "SQLite database"
+app_deploy_eval: "Nano.Release.migrate"
+app_ecto_repo: "Nano.Repo"

@@ -6,7 +6,10 @@
       - app_name is defined
       - app_path is defined
       - app_user is defined
-      - app_version is defined
+      - app_group is defined
+      - app_ecto_repo is defined
+      - app_deploy_eval is defined
+      - app_git is defined
       - app_http_port is defined
       - app_domain is defined
       - app_log_path is defined
@@ -109,38 +112,6 @@
     mode: 0644
   when: geoip_path is defined
 
-- name: Add applications env file to systemd
-  become: true
-  template:
-    src: env.j2
-    dest: "{{ app_path }}/etc/env"
-    owner: "{{ app_user }}"
-    group: "{{ app_user }}"
-    mode: 0644
-  notify: systemd daemon reload
-
-- name: Add application's systemd file
-  become: true
-  template:
-    src: "project.service.j2"
-    dest: "/usr/lib/systemd/system/{{ app_user }}.service"
-    mode: 0644
-  notify: systemd daemon reload
-
-- name: Stop application service
-  become: true
-  service:
-    name: "{{ app_user }}"
-    enabled: true
-    state: stopped
-
-- name: Start application service
-  become: true
-  service:
-    name: "{{ app_user }}"
-    enabled: true
-    state: started
-
 - name: Check that the private key exists
   stat:
     path: "{{ app_path }}/etc/key.pem"
@@ -215,6 +186,7 @@
     password: "{{ stats_password }}"
     mode: 0644
     create: yes
+  when: stats_password is defined
 
 - name: Copy nginx configuration for application
   become: true
@@ -223,3 +195,70 @@
     dest: "/etc/nginx/conf.d/{{ app_user }}.conf"
     mode: 0644
   notify: reload nginx
+
+- name: Install required app's packages
+  package:
+    name: "{{ item.package }}"
+    state: present
+  loop: "{{ app_required_packages }}"
+
+- name: Add applications env file to systemd
+  become: true
+  template:
+    src: env.j2
+    dest: "{{ app_path }}/etc/env"
+    owner: "{{ app_user }}"
+    group: "{{ app_user }}"
+    mode: 0644
+  notify: systemd daemon reload
+
+- name: Generate setup systemd services for apps
+  become: true
+  template:
+    src: app-setup.service.j2
+    dest: "/usr/lib/systemd/system/app-setup.service"
+    mode: 0644
+  notify: systemd daemon reload
+
+- name: Enable and start setup services
+  systemd:
+    name: "app-setup.service"
+    state: started
+    enabled: yes
+    daemon_reload: yes
+
+- name: Generate deploy systemd services for apps
+  become: true
+  template:
+    src: app-deploy.service.j2
+    dest: "/usr/lib/systemd/system/app-deploy.service"
+    mode: 0644
+
+- name: Enable deploy services
+  systemd:
+    name: "deploy-{{ item.name }}.service"
+    state: started
+    enabled: yes
+    daemon_reload: yes
+
+- name: Add application's systemd file
+  become: true
+  template:
+    src: "app.service.j2"
+    dest: "/usr/lib/systemd/system/{{ app_name }}.service"
+    mode: 0644
+  notify: systemd daemon reload
+
+- name: Stop application service
+  become: true
+  service:
+    name: "{{ app_name }}"
+    enabled: true
+    state: stopped
+
+- name: Start application service
+  become: true
+  service:
+    name: "{{ app_name }}"
+    enabled: true
+    state: started

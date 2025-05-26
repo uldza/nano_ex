@@ -1,19 +1,25 @@
 [Unit]
 Description={{ app_name }} service
-After=syslog.target network.target
+After=network-online.target setup-app.service
+Requires=network-online.target
+WantedBy=multi-user.target
+StartLimitIntervalSec=60
+StartLimitBurst=5
+OnFailure=notify-service-failure@%n
 
 [Service]
 Type=simple
+User={{ app_user }}
+Group={{ app_user }}
+SyslogIdentifier={{ app_name }}
 WorkingDirectory={{ app_path }}
 Environment=HOME={{ app_path }} SHELL=/bin/bash TERM=xterm
 EnvironmentFile={{ app_path }}/etc/env
 ExecStart={{ app_path }}/bin/{{ app_name }} start
 ExecStop={{ app_path }}/bin/{{ app_name }} stop
 RemainAfterExit=yes
-User={{ app_user }}
-Group={{ app_user }}
-LimitNOFILE=8196
 Restart=on-failure
-
-[Install]
-WantedBy=multi-user.target
+RestartSec=2
+RestartMaxDelaySec=60
+Restart=on-failure
+LimitNOFILE=8196
