@@ -12,4 +12,4 @@
    - user
    - ssh
    - nginx
-   - docker
+   #- docker
