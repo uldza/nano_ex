@@ -78,63 +78,20 @@
   <section class="mb-12">
     <h2 class="text-2xl font-bold text-blue-dark mb-4">Forms & Inputs</h2>
     <form class="bg-white p-6 rounded-xl shadow w-full max-w-md">
-      <label class="block text-blue-dark mb-2">Email</label>
-      <input
-        type="email"
-        class="block w-full rounded-lg border border-blue-normal mb-4 p-2"
-        placeholder="you@email.com"
-      />
-      <label class="block text-blue-dark mb-2">Password</label>
-      <input
-        type="password"
-        class="block w-full rounded-lg border border-blue-normal mb-4 p-2"
-        placeholder="Password"
-      />
-      <button type="submit" class="btn-primary bg-blue-normal border-blue-normal w-full">
-        Submit
-      </button>
+      <label class="theme-label" for="email">E-pasts</label>
+      <input id="email" class="theme-input" type="email" placeholder="E-pasts" />
+      <label class="theme-label" for="name">Vārds</label>
+      <input id="name" class="theme-input theme-input-rectangle" type="text" placeholder="Vārds" />
+      
+<!-- Disabled example -->
+      <input class="theme-input" type="email" placeholder="E-pasts" disabled />
+      
+<!-- Error example -->
+      <input class="theme-input theme-input-error" type="text" placeholder="Lai" value="Lai" />
+      <div class="theme-input-error-message">Lauks “_” ir obligāti aizpildāms</div>
+
+      <button type="submit" class="theme-cta-btn w-full">Submit</button>
     </form>
-  </section>
-  
-<!-- Icons & Media -->
-  <section class="mb-12">
-    <h2 class="text-2xl font-bold text-blue-dark mb-4">Icons & Media</h2>
-    <div class="flex flex-wrap gap-8 items-center">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-8 w-8 text-blue-normal"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
-        />
-      </svg>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-8 w-8 text-green-normal"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
-        />
-      </svg>
-      <img
-        src="https://placehold.co/64x64"
-        alt="Sample"
-        class="rounded-full border border-blue-normal"
-      />
-      <video controls class="w-32 h-20 rounded border border-blue-normal bg-black"></video>
-    </div>
   </section>
   
 <!-- Flash & Modals -->
@@ -150,13 +107,13 @@
 
   <div class="flex flex-wrap justify-center gap-12 my-12">
     <div class="blob-card blob-red">
-      <span>INTERAKTĪVS<br>SATURS</span>
+      <span>INTERAKTĪVS<br />SATURS</span>
     </div>
     <div class="blob-card blob-green">
-      <span>JĒGPILNA<br>IZKLAIDE</span>
+      <span>JĒGPILNA<br />IZKLAIDE</span>
     </div>
     <div class="blob-card blob-blue">
-      <span>DROŠA<br>VIDE</span>
+      <span>DROŠA<br />VIDE</span>
     </div>
   </div>
 </div>
