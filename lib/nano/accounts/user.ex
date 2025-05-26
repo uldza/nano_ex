@@ -4,6 +4,8 @@ defmodule Nano.Accounts.User do
 
   alias Nano.Accounts.Subscription
 
+  @roles ["user", "admin", "mod"]
+
   schema "users" do
     field :email, :string
     field :username, :string
@@ -12,6 +14,7 @@ defmodule Nano.Accounts.User do
     field :current_password, :string, virtual: true, redact: true
     field :confirmed_at, :utc_datetime
     field :stripe_customer_id, :string
+    field :role, :string, default: "user"
 
     has_one :subscription, Subscription
 
@@ -54,9 +57,15 @@ defmodule Nano.Accounts.User do
   """
   def customer_changeset(user, attrs) do
     user
-    |> cast(attrs, [:stripe_customer_id])
+    |> cast(attrs, [:stripe_customer_id, :role])
     |> validate_required([:stripe_customer_id])
+    |> validate_role()
     |> unique_constraint(:stripe_customer_id)
+  end
+
+  defp validate_role(changeset) do
+    changeset
+    |> validate_inclusion(:role, @roles, message: "must be one of: #{Enum.join(@roles, ", ")}")
   end
 
   defp validate_username(changeset, _opts) do

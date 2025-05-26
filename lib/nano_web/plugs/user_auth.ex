@@ -232,6 +232,20 @@ defmodule NanoWeb.UserAuth do
     end
   end
 
+  @doc """
+  Used for routes that require the user to be an admin or moderator.
+  """
+  def require_admin_or_mod(conn, _opts) do
+    if conn.assigns[:current_user] && conn.assigns.current_user.role in ["admin", "mod"] do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You must be an admin or moderator to access this page.")
+      |> redirect(to: ~p"/")
+      |> halt()
+    end
+  end
+
   defp put_token_in_session(conn, token) do
     conn
     |> put_session(:user_token, token)

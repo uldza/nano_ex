@@ -371,4 +371,28 @@ defmodule Nano.Accounts do
   def get_user_subscription(%User{} = user) do
     Repo.get_by(Subscription, user_id: user.id, status: "active")
   end
+
+  @doc """
+  Returns the list of all users.
+  """
+  def list_users do
+    Repo.all(User)
+  end
+
+  @doc """
+  Updates a user.
+
+  ## Examples
+
+      iex> update_user(user, %{role: "admin"})
+      {:ok, %User{}}
+
+      iex> update_user(user, %{role: "invalid"})
+      {:error, %Ecto.Changeset{}}
+  """
+  def update_user(%User{} = user, attrs) do
+    user
+    |> User.customer_changeset(attrs)
+    |> Repo.update()
+  end
 end
