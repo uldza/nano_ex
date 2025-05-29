@@ -4,48 +4,47 @@
 
   <body class="antialiased bg-white min-h-screen">
     <!-- Header Section -->
-    <header class="container mx-auto py-4 px-4 flex justify-between items-center">
-      <div class="flex items-center">
+    <header class="container relative mx-auto py-4 px-4 flex justify-between items-center">
+      <div
+        id="deco-1"
+        class="hidden md:block absolute top-0 right-0 yellow-normal [border-bottom-left-radius:4rem] w-[500px] h-[750px] -z-10"
+      >
+      </div>
+      <div
+        id="deco-2"
+        class="hidden md:block absolute top-[1em] right-0 yellow-light-active [border-bottom-left-radius:4rem] w-[490px] h-[750px] -z-20"
+      >
+      </div>
+      <div id="logo-container" class="flex items-center border-b border-blue-darker w-[75%] pb-6">
         <div class="text-3xl font-bold text-blue-normal">
-          <img src="/images/pikabu-logo.png" alt="Pikabu logo" class="h-16" />
+          <a href="/">
+            <img src="/images/pikabu-logo.png" alt="Pikabu logo" class="h-16" />
+          </a>
         </div>
       </div>
-      <ul class="relative z-10 flex items-center gap-4 px-4 sm:px-6 lg:px-8 justify-end">
+      <ul class="flex items-center gap-4 absolute right-4 top-1/2 -translate-y-1/2">
         <%= if @current_user do %>
           <li class="text-[0.8125rem] leading-6 text-blue-dark">
             {@current_user.email}
           </li>
           <li>
-            <.link
-              href={~p"/users/settings"}
-              class="nav-btn bg-blue-light border-blue-normal text-blue-normal"
-            >
+            <.link href={~p"/users/settings"} class="theme-cta-btn">
               Settings
             </.link>
           </li>
           <li>
-            <.link
-              href={~p"/users/log_out"}
-              method="delete"
-              class="nav-btn bg-blue-light border-blue-normal text-blue-normal"
-            >
+            <.link href={~p"/users/log_out"} method="delete" class="theme-cta-btn">
               Log out
             </.link>
           </li>
         <% else %>
           <li>
-            <.link
-              href={~p"/users/register"}
-              class="nav-btn bg-blue-light border-blue-normal text-blue-normal"
-            >
+            <.link href={~p"/users/register"} class="theme-cta-btn">
               Register
             </.link>
           </li>
           <li>
-            <.link
-              href={~p"/users/log_in"}
-              class="nav-btn bg-blue-light border-blue-normal text-blue-normal"
-            >
+            <.link href={~p"/users/log_in"} class="theme-cta-btn">
               Log in
             </.link>
           </li>
@@ -59,11 +58,15 @@
     <footer>
       <div class="blue-normal [border-top-left-radius:4rem] py-8 px-4">
         <div class="container mx-auto">
-          <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p class="text-white">© 2025 Pikabu Video. All rights reserved.</p>
+          <div class="text-white flex flex-col md:flex-row justify-between items-center gap-4">
+            <p>© 2025 Pikabu Video. All rights reserved.</p>
             <div class="flex gap-8">
-              <a href="/privacy" class="text-white underline hover:text-blue-light transition-colors">Privacy Policy</a>
-              <a href="/terms" class="text-white underline hover:text-blue-light transition-colors">Terms of Service</a>
+              <a href="/privacy" class="underline hover:text-blue-light transition-colors">
+                Privacy Policy
+              </a>
+              <a href="/terms" class="underline hover:text-blue-light transition-colors">
+                Terms of Service
+              </a>
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 :root {
     --dark: #000000;
+    --text-dark: #0f3655;
     /* Green Theme */
     --green-light: #ecfbe7;
     --green-light-hover: #e3f9db;
@@ -142,6 +143,7 @@
 .brown-darker { background-color: var(--brown-darker); }
 
 /* Text Color Utilities */
+.text-dark { color: var(--text-dark); }
 .text-brown-light { color: var(--brown-light); }
 .text-brown-normal { color: var(--brown-normal); }
 .text-brown-dark { color: var(--brown-dark); }
@@ -152,11 +154,15 @@
 .text-blue-light { color: var(--blue-light); }
 .text-blue-normal { color: var(--blue-normal); }
 .text-blue-dark { color: var(--blue-dark); }
+.text-blue-darker { color: var(--blue-darker); }
 .text-orange-normal { color: var(--orange-normal); }
 .text-orange-dark { color: var(--orange-dark); }
 .text-red-light { color: var(--red-light); }
 .text-red-normal { color: var(--red-normal); }
 .text-red-dark { color: var(--red-dark); }
+
+/* Border Color Utilities */
+.border-blue-darker { border-color: var(--blue-darker); }
 
 /* Ball Button */
 .btn-ball {

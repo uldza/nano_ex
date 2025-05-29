@@ -1,24 +1,20 @@
 <.flash_group flash={@flash} />
 
-<div class="bg-white min-h-screen">
+<div class="min-h-screen">
   
 <!-- Hero Section (Yellow Special Section) -->
-  <section class="yellow-normal rounded-xl container mx-auto px-4 py-12 flex flex-col md:flex-row items-center my-8">
+  <section class="container mx-auto px-4 py-12 flex flex-col md:flex-row items-center my-8">
     <div class="md:w-1/2 mb-10 md:mb-0">
-      <h1 class="text-4xl md:text-5xl font-bold mb-4 text-blue-normal">
+      <h1 class="text-4xl md:text-5xl mb-4">
         Watch Fun Videos <span class="text-orange-normal">Together!</span>
       </h1>
-      <p class="text-lg mb-6 text-blue-dark">
+      <p class="text-lg mb-6">
         Jump into a world of amazing videos, chat with friends, and create unforgettable moments with Pikabu video rooms.
       </p>
       <div class="flex space-x-4">
-        <.link href={~p"/users/register"} class="btn-primary">
+        <.link href={~p"/users/register"} class="theme-cta-btn">
           Start Your Adventure!
         </.link>
-
-        <a href="#how-it-works" class="btn-secondary">
-          Learn More
-        </a>
       </div>
     </div>
     <div class="md:w-1/2 relative">
@@ -47,17 +43,7 @@
                 });
               }
             </script>
-            <div class="absolute bottom-2 left-2 bg-orange-normal text-white px-2 py-1 text-xs rounded-lg">
-              Free Preview • 10 min
-            </div>
           </div>
-        </div>
-      </div>
-      <div class="absolute -bottom-4 -right-4 bg-yellow-normal rounded-full w-24 h-24 flex items-center justify-center transform rotate-12 shadow-lg z-10">
-        <div class="text-center font-bold text-blue-normal">
-          <div class="text-lg leading-none">Try</div>
-          <div class="text-xl leading-none">FREE</div>
-          <div class="text-xs">10 min</div>
         </div>
       </div>
     </div>
@@ -68,7 +54,7 @@
     <h2 class="text-3xl font-bold text-center mb-12 text-blue-normal">Fun Things You Can Do!</h2>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div class="bg-white rounded-xl p-6 shadow-lg transform hover:-translate-y-2 transition">
+      <div class="rounded-xl p-6 shadow-lg transform hover:-translate-y-2 transition">
         <div class="w-16 h-16 mx-auto mb-4 bg-blue-light rounded-full flex items-center justify-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -91,7 +77,7 @@
         </p>
       </div>
 
-      <div class="bg-white rounded-xl p-6 shadow-lg transform hover:-translate-y-2 transition">
+      <div class="rounded-xl p-6 shadow-lg transform hover:-translate-y-2 transition">
         <div class="w-16 h-16 mx-auto mb-4 bg-green-light rounded-full flex items-center justify-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -114,7 +100,7 @@
         </p>
       </div>
 
-      <div class="bg-white rounded-xl p-6 shadow-lg transform hover:-translate-y-2 transition">
+      <div class="rounded-xl p-6 shadow-lg transform hover:-translate-y-2 transition">
         <div class="w-16 h-16 mx-auto mb-4 bg-blue-light rounded-full flex items-center justify-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -145,7 +131,7 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       <%= for room <- @rooms do %>
-        <div class="bg-white rounded-xl overflow-hidden shadow-lg transform hover:-translate-y-2 transition">
+        <div class="rounded-xl overflow-hidden shadow-lg transform hover:-translate-y-2 transition">
           <div class="relative">
             <img src={room.video_thumbnail_url} alt={room.name} class="w-full h-48 object-cover" />
             <%= if room.requires_subscription do %>
