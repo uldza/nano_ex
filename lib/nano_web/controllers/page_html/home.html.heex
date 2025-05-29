@@ -50,118 +50,93 @@
   </section>
   
 <!-- Features Section (Default White) -->
-  <section id="how-it-works" class="container mx-auto px-4 py-16">
-    <h2 class="text-3xl font-bold text-center mb-12 text-blue-normal">Fun Things You Can Do!</h2>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div class="rounded-xl p-6 shadow-lg transform hover:-translate-y-2 transition">
-        <div class="w-16 h-16 mx-auto mb-4 bg-blue-light rounded-full flex items-center justify-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-8 w-8 text-blue-normal"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
-            />
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold mb-2 text-center text-blue-dark">Video Rooms</h3>
-        <p class="text-blue-dark text-center">
-          Join exciting video rooms with different themes and activities!
-        </p>
+  <section
+    id="how-it-works"
+    class="container mx-auto px-4 py-16 relative flex flex-col items-center mb-12"
+  >
+    <h2 class="text-3xl text-center mb-12 z-20">Fun Things You Can Do!</h2>
+    
+<!-- Cards -->
+    <div class="relative z-10 w-full text-center pb-12">
+      <!-- Decorative backgrounds -->
+      <div
+        id="how-deco-1"
+        class="absolute left-0 right-0 bottom-[1em] yellow-normal [border-bottom-right-radius:4rem] h-[300px] -z-10"
+      >
+      </div>
+      <div
+        id="how-deco-2"
+        class="absolute left-0 right-[0.5em] bottom-0 yellow-light-active [border-bottom-right-radius:4rem] h-[300px] -z-20"
+      >
       </div>
 
-      <div class="rounded-xl p-6 shadow-lg transform hover:-translate-y-2 transition">
-        <div class="w-16 h-16 mx-auto mb-4 bg-green-light rounded-full flex items-center justify-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-8 w-8 text-green-normal"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
-            />
-          </svg>
+      <div class="flex flex-col md:flex-row md:gap-12 gap-1 justify-center items-stretch max-w-6xl mx-auto">
+        <div class="theme-card flex-1">
+          <div class="mb-4 flex justify-center">
+            <img src="/images/icon-1.png" alt="Icon 1" class="h-16" />
+          </div>
+          <h3 class="text-2xl font-bold mb-2">Tematiskās istabas</h3>
+          <p class="text-base">
+            Lietotāji var pievienoties istabām ar noteiktu tematu, kas atbilst viņu interesēm vai aktuālajām vajadzībām, piemēram, bioloģijas istaba, kur tiek pētīta daba un dzīvnieki, vai vācu valodas istaba-ieliks veids valodas apguvei agrīnā vecumā!
+          </p>
         </div>
-        <h3 class="text-xl font-bold mb-2 text-center text-green-dark">Fun Chat</h3>
-        <p class="text-green-dark text-center">
-          Chat with friends and send cool stickers and reactions!
-        </p>
-      </div>
-
-      <div class="rounded-xl p-6 shadow-lg transform hover:-translate-y-2 transition">
-        <div class="w-16 h-16 mx-auto mb-4 bg-blue-light rounded-full flex items-center justify-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-8 w-8 text-blue-normal"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
+        <div class="theme-card flex-1">
+          <div class="mb-4 flex justify-center">
+            <img src="/images/icon-2.png" alt="Icon 2" class="h-16" />
+          </div>
+          <h3 class="text-2xl font-bold mb-2">Droša vide sarunām tiešsaistē</h3>
+          <p class="text-base">
+            Platforma nodrošina uzticamu un uzraudzītu vidi, kurā bērni var brīvi kontaktēties. Platforma lieto modernus moderēšanas rīkus un ļauj veidot privātuma iestatījumus.
+          </p>
         </div>
-        <h3 class="text-xl font-bold mb-2 text-center text-blue-dark">Cool Reactions</h3>
-        <p class="text-blue-dark text-center">
-          Show how you feel with awesome animated reactions!
-        </p>
+        <div class="theme-card flex-1">
+          <div class="mb-4 flex justify-center">
+            <img src="/images/icon-3.png" alt="Icon 3" class="h-16" />
+          </div>
+          <h3 class="text-2xl font-bold mb-2">Vecumam pielāgots saturs</h3>
+          <p class="text-base">
+            Saturs tiek rūpīgi izvērtēts un pielāgots atbilstoši lietotāju vecuma grupām. Tas palīdz nodrošināt atbilstoši piemērotu, izglītojošu un interaktīvu lietošanas pieredzi.
+          </p>
+        </div>
       </div>
     </div>
   </section>
-  
-<!-- Available Rooms Section (Default White) -->
-  <section class="container mx-auto px-4 py-16">
-    <h2 class="text-3xl font-bold text-center mb-12 text-blue-normal">Available Video Rooms</h2>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <%= for room <- @rooms do %>
-        <div class="rounded-xl overflow-hidden shadow-lg transform hover:-translate-y-2 transition">
-          <div class="relative">
-            <img src={room.video_thumbnail_url} alt={room.name} class="w-full h-48 object-cover" />
-            <%= if room.requires_subscription do %>
-              <div class="absolute top-2 right-2 yellow-normal text-black px-2 py-1 text-xs rounded-full font-bold">
-                Premium
-              </div>
-            <% end %>
+  <section id="pikabu">
+    <h2 class="text-3xl text-center mb-12 z-20 border-t border-blue-darker pt-10">It's fun</h2>
+    <div class="flex flex-wrap justify-center gap-12 my-12">
+      <div class="blob-card blob-red">
+        <span>INTERAKTĪVS<br />SATURS</span>
+      </div>
+      <div class="blob-card blob-green">
+        <span>JĒGPILNA<br />IZKLAIDE</span>
+      </div>
+      <div class="blob-card blob-blue">
+        <span>DROŠA<br />VIDE</span>
+      </div>
+    </div>
+
+    <div
+      id="contacts"
+      class="flex flex-col md:flex-row items-center justify-between max-w-5xl mx-auto bg-white rounded-xl shadow-none p-8"
+    >
+      <div class="flex-1 text-left">
+        <h2 class="text-4xl mb-4">PAR PIKABU</h2>
+        <p class="text-lg font-semibold mb-6">Saturu veido SIA Zvaigznāja Komanda</p>
+        <div class="space-y-4">
+          <div class="flex items-center gap-3">
+            <img src="/images/icon-phone.svg" alt="Phone" class="h-6 w-6" />
+            <span class="text-blue-dark text-lg">+371 29&nbsp;881&nbsp;187</span>
           </div>
-          <div class="p-6">
-            <h3 class="text-xl font-bold mb-2 text-blue-dark">{room.name}</h3>
-            <p class="text-blue-dark mb-4">{room.description}</p>
-            <.link href={~p"/rooms/#{room.id}"} class="btn-primary w-full text-center">
-              Join Room
-            </.link>
+          <div class="flex items-center gap-3">
+            <img src="/images/icon-mail.svg" alt="Email" class="h-6 w-6" />
+            <span class="text-blue-dark text-lg">pikabu@pikabu.lv</span>
           </div>
         </div>
-      <% end %>
-    </div>
-  </section>
-  
-<!-- Call to Action (Blue Special Section) -->
-  <section class="blue-normal rounded-2xl container mx-auto px-4 py-16 my-8 shadow-xl">
-    <div class="text-center">
-      <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Ready to join the fun?</h2>
-      <p class="text-xl text-blue-light mb-8">
-        Start your adventure today with a free 10-minute trial!
-      </p>
-      <.link href={~p"/users/register"} class="btn-secondary text-lg">
-        Join Pikabu Now!
-      </.link>
+      </div>
+      <div class="flex-1 flex justify-center mt-8 md:mt-0">
+        <img src="/images/pikabu-mascot.png" alt="Pikabu Mascot" class="h-64 w-auto" />
+      </div>
     </div>
   </section>
 </div>
