@@ -1,15 +1,15 @@
-<div class="mx-auto max-w-sm bg-white p-8 rounded-xl shadow text-blue-normal">
-  <.header class="text-center text-blue-normal">
-    Forgot your password?
-    <:subtitle>We'll send a password reset link to your inbox</:subtitle>
-  </.header>
-
+<div class="mx-auto max-w-sm">
   <.simple_form :let={f} for={@conn.params["user"]} as={:user} action={~p"/users/reset_password"}>
+    <.header class="text-center">
+      Forgot your password?
+      <:subtitle>We'll send a password reset link to your inbox</:subtitle>
+    </.header>
+
     <.input field={f[:email]} type="email" placeholder="Email" required />
     <:actions>
       <.button
         phx-disable-with="Sending..."
-        class="btn-primary bg-blue-normal border-blue-normal w-full"
+        class="w-full"
       >
         Send password reset instructions
       </.button>

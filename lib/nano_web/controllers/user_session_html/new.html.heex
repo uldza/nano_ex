@@ -1,9 +1,9 @@
-<div class="mx-auto max-w-sm bg-white p-8 rounded-xl shadow text-blue-normal">
-  <.header class="text-center text-blue-normal">
-    Log in to account
-  </.header>
-
+<div class="mx-auto max-w-sm">
   <.simple_form :let={f} for={@conn.params["user"]} as={:user} action={~p"/users/log_in"}>
+    <.header class="text-center">
+      Log in to account
+    </.header>
+
     <.error :if={@error_message}>{@error_message}</.error>
 
     <.input field={f[:email]} type="email" label="Email" required />
@@ -18,7 +18,7 @@
     <:actions>
       <.button
         phx-disable-with="Logging in..."
-        class="btn-primary bg-blue-normal border-blue-normal w-full"
+        class="w-full"
       >
         Log in <span aria-hidden="true">→</span>
       </.button>

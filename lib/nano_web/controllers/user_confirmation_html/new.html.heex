@@ -1,15 +1,16 @@
-<div class="mx-auto max-w-sm bg-white p-8 rounded-xl shadow text-blue-normal">
-  <.header class="text-center text-blue-normal">
+<div class="mx-auto max-w-sm">
+
+  <.simple_form :let={f} for={@conn.params["user"]} as={:user} action={~p"/users/confirm"}>
+  <.header class="text-center">
     No confirmation instructions received?
     <:subtitle>We'll send a new confirmation link to your inbox</:subtitle>
   </.header>
 
-  <.simple_form :let={f} for={@conn.params["user"]} as={:user} action={~p"/users/confirm"}>
     <.input field={f[:email]} type="email" placeholder="Email" required />
     <:actions>
       <.button
         phx-disable-with="Sending..."
-        class="btn-primary bg-blue-normal border-blue-normal w-full"
+        class="w-full"
       >
         Resend confirmation instructions
       </.button>
