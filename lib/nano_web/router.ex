@@ -13,10 +13,6 @@ defmodule NanoWeb.Router do
     plug :fetch_current_user
   end
 
-  pipeline :admin do
-    plug :require_admin_or_mod
-  end
-
   scope "/", NanoWeb do
     pipe_through :browser
 
@@ -30,10 +26,16 @@ defmodule NanoWeb.Router do
     # Newsletter subscription routes
     get "/subscription", PageController, :subscription_page
     post "/subscription", PageController, :handle_subscription
+
+    # User authentication routes
+    delete "/users/log_out", UserSessionController, :delete
+    get "/users/confirm", UserConfirmationController, :new
+    post "/users/confirm", UserConfirmationController, :create
+    get "/users/confirm/:token", UserConfirmationController, :edit
+    post "/users/confirm/:token", UserConfirmationController, :update
   end
 
   ## Authentication routes
-
   scope "/", NanoWeb do
     pipe_through [:browser, :redirect_if_user_is_authenticated]
 
@@ -53,22 +55,7 @@ defmodule NanoWeb.Router do
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
-    get "/admin", AdminController, :dashboard
-    get "/admin/rooms/:room_id", AdminController, :room_management
-    put "/admin/rooms/:room_id", AdminController, :update_room
-    post "/admin/rooms/:room_id/questions", AdminController, :create_question
-    put "/admin/rooms/:room_id/questions/:question_id", AdminController, :update_question
-    delete "/admin/rooms/:room_id/questions/:question_id", AdminController, :delete_question
 
-    post "/admin/rooms/:room_id/questions/:question_id/activate",
-         AdminController,
-         :activate_question
-
-    post "/admin/rooms/:room_id/questions/:question_id/deactivate",
-         AdminController,
-         :deactivate_question
-
-    post "/admin/users/:id/make-admin", AdminController, :make_admin
   end
 
   scope "/rooms", NanoWeb do
@@ -77,14 +64,27 @@ defmodule NanoWeb.Router do
     get "/:room_id", PlayerController, :show
   end
 
-  scope "/", NanoWeb do
-    pipe_through [:browser]
+  # Admin routes
+  scope "/admin", NanoWeb do
+    pipe_through [:browser, :require_admin_or_mod]
 
-    delete "/users/log_out", UserSessionController, :delete
-    get "/users/confirm", UserConfirmationController, :new
-    post "/users/confirm", UserConfirmationController, :create
-    get "/users/confirm/:token", UserConfirmationController, :edit
-    post "/users/confirm/:token", UserConfirmationController, :update
+    get "/", AdminController, :dashboard
+
+    get "/rooms/:room_id", AdminController, :room_management
+    put "/rooms/:room_id", AdminController, :update_room
+    post "/rooms/:room_id/questions", AdminController, :create_question
+    put "/rooms/:room_id/questions/:question_id", AdminController, :update_question
+    delete "/rooms/:room_id/questions/:question_id", AdminController, :delete_question
+
+    post "/rooms/:room_id/questions/:question_id/activate",
+         AdminController,
+         :activate_question
+
+    post "/rooms/:room_id/questions/:question_id/deactivate",
+         AdminController,
+         :deactivate_question
+
+    post "/users/:id/make-admin", AdminController, :make_admin
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
