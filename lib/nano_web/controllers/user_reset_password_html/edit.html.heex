@@ -1,9 +1,8 @@
 <div class="mx-auto max-w-sm">
-
   <.simple_form :let={f} for={@changeset} action={~p"/users/reset_password/#{@token}"}>
-  <.header class="text-center">
-    Reset Password
-  </.header>
+    <.header class="text-center">
+      Reset Password
+    </.header>
 
     <.error :if={@changeset.action}>
       Oops, something went wrong! Please check the errors below.
@@ -17,10 +16,7 @@
       required
     />
     <:actions>
-      <.button
-        phx-disable-with="Resetting..."
-        class="w-full"
-      >
+      <.button phx-disable-with="Resetting..." class="w-full">
         Reset password
       </.button>
     </:actions>

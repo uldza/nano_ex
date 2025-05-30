@@ -55,12 +55,12 @@ defmodule NanoWeb.Router do
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
-
   end
 
   scope "/rooms", NanoWeb do
     pipe_through [:browser, :require_authenticated_user, :require_active_subscription]
 
+    get "/", PlayerController, :index
     get "/:room_id", PlayerController, :show
   end
 
@@ -70,6 +70,8 @@ defmodule NanoWeb.Router do
 
     get "/", AdminController, :dashboard
 
+    get "/rooms/new", AdminController, :new_room
+    post "/rooms", AdminController, :create_room
     get "/rooms/:room_id", AdminController, :room_management
     put "/rooms/:room_id", AdminController, :update_room
     post "/rooms/:room_id/questions", AdminController, :create_question

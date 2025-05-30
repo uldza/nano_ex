@@ -201,7 +201,13 @@ defmodule NanoWeb.CoreComponents do
 
   def simple_form(assigns) do
     ~H"""
-    <.form :let={f} for={@for} as={@as} {@rest} class="bg-white p-6 pt-4 rounded-xl shadow w-full max-w-md">
+    <.form
+      :let={f}
+      for={@for}
+      as={@as}
+      {@rest}
+      class="bg-white p-6 pt-4 rounded-xl shadow w-full max-w-md"
+    >
       <div class="mt-10 space-y-8">
         {render_slot(@inner_block, f)}
         <div :for={action <- @actions} class="mt-2 flex items-center justify-between gap-6">

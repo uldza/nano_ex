@@ -28,9 +28,15 @@
             {@current_user.email}
           </li>
           <li>
-            <.link href={~p"/users/settings"} class="theme-cta-btn">
-              Settings
-            </.link>
+            <%= if @current_user.role == "admin" do %>
+              <.link href={~p"/admin"} class="theme-cta-btn">
+                Admin
+              </.link>
+            <% else %>
+              <.link href={~p"/users/settings"} class="theme-cta-btn">
+                Settings
+              </.link>
+            <% end %>
           </li>
           <li>
             <.link href={~p"/users/log_out"} method="delete" class="theme-cta-btn">

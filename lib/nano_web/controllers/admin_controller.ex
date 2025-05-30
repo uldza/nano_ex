@@ -3,6 +3,7 @@ defmodule NanoWeb.AdminController do
 
   alias Nano.Rooms
   alias Nano.Accounts
+  alias Nano.ChatRooms
 
   plug :require_admin
 
@@ -10,6 +11,24 @@ defmodule NanoWeb.AdminController do
     users = Accounts.list_users()
     rooms = Rooms.list_rooms()
     render(conn, :dashboard, users: users, rooms: rooms)
+  end
+
+  def new_room(conn, _params) do
+    render(conn, :new_room)
+  end
+
+  def create_room(conn, %{"room" => room_params}) do
+    case ChatRooms.create_room(room_params) do
+      {:ok, room} ->
+        conn
+        |> put_flash(:info, "Room created successfully.")
+        |> redirect(to: ~p"/admin/rooms/#{room.id}")
+
+      {:error, _changeset} ->
+        conn
+        |> put_flash(:error, "Error creating room.")
+        |> redirect(to: ~p"/admin/rooms/new")
+    end
   end
 
   def room_management(conn, %{"room_id" => room_id}) do

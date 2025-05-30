@@ -1,0 +1,89 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold text-indigo-800">Create New Room</h1>
+    <.link href={~p"/admin"} class="text-indigo-600 hover:text-indigo-800">
+      ← Back to Dashboard
+    </.link>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-lg p-6">
+    <.form :let={f} for={%{}} action={~p"/admin/rooms"} method="post" class="space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-sm font-medium text-indigo-700">Name</label>
+          <input
+            type="text"
+            name="room[name]"
+            required
+            class="mt-1 block w-full rounded-md border-indigo-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-indigo-700">Description</label>
+          <input
+            type="text"
+            name="room[description]"
+            class="mt-1 block w-full rounded-md border-indigo-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-indigo-700">Video URL</label>
+          <input
+            type="text"
+            name="room[video_url]"
+            required
+            class="mt-1 block w-full rounded-md border-indigo-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-indigo-700">Thumbnail URL</label>
+          <input
+            type="text"
+            name="room[video_thumbnail_url]"
+            required
+            class="mt-1 block w-full rounded-md border-indigo-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-indigo-700">Free Minutes</label>
+          <input
+            type="number"
+            name="room[free_minutes]"
+            value="0"
+            min="0"
+            class="mt-1 block w-full rounded-md border-indigo-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+          />
+        </div>
+
+        <div class="flex items-center">
+          <input
+            type="checkbox"
+            name="room[requires_subscription]"
+            value="true"
+            class="h-4 w-4 rounded border-indigo-300 text-indigo-600 focus:ring-indigo-500"
+          />
+          <label class="ml-2 block text-sm text-indigo-700">Requires Subscription</label>
+        </div>
+      </div>
+
+      <div class="flex justify-end space-x-3">
+        <.link
+          href={~p"/admin"}
+          class="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          Cancel
+        </.link>
+        <button
+          type="submit"
+          class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          Create Room
+        </button>
+      </div>
+    </.form>
+  </div>
+</div>

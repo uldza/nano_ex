@@ -1,17 +1,13 @@
 <div class="mx-auto max-w-sm">
-
   <.simple_form :let={f} for={@conn.params["user"]} as={:user} action={~p"/users/confirm"}>
-  <.header class="text-center">
-    No confirmation instructions received?
-    <:subtitle>We'll send a new confirmation link to your inbox</:subtitle>
-  </.header>
+    <.header class="text-center">
+      No confirmation instructions received?
+      <:subtitle>We'll send a new confirmation link to your inbox</:subtitle>
+    </.header>
 
     <.input field={f[:email]} type="email" placeholder="Email" required />
     <:actions>
-      <.button
-        phx-disable-with="Sending..."
-        class="w-full"
-      >
+      <.button phx-disable-with="Sending..." class="w-full">
         Resend confirmation instructions
       </.button>
     </:actions>
