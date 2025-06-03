@@ -35,6 +35,17 @@ defmodule NanoWeb.ChatLive do
     {:noreply, assign(socket, message: "")}
   end
 
+  def handle_event("send_emoji", %{"emoji" => emoji}, socket) do
+    ChatRooms.create_message(%{
+      content: emoji,
+      type: "emoji",
+      chat_room_id: socket.assigns.room.id,
+      user_id: socket.assigns.current_user.id
+    })
+
+    {:noreply, socket}
+  end
+
   def handle_info({:message_created, message}, socket) do
     {:noreply, stream_insert(socket, :messages, message, at: 0)}
   end
