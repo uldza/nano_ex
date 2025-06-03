@@ -1,11 +1,18 @@
 <div class="container mx-auto px-4 py-8">
   <h1 class="text-5xl text-center mt-8 mb-16">Izvēlies tematisko istabu</h1>
 
-  <div id="lobby-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-white rounded-lg p-2 max-w-6xl mx-auto">
+  <div
+    id="lobby-grid"
+    class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-white rounded-lg p-2 max-w-6xl mx-auto"
+  >
     <%= for room <- @rooms do %>
-      <a href={~p"/rooms/#{room.id}"} class="theme-card border-2 border-blue-darker flex flex-col items-center justify-between aspect-square text-dark hover:shadow-lg transition-shadow duration-200" style="background: var(--yellow-light-active);">
+      <a
+        href={~p"/rooms/#{room.id}"}
+        class="theme-card border-2 border-blue-darker flex flex-col items-center justify-between aspect-square text-dark hover:shadow-lg transition-shadow duration-200"
+        style="background: var(--yellow-light-active);"
+      >
         <img src={room.video_thumbnail_url} alt={room.name} class="mb-4 w-48 h-48 object-contain" />
-        <h3 class="text-xl font-bold mb-2 text-center"><%= room.name %></h3>
+        <h3 class="text-xl font-bold mb-2 text-center">{room.name}</h3>
       </a>
     <% end %>
   </div>

@@ -1,4 +1,78 @@
+<!-- Header Section -->
+<header class="container relative mx-auto py-4 px-4 flex justify-between items-center">
+  <div
+    id="deco-1"
+    class="hidden md:block absolute top-0 right-0 yellow-normal [border-bottom-left-radius:4rem] w-[500px] h-[750px] -z-10"
+  >
+  </div>
+  <div
+    id="deco-2"
+    class="hidden md:block absolute top-[1em] right-0 yellow-light-active [border-bottom-left-radius:4rem] w-[490px] h-[750px] -z-20"
+  >
+  </div>
+  <div id="logo-container" class="flex items-center border-b border-blue-darker w-[75%] pb-6">
+    <div class="text-3xl font-bold text-blue-normal">
+      <a href="/">
+        <img src="/images/pikabu-logo.png" alt="Pikabu logo" class="h-16" />
+      </a>
+    </div>
+  </div>
+  <ul class="flex items-center gap-4 absolute right-4 top-1/2 -translate-y-1/2">
+    <%= if @current_user do %>
+      <li class="text-[0.8125rem] leading-6 text-blue-dark">
+        {@current_user.email}
+      </li>
+      <li>
+        <%= if @current_user.role == "admin" do %>
+          <.link href={~p"/admin"} class="theme-cta-btn">
+            Admin
+          </.link>
+        <% else %>
+          <.link href={~p"/users/settings"} class="theme-cta-btn">
+            Settings
+          </.link>
+        <% end %>
+      </li>
+      <li>
+        <.link href={~p"/users/log_out"} method="delete" class="theme-cta-btn">
+          Log out
+        </.link>
+      </li>
+    <% else %>
+      <li>
+        <.link href={~p"/users/register"} class="theme-cta-btn">
+          Register
+        </.link>
+      </li>
+      <li>
+        <.link href={~p"/users/log_in"} class="theme-cta-btn">
+          Log in
+        </.link>
+      </li>
+    <% end %>
+  </ul>
+</header>
+
 <main id="main-content" class="text-dark px-4 py-20 sm:px-6 lg:px-8 min-h-screen">
   <.flash_group flash={@flash} />
   {@inner_content}
 </main>
+
+<!-- Footer -->
+<footer>
+  <div class="blue-normal [border-top-left-radius:4rem] py-8 px-4">
+    <div class="container mx-auto">
+      <div class="text-white flex flex-col md:flex-row justify-between items-center gap-4">
+        <p>© 2025 SIA Zvaigznāja Komanda.</p>
+        <div class="flex gap-8">
+          <a href="/privacy" class="underline hover:text-blue-light transition-colors">
+            Privacy Policy
+          </a>
+          <a href="/terms" class="underline hover:text-blue-light transition-colors">
+            Terms of Service
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

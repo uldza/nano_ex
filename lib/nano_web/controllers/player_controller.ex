@@ -12,7 +12,9 @@ defmodule NanoWeb.PlayerController do
     video_room = Nano.ChatRooms.get_room!(room_id)
     messages = Nano.ChatRooms.get_messages_for_room(video_room.id)
 
-    render(conn, :show, %{
+    conn
+    |> put_layout(html: :player)
+    |> render(:show, %{
       video_room: video_room,
       messages: messages,
       user_token: get_session(conn, :user_token)

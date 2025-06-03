@@ -1,12 +1,16 @@
-<div class="flex h-screen bg-white">
+<div
+  class="text-dark [border-radius:2rem] flex justify-center gap-16 min-h-screen p-16"
+  style="background: var(--yellow-normal);"
+>
   <!-- Video Player Section -->
-  <div class="w-3/4 p-4 flex flex-col">
-    <div class="mt-4">
-      <h1 class="text-2xl font-bold text-blue-normal">{@video_room.name}</h1>
-      <p class="text-blue-dark">{@video_room.description}</p>
-    </div>
-    <div class="bg-black rounded-lg overflow-hidden aspect-video border-4 border-blue-normal">
-      <video id="video-player" controls class="w-full h-full object-cover"></video>
+  <div id="video-wrapper" class="flex-2/3 flex flex-col h-full rounded-2xl px-8">
+    <div class="flex-none overflow-hidden aspect-video">
+      <video
+        id="video-player"
+        controls
+        class="w-full h-full object-cover rounded-2xl border-2 border-[var(--blue-dark-active)] bg-white"
+      >
+      </video>
       <script>
         var video = document.getElementById('video-player');
         if (Hls.isSupported()) {
@@ -30,7 +34,7 @@
     </div>
     
 <!-- Program Questions Section -->
-    <div class="mt-4">
+    <div class="flex-1 mt-4 overflow-y-auto">
       {live_render(@conn, NanoWeb.ProgramQuestionLive,
         session: %{"room_id" => @video_room.id},
         id: "program-questions"
@@ -39,10 +43,12 @@
   </div>
   
 <!-- Chat Section -->
-  {live_render(@conn, NanoWeb.ChatLive,
-    session: %{
-      "room_id" => @video_room.id,
-      "user_token" => @user_token
-    }
-  )}
+  <div id="chat-wrapper" class="flex-1/3 h-full overflow-y-auto">
+    {live_render(@conn, NanoWeb.ChatLive,
+      session: %{
+        "room_id" => @video_room.id,
+        "user_token" => @user_token
+      }
+    )}
+  </div>
 </div>
