@@ -13,13 +13,12 @@ defmodule NanoWeb.ChatLive do
 
     room = ChatRooms.get_room!(room_id)
     messages = ChatRooms.get_messages_for_room(room_id)
+    |> Enum.reverse()  # Reverse the messages so oldest are at the top
 
     {:ok,
-     assign(socket,
-       room: room,
-       messages: messages,
-       message: ""
-     )}
+     socket
+     |> stream(:messages, messages)
+     |> assign(room: room, message: "")}
   end
 
   def handle_event("send_message", %{"message" => message}, socket) do
@@ -47,6 +46,6 @@ defmodule NanoWeb.ChatLive do
   end
 
   def handle_info({:message_created, message}, socket) do
-    {:noreply, stream_insert(socket, :messages, message, at: 0)}
+    {:noreply, stream_insert(socket, :messages, message, at: -1)}  # Append new messages at the end
   end
 end

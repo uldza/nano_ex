@@ -1,7 +1,7 @@
-<div class="absolute top-10 bottom-0 left-0 right-0 flex-col gap-4">
+<div class="absolute top-0 bottom-0 left-0 right-0 flex-col gap-4">
   <!-- Chat Messages Box -->
   <div
-    class="flex-1 rounded-2xl border-2 border-[var(--blue-dark-active)] bg-white p-4"
+    class="flex-1 rounded-2xl border-2 border-[var(--blue-dark-active)] bg-white p-4 pt-0"
     style="height: calc(100% - 10rem);"
   >
     <div
@@ -10,8 +10,8 @@
       phx-update="stream"
       phx-hook="ScrollToBottom"
     >
-      <%= for msg <- Enum.reverse(@messages) do %>
-        <div class="mb-4" id={"message-#{msg.id}"}>
+      <%= for {dom_id, msg} <- @streams.messages do %>
+        <div class="mb-4" id={dom_id}>
           <div class="flex items-start">
             <div class="flex-1">
               <div class="text-sm font-semibold text-purple-600 mb-1">
