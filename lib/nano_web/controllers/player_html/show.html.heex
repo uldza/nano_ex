@@ -1,17 +1,17 @@
 <div
   class="text-dark [border-radius:2rem] flex justify-center gap-16 min-h-screen p-16"
-  style="background: var(--yellow-normal);"
+  style="background: var(--yellow-normal); box-shadow: inset 10px 10px 10px rgba(255, 255, 255, .5), inset -10px -10px 10px rgba(0, 0, 0, .8);"
 >
   <!-- Video Player Section -->
   <div id="video-wrapper" class="flex-2/3 flex flex-col h-full w-full rounded-2xl px-8">
-    <div class="flex-none overflow-hidden aspect-video">
+    <div class="flex-none aspect-video shadow-xl rounded-2xl border-2 border-[var(--blue-dark-active)] bg-white [box-shadow:-2px_-2px_20px_4px_rgba(0,0,0,1)]">
       <video
         id="video-player"
         controls
         muted
         autoplay
         playsinline
-        class="w-full h-full object-cover rounded-2xl border-2 border-[var(--blue-dark-active)] bg-white"
+        class="w-full h-full object-cover rounded-2xl"
       >
       </video>
       <script>
