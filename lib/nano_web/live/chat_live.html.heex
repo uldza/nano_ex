@@ -1,11 +1,11 @@
 <div class="absolute top-0 bottom-0 left-0 right-0 flex-col gap-4">
   <!-- Chat Messages Box -->
   <div
-    class="flex-1 rounded-2xl border-2 border-[var(--blue-dark-active)] bg-white p-4 pt-0 [box-shadow:-2px_-2px_20px_4px_rgba(0,0,0,1)]"
-    style="height: calc(100% - 10rem);"
+    class="flex-1 rounded-2xl border-4 border-[var(--blue-dark-active)] bg-white p-4 pt-0"
+    style="height: calc(100% - 20rem);"
   >
     <div
-      class="h-full overflow-y-auto overflow-x-hidden"
+      class="h-full overflow-y-auto overflow-x-hidden py-4"
       id="chat-messages"
       phx-update="stream"
       phx-hook="ScrollToBottom"
@@ -14,11 +14,11 @@
         <div class="mb-4" id={dom_id}>
           <div class="flex items-start">
             <div class="flex-1">
-              <div class="text-sm font-semibold text-purple-600 mb-1">
-                {msg.user.username}
-              </div>
-              <div class="bg-white rounded-2xl p-4 shadow-lg border border-purple-100">
+              <div class="bg-white rounded-2xl p-4 shadow-lg brown-light-active">
                 <p class="text-gray-700 text-lg">{msg.content}</p>
+              </div>
+              <div class="text-sm text-blue-normal mt-1 text-right">
+                {msg.user.username}
               </div>
             </div>
           </div>
@@ -28,7 +28,11 @@
   </div>
   
 <!-- Chat Input Box -->
-  <div class="rounded-2xl border-2 border-[var(--green-dark-active)] bg-white p-4 absolute bottom-0 flex flex-col gap-4">
+  <div
+    id="emoji-input"
+    class="rounded-2xl yellow-normal p-4 mt-6 border-4 border-[var(--red-normal)]"
+    style="box-shadow: inset -10px -10px 10px rgba(0, 0, 0, .8);"
+  >
     <!-- Emoji Box -->
     <div class="flex justify-between items-center text-4xl">
       <button
@@ -72,21 +76,24 @@
         🔥
       </button>
     </div>
+  </div>
 
+  <div id="msg-input" class="rounded-2xl brown-normal border-4 border-[var(--green-normal-active)] bg-white p-4 mt-6">
     <form phx-submit="send_message" class="flex gap-2">
-      <input
+      <textarea
         type="text"
         name="message"
         value={@message}
-        placeholder="Type a message..."
-        class="flex-1 rounded-2xl border-2 border-purple-200 px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+        placeholder="Raksti ziņu..."
+        class="flex-1 border-none focus:outline-none bg-transparent font-bold"
+        autocomplete="off"
+        resize="off"
       />
       <button
         type="submit"
-        class="bg-purple-500 text-white px-6 py-3 rounded-2xl hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500 transform hover:scale-105 transition-transform duration-200 flex items-center gap-2"
+        class="btn-ball btn-orange"
       >
-        <span>Send</span>
-        <span>✉️</span>
+        <.icon name="hero-paper-airplane" class="text-brown-normal ml-2 h-6 w-6"/>
       </button>
     </form>
   </div>
