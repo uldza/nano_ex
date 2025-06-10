@@ -43,50 +43,26 @@ defmodule Nano.Rooms do
     Repo.delete(question)
   end
 
-  def activate_question(%ProgramQuestion{} = question) do
-    # Deactivate any currently active questions for this room
-    from(q in ProgramQuestion,
-      where: q.room_id == ^question.room_id and q.is_active == true
-    )
-    |> Repo.update_all(set: [is_active: false, ended_at: DateTime.utc_now()])
-
-    # Activate the new question
+  def activate_question(%ProgramQuestion{id: id} = question) when is_integer(id) do
+    IO.puts("Activating question #{id}")
+    # Make question active
     case question
-         |> ProgramQuestion.changeset(%{
-           is_active: true,
-           started_at: DateTime.utc_now()
-         })
+         |> ProgramQuestion.changeset(%{is_active: true})
          |> Repo.update() do
       {:ok, updated_question} ->
-        Phoenix.PubSub.broadcast(
-          Nano.PubSub,
-          "room:#{question.room_id}:questions",
-          {:question_activated, updated_question}
-        )
-
         {:ok, updated_question}
-
       error ->
         error
     end
   end
 
-  def deactivate_question(%ProgramQuestion{} = question) do
+  def deactivate_question(%ProgramQuestion{id: id} = question) when is_integer(id) do
+    # Make question active
     case question
-         |> ProgramQuestion.changeset(%{
-           is_active: false,
-           ended_at: DateTime.utc_now()
-         })
+         |> ProgramQuestion.changeset(%{is_active: false})
          |> Repo.update() do
       {:ok, updated_question} ->
-        Phoenix.PubSub.broadcast(
-          Nano.PubSub,
-          "room:#{question.room_id}:questions",
-          {:question_deactivated, updated_question}
-        )
-
         {:ok, updated_question}
-
       error ->
         error
     end

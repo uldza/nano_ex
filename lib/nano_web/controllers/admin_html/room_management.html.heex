@@ -10,7 +10,7 @@
   <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
     <h2 class="text-2xl font-bold text-indigo-700 mb-6">Room Settings</h2>
 
-    <.form :let={f} for={%{}} action={~p"/admin/rooms/#{@room.id}"} method="put" class="space-y-6">
+    <.form for={%{}} action={~p"/admin/rooms/#{@room.id}"} method="put" class="space-y-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label class="block text-sm font-medium text-indigo-700">Name</label>
@@ -90,7 +90,7 @@
     <div class="flex justify-between items-center mb-6">
       <h2 class="text-2xl font-bold text-indigo-700">Program Questions</h2>
       <button
-        phx-click={show_modal("new-question-modal")}
+        onclick="show_my_modal('question-modal'); return false;"
         class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
       >
         Add Question
@@ -109,22 +109,32 @@
               <%= if question.is_active do %>
                 <.link
                   href={~p"/admin/rooms/#{@room.id}/questions/#{question.id}/deactivate"}
-                  method="post"
+                  method="put"
                   class="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-700"
                 >
-                  Stop
+                  Hide
                 </.link>
               <% else %>
                 <.link
                   href={~p"/admin/rooms/#{@room.id}/questions/#{question.id}/activate"}
-                  method="post"
+                  method="put"
                   class="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700"
                 >
-                  Play
+                  Unhide
                 </.link>
               <% end %>
               <.link
-                href={~p"/admin/rooms/#{@room.id}/questions/#{question.id}/edit"}
+                href="#"
+                onclick={"show_my_modal('question-modal', {
+                  question: #{Jason.encode!(question.question)},
+                  answer1: #{Jason.encode!(question.answer1)},
+                  answer2: #{Jason.encode!(question.answer2)},
+                  answer3: #{Jason.encode!(question.answer3)},
+                  answer4: #{Jason.encode!(question.answer4)},
+                  correct_answer: #{question.correct_answer},
+                  order: #{question.order},
+                  id: #{question.id}
+                }); return false;"}
                 class="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200"
               >
                 Edit
@@ -140,54 +150,51 @@
             </div>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <h4 class="text-sm font-medium text-indigo-700 mb-2">Possible Answers:</h4>
-              <ul class="space-y-2">
-                <li class="text-sm text-indigo-600">1. {question.answer_1}</li>
-                <li class="text-sm text-indigo-600">2. {question.answer_2}</li>
-                <li class="text-sm text-indigo-600">3. {question.answer_3}</li>
-                <li class="text-sm text-indigo-600">4. {question.answer_4}</li>
-              </ul>
+          <%= if question.is_active do %>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <h4 class="text-sm font-medium text-indigo-700 mb-2">Possible Answers:</h4>
+                <ul class="space-y-2">
+                  <li class="text-sm text-indigo-600">1. {question.answer1}</li>
+                  <li class="text-sm text-indigo-600">2. {question.answer2}</li>
+                  <li class="text-sm text-indigo-600">3. {question.answer3}</li>
+                  <li class="text-sm text-indigo-600">4. {question.answer4}</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="text-sm font-medium text-indigo-700 mb-2">Correct Answer:</h4>
+                <p class="text-sm text-indigo-600">Answer {question.correct_answer}</p>
+              </div>
             </div>
-            <div>
-              <h4 class="text-sm font-medium text-indigo-700 mb-2">Correct Answer:</h4>
-              <p class="text-sm text-indigo-600">Answer {question.correct_answer}</p>
-              <%= if question.is_active do %>
-                <div class="mt-2">
-                  <p class="text-sm text-indigo-600">
-                    Started: {Calendar.strftime(question.started_at, "%Y-%m-%d %H:%M:%S")}
-                  </p>
-                </div>
-              <% end %>
-            </div>
-          </div>
+          <% end %>
         </div>
       <% end %>
     </div>
   </div>
 </div>
 
-<!-- New Question Modal -->
+<!-- Question Modal (New/Edit) -->
 <div
-  id="new-question-modal"
+  id="question-modal"
   class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 overflow-y-auto h-full w-full"
 >
   <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
     <div class="mt-3">
-      <h3 class="text-lg font-medium leading-6 text-indigo-800 mb-4">Add New Question</h3>
+      <h3 class="text-lg font-medium leading-6 text-indigo-800 mb-4" id="modal-title">Add New Question</h3>
       <.form
-        :let={f}
         for={%{}}
-        action={~p"/admin/rooms/#{@room.id}/questions"}
+        id="question-form"
+        action=""
         method="post"
         class="space-y-4"
       >
+        <input type="hidden" name="question[id]" id="question-id" />
         <div>
           <label class="block text-sm font-medium text-indigo-700">Question</label>
           <input
             type="text"
             name="question[question]"
+            id="question-text"
             required
             class="mt-1 block w-full rounded-md border-indigo-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           />
@@ -197,7 +204,8 @@
           <label class="block text-sm font-medium text-indigo-700">Answer 1</label>
           <input
             type="text"
-            name="question[answer_1]"
+            name="question[answer1]"
+            id="question-answer1"
             required
             class="mt-1 block w-full rounded-md border-indigo-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           />
@@ -207,7 +215,8 @@
           <label class="block text-sm font-medium text-indigo-700">Answer 2</label>
           <input
             type="text"
-            name="question[answer_2]"
+            name="question[answer2]"
+            id="question-answer2"
             required
             class="mt-1 block w-full rounded-md border-indigo-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           />
@@ -217,7 +226,8 @@
           <label class="block text-sm font-medium text-indigo-700">Answer 3</label>
           <input
             type="text"
-            name="question[answer_3]"
+            name="question[answer3]"
+            id="question-answer3"
             required
             class="mt-1 block w-full rounded-md border-indigo-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           />
@@ -227,7 +237,8 @@
           <label class="block text-sm font-medium text-indigo-700">Answer 4</label>
           <input
             type="text"
-            name="question[answer_4]"
+            name="question[answer4]"
+            id="question-answer4"
             required
             class="mt-1 block w-full rounded-md border-indigo-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           />
@@ -238,6 +249,7 @@
           <input
             type="number"
             name="question[correct_answer]"
+            id="question-correct-answer"
             min="1"
             max="4"
             required
@@ -250,6 +262,7 @@
           <input
             type="number"
             name="question[order]"
+            id="question-order"
             required
             class="mt-1 block w-full rounded-md border-indigo-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           />
@@ -258,7 +271,7 @@
         <div class="flex justify-end space-x-3">
           <button
             type="button"
-            phx-click={hide_modal("new-question-modal")}
+            onclick="hide_my_modal('question-modal'); return false;"
             class="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             Cancel
@@ -267,7 +280,7 @@
             type="submit"
             class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
-            Create Question
+            Save Question
           </button>
         </div>
       </.form>
@@ -276,11 +289,52 @@
 </div>
 
 <script>
-  function show_modal(modal_id) {
-    document.getElementById(modal_id).classList.remove("hidden");
+  function show_my_modal(modal_id, data = null) {
+    const modal = document.getElementById(modal_id);
+    modal.classList.remove("hidden");
+    console.log(modal);
+
+    if (data) {
+      // Update modal title
+      document.getElementById("modal-title").textContent = "Edit Question";
+      
+      // Update form action
+      const form = document.getElementById("question-form");
+      form.action = `/admin/rooms/${window.location.pathname.split('/')[3]}/questions/${data.id}`;
+      form.method = "put";
+      
+      // Fill form fields
+      document.getElementById("question-id").value = data.id;
+      document.getElementById("question-text").value = data.question;
+      document.getElementById("question-answer1").value = data.answer1;
+      document.getElementById("question-answer2").value = data.answer2;
+      document.getElementById("question-answer3").value = data.answer3;
+      document.getElementById("question-answer4").value = data.answer4;
+      document.getElementById("question-correct-answer").value = data.correct_answer;
+      document.getElementById("question-order").value = data.order;
+    } else {
+      // Reset modal for new question
+      document.getElementById("modal-title").textContent = "Add New Question";
+      const form = document.getElementById("question-form");
+      form.action = `/admin/rooms/${window.location.pathname.split('/')[3]}/questions`;
+      form.method = "post";
+      form.reset();
+      document.getElementById("question-id").value = "";
+    }
   }
 
-  function hide_modal(modal_id) {
-    document.getElementById(modal_id).classList.add("hidden");
+  function hide_my_modal(modal_id) {
+    const modal = document.getElementById(modal_id);
+    modal.classList.add("hidden");
+
+    console.log(modal);
+    
+    // Reset form state
+    const form = document.getElementById("question-form");
+    form.reset();
+    form.action = `/admin/rooms/${window.location.pathname.split('/')[3]}/questions`;
+    form.method = "post";
+    document.getElementById("modal-title").textContent = "Add New Question";
+    document.getElementById("question-id").value = "";
   }
 </script>

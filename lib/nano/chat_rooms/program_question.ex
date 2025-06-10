@@ -29,6 +29,7 @@ defmodule Nano.ChatRooms.ProgramQuestion do
       :answer4,
       :correct_answer,
       :order,
+      :is_active,
       :room_id
     ])
     |> validate_required([

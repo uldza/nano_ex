@@ -69,23 +69,19 @@ defmodule NanoWeb.Router do
     pipe_through [:browser, :require_admin_or_mod]
 
     get "/", AdminController, :dashboard
-
+    # Room related routes
     get "/rooms/new", AdminController, :new_room
     post "/rooms", AdminController, :create_room
     get "/rooms/:room_id", AdminController, :room_management
     put "/rooms/:room_id", AdminController, :update_room
+    # Question related routes
     post "/rooms/:room_id/questions", AdminController, :create_question
+    get "/rooms/:room_id/questions/:question_id/edit", AdminController, :edit_question
     put "/rooms/:room_id/questions/:question_id", AdminController, :update_question
+    put "/rooms/:room_id/questions/:question_id/activate", AdminController, :activate_question
+    put "/rooms/:room_id/questions/:question_id/deactivate", AdminController, :deactivate_question
     delete "/rooms/:room_id/questions/:question_id", AdminController, :delete_question
-
-    post "/rooms/:room_id/questions/:question_id/activate",
-         AdminController,
-         :activate_question
-
-    post "/rooms/:room_id/questions/:question_id/deactivate",
-         AdminController,
-         :deactivate_question
-
+    # User related routes
     post "/users/:id/make-admin", AdminController, :make_admin
   end
 

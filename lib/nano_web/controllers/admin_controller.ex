@@ -13,6 +13,7 @@ defmodule NanoWeb.AdminController do
     render(conn, :dashboard, users: users, rooms: rooms)
   end
 
+  ## Room related actions
   def new_room(conn, _params) do
     render(conn, :new_room)
   end
@@ -53,6 +54,7 @@ defmodule NanoWeb.AdminController do
     end
   end
 
+  ## Question related actions
   def create_question(conn, %{"room_id" => room_id, "question" => question_params}) do
     question_params = Map.put(question_params, "room_id", room_id)
 
@@ -89,20 +91,8 @@ defmodule NanoWeb.AdminController do
     end
   end
 
-  def delete_question(conn, %{"room_id" => room_id, "question_id" => question_id}) do
-    question = Rooms.get_question!(question_id)
-
-    case Rooms.delete_question(question) do
-      {:ok, _question} ->
-        conn
-        |> put_flash(:info, "Question deleted successfully.")
-        |> redirect(to: ~p"/admin/rooms/#{room_id}")
-
-      {:error, _changeset} ->
-        conn
-        |> put_flash(:error, "Error deleting question.")
-        |> redirect(to: ~p"/admin/rooms/#{room_id}")
-    end
+  def send_question(_conn, _params) do
+    ## TODO pubsub the question to room
   end
 
   def activate_question(conn, %{"room_id" => room_id, "question_id" => question_id}) do
@@ -137,6 +127,23 @@ defmodule NanoWeb.AdminController do
     end
   end
 
+  def delete_question(conn, %{"room_id" => room_id, "question_id" => question_id}) do
+    question = Rooms.get_question!(question_id)
+
+    case Rooms.delete_question(question) do
+      {:ok, _question} ->
+        conn
+        |> put_flash(:info, "Question deleted successfully.")
+        |> redirect(to: ~p"/admin/rooms/#{room_id}")
+
+      {:error, _changeset} ->
+        conn
+        |> put_flash(:error, "Error deleting question.")
+        |> redirect(to: ~p"/admin/rooms/#{room_id}")
+    end
+  end
+
+  ## User related actions
   def make_admin(conn, %{"id" => user_id}) do
     user = Accounts.get_user!(user_id)
 
