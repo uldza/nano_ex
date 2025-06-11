@@ -91,8 +91,24 @@ defmodule NanoWeb.AdminController do
     end
   end
 
-  def send_question(_conn, _params) do
-    ## TODO pubsub the question to room
+  def send_question(conn, %{"room_id" => room_id, "question_id" => question_id}) do
+    question = Rooms.get_question!(question_id)
+
+    if question.is_active do
+      Phoenix.PubSub.broadcast(
+        Nano.PubSub,
+        "room:#{room_id}:questions",
+        {:question_activated, question}
+      )
+
+      conn
+      |> put_flash(:info, "Question sent to room successfully.")
+      |> redirect(to: ~p"/admin/rooms/#{room_id}")
+    else
+      conn
+      |> put_flash(:error, "Cannot send inactive question to room.")
+      |> redirect(to: ~p"/admin/rooms/#{room_id}")
+    end
   end
 
   def activate_question(conn, %{"room_id" => room_id, "question_id" => question_id}) do

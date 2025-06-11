@@ -36,8 +36,6 @@ defmodule Nano.ChatRooms.ProgramQuestion do
       :question,
       :answer1,
       :answer2,
-      :answer3,
-      :answer4,
       :correct_answer,
       :order,
       :room_id

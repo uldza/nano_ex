@@ -50,7 +50,10 @@
 <!-- Program Questions Section -->
     <div class="flex-1 mt-4 overflow-y-auto">
       {live_render(@conn, NanoWeb.ProgramQuestionLive,
-        session: %{"room_id" => @video_room.id},
+        session: %{
+          "room_id" => @video_room.id,
+          "user_token" => @user_token
+        },
         id: "program-questions"
       )}
     </div>

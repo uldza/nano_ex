@@ -80,6 +80,7 @@ defmodule NanoWeb.Router do
     put "/rooms/:room_id/questions/:question_id", AdminController, :update_question
     put "/rooms/:room_id/questions/:question_id/activate", AdminController, :activate_question
     put "/rooms/:room_id/questions/:question_id/deactivate", AdminController, :deactivate_question
+    post "/rooms/:room_id/questions/:question_id/send", AdminController, :send_question
     delete "/rooms/:room_id/questions/:question_id", AdminController, :delete_question
     # User related routes
     post "/users/:id/make-admin", AdminController, :make_admin
