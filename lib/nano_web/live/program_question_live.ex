@@ -17,20 +17,28 @@ defmodule NanoWeb.ProgramQuestionLive do
       Phoenix.PubSub.subscribe(Nano.PubSub, "room:#{room_id}:questions")
     end
 
-    {:ok, assign(socket, room_id: room_id, active_question: nil, answer_dimensions: @answer_dimensions, feedback: nil)}
+    {:ok,
+     assign(socket,
+       room_id: room_id,
+       active_question: nil,
+       answer_dimensions: @answer_dimensions,
+       feedback: nil
+     )}
   end
 
   def handle_info({:question_activated, question}, socket) do
     # Transform question into a list of answers with their numbers
-    answers = [
-      {1, question.answer1},
-      {2, question.answer2},
-      {3, question.answer3},
-      {4, question.answer4}
-    ]
-    |> Enum.filter(fn {_num, text} -> text != nil and text != "" end)
+    answers =
+      [
+        {1, question.answer1},
+        {2, question.answer2},
+        {3, question.answer3},
+        {4, question.answer4}
+      ]
+      |> Enum.filter(fn {_num, text} -> text != nil and text != "" end)
 
-    {:noreply, assign(socket, active_question: Map.put(question, :answers, answers), feedback: nil)}
+    {:noreply,
+     assign(socket, active_question: Map.put(question, :answers, answers), feedback: nil)}
   end
 
   def handle_info({:question_deactivated, _question}, socket) do
@@ -81,7 +89,7 @@ defmodule NanoWeb.ProgramQuestionLive do
         style="box-shadow: inset -10px -10px 10px rgba(0, 0, 0, .8);"
       >
         <div class="space-y-4">
-          <h3 class="text-xl font-bold"><%= @active_question.question %></h3>
+          <h3 class="text-xl font-bold">{@active_question.question}</h3>
 
           <div class="grid grid-cols-4 gap-4 px-10">
             <%= for {num, text} <- @active_question.answers do %>
@@ -130,8 +138,8 @@ defmodule NanoWeb.ProgramQuestionLive do
         style="box-shadow: inset -10px -10px 10px rgba(0, 0, 0, .8);"
       >
         <div class="space-y-4">
-          <h3 class="text-xl font-bold"><%= @feedback %></h3>
-      </div>
+          <h3 class="text-xl font-bold">{@feedback}</h3>
+        </div>
       </div>
     <% end %>
     """

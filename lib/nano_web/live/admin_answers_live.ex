@@ -24,13 +24,13 @@ defmodule NanoWeb.AdminAnswersLive do
           <div class="bg-gray-50 rounded p-3 border border-gray-200">
             <div class="flex justify-between items-start">
               <div>
-                <p class="text-sm font-medium text-gray-900"><%= answer.user_name %></p>
+                <p class="text-sm font-medium text-gray-900">{answer.user_name}</p>
                 <p class="text-sm text-gray-600">
-                  Selected answer <%= answer.answer %>: <%= answer.answer_text %>
+                  Selected answer {answer.answer}: {answer.answer_text}
                 </p>
               </div>
               <span class="text-xs text-gray-500">
-                <%= Calendar.strftime(DateTime.utc_now(), "%H:%M:%S") %>
+                {Calendar.strftime(DateTime.utc_now(), "%H:%M:%S")}
               </span>
             </div>
           </div>

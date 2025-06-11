@@ -78,10 +78,13 @@
     </div>
   </div>
 
-  <div id="msg-input" class="relative rounded-2xl brown-normal border-4 border-[var(--green-normal-active)] bg-white p-4 mt-6">
+  <div
+    id="msg-input"
+    class="relative rounded-2xl brown-normal border-4 border-[var(--green-normal-active)] bg-white p-4 mt-6"
+  >
     <form phx-submit="send_message" class="flex gap-2">
       <label for="msg" class="absolute top-6 left-4" id="pencil-label">
-        <img src="/images/pencil.png" alt="pencil">
+        <img src="/images/pencil.png" alt="pencil" />
       </label>
       <textarea
         id="msg"
@@ -93,11 +96,8 @@
         resize="off"
         phx-hook="HideLabel"
       />
-      <button
-        type="submit"
-        class="btn-ball btn-orange"
-      >
-        <.icon name="hero-paper-airplane" class="text-brown-normal ml-2 h-6 w-6"/>
+      <button type="submit" class="btn-ball btn-orange">
+        <.icon name="hero-paper-airplane" class="text-brown-normal ml-2 h-6 w-6" />
       </button>
     </form>
   </div>

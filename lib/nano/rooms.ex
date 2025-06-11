@@ -51,6 +51,7 @@ defmodule Nano.Rooms do
          |> Repo.update() do
       {:ok, updated_question} ->
         {:ok, updated_question}
+
       error ->
         error
     end
@@ -63,6 +64,7 @@ defmodule Nano.Rooms do
          |> Repo.update() do
       {:ok, updated_question} ->
         {:ok, updated_question}
+
       error ->
         error
     end

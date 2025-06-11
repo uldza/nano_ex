@@ -17,8 +17,35 @@ defmodule NanoWeb.PageController do
   end
 
   def subscribe(conn, _params) do
-    plans = Application.get_env(:nano, :subscription_plans)
-    render(conn, :subscribe, plans: plans)
+    plan = Application.get_env(:nano, :subscription_plan)
+    render(conn, :subscribe, plan: plan)
+  end
+
+  def checkout(conn, %{"plan" => plan_key}) do
+    plan = Application.get_env(:nano, :subscription_plan)
+    plan_id = String.to_existing_atom(plan_key)
+
+    if Map.get(plan, :id) == plan_id do
+      case StripeService.create_checkout_session(%{user: conn.assigns.current_user, plan: plan}) do
+        {:ok, checkout_url} ->
+          conn
+          |> redirect(external: checkout_url)
+
+        {:error, :invalid_plan} ->
+          conn
+          |> put_flash(:error, "Invalid subscription plan")
+          |> redirect(to: ~p"/subscribe")
+
+        {:error, _reason} ->
+          conn
+          |> put_flash(:error, "Failed to create checkout session. Please try again later.")
+          |> redirect(to: ~p"/subscribe")
+      end
+    else
+      conn
+      |> put_flash(:error, "Invalid subscription plan")
+      |> redirect(to: ~p"/subscribe")
+    end
   end
 
   def success(conn, _params) do
@@ -73,42 +100,13 @@ defmodule NanoWeb.PageController do
     end
   end
 
-  def checkout(conn, %{"plan" => plan_key}) do
-    plans = Application.get_env(:nano, :subscription_plans)
-    plan_id = String.to_existing_atom(plan_key)
-
-    case Keyword.get(plans, plan_id) do
-      nil ->
-        conn
-        |> put_flash(:error, "Invalid subscription plan")
-        |> redirect(to: ~p"/subscribe")
-
-      plan ->
-        case StripeService.create_checkout_session(%{user: conn.assigns.current_user, plan: plan}) do
-          {:ok, checkout_url} ->
-            conn
-            |> redirect(external: checkout_url)
-
-          {:error, :invalid_plan} ->
-            conn
-            |> put_flash(:error, "Invalid subscription plan")
-            |> redirect(to: ~p"/subscribe")
-
-          {:error, _reason} ->
-            conn
-            |> put_flash(:error, "Failed to create checkout session. Please try again later.")
-            |> redirect(to: ~p"/subscribe")
-        end
-    end
-  end
-
-  def subscription_page(conn, _params) do
+  def news_subscription_page(conn, _params) do
     form = %SubscriptionForm{}
     changeset = SubscriptionForm.changeset(form)
     render(conn, :subscription_page, form: Phoenix.Component.to_form(changeset))
   end
 
-  def handle_subscription(conn, %{"subscription_form" => params}) do
+  def handle_news_subscription(conn, %{"subscription_form" => params}) do
     form = %SubscriptionForm{}
     changeset = SubscriptionForm.changeset(form, params)
 

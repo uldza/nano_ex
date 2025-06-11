@@ -1,55 +1,96 @@
-<div class="min-h-screen py-12">
-  <div class="container mx-auto px-4">
-    <div class="text-center mb-12">
-      <h1 class="text-4xl font-bold text-blue-normal mb-4">Choose Your Plan</h1>
-      <p class="text-xl text-blue-dark">Select the subscription plan that works best for you</p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-      <%= for {plan_key, plan} <- Application.get_env(:nano, :subscription_plans) do %>
-        <div class="rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition duration-300">
-          <div class="p-6">
-            <h3 class="text-2xl font-bold text-blue-dark mb-2">{plan.name}</h3>
-            <div class="text-4xl font-bold text-blue-normal mb-4">
-              ${plan.price}
-              <span class="text-lg text-blue-dark">/{plan.interval}</span>
-            </div>
-            <ul class="space-y-3 mb-6">
-              <%= for feature <- plan.features do %>
-                <li class="flex items-center text-blue-dark">
-                  <svg
-                    class="w-5 h-5 text-green-normal mr-2"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M5 13l4 4L19 7"
-                    >
-                    </path>
-                  </svg>
-                  {feature}
-                </li>
-              <% end %>
-            </ul>
-            <.link
-              href={~p"/subscribe/checkout/#{plan_key}"}
-              class="btn-primary bg-blue-normal border-blue-normal block w-full text-center"
-            >
-              Subscribe Now
-            </.link>
-          </div>
-        </div>
-      <% end %>
-    </div>
-
-    <div class="mt-12 text-center">
-      <p class="text-blue-dark">
-        All plans include a 7-day free trial. Cancel anytime.
+<!-- First row: Blue normal card with image -->
+<section class="container mx-auto max-w-4xl">
+  <div class="flex flex-col md:flex-row gap-8 mb-8">
+    <div class="theme-card flex-1 text-white">
+      <h2 class="text-2xl font-semibold mb-4">UZSĀC CEĻOJUMU AR</h2>
+      <p class="mb-6">
+        7 dienu bezmaksas izmēģinājuma versiju un atslēdz visas PIKABU istabas!
       </p>
+      <.icon name="hero-arrow-down-circle-solid" class="w-12 h-12" />
+    </div>
+    <div class="flex-1 flex items-center justify-center">
+      <img src="/images/pikabu-mascot.png" alt="Pikabu mascot" class="w-2/3 max-w-md" />
     </div>
   </div>
-</div>
+  
+<!-- Second row: Image with blue dark card -->
+  <div class="flex flex-col-reverse md:flex-row gap-8 mb-8">
+    <div class="flex-1 flex items-center justify-center">
+      <svg
+        width="124"
+        height="225"
+        viewBox="0 0 124 225"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g clip-path="url(#clip0_581_1062)">
+          <path d="M93.1816 120.225L121.001 137.526V160.601H93.1816" fill="#FFF9E6" />
+          <path
+            d="M121.001 163.615H93.1821C91.5268 163.615 90.1748 162.269 90.1748 160.601C90.1748 158.934 91.5181 157.588 93.1821 157.588H118.003V139.202L91.6048 122.779C90.1921 121.901 89.7588 120.043 90.6341 118.636C91.5094 117.22 93.3641 116.786 94.768 117.663L122.587 134.972C123.471 135.519 124.009 136.492 124.009 137.534V160.61C124.009 162.269 122.665 163.624 121.001 163.624V163.615Z"
+            fill="#0E3654"
+          />
+          <path d="M30.8267 119.261L3.00732 136.57V159.637H30.8267" fill="#FFF9E6" />
+          <path
+            d="M30.8267 162.651H3.00727C1.35197 162.651 0 161.305 0 159.637V136.562C0 135.519 0.537322 134.555 1.4213 133.999L29.2407 116.69C30.6533 115.813 32.4993 116.247 33.3746 117.663C34.2499 119.079 33.8166 120.929 32.404 121.806L6.00587 138.229V156.615H30.818C32.4733 156.615 33.8253 157.961 33.8253 159.629C33.8253 161.296 32.482 162.642 30.818 162.642L30.8267 162.651Z"
+            fill="#0E3654"
+          />
+          <path
+            d="M31.3118 162.008H92.2285L92.2285 50.2161L31.3118 50.2161L31.3118 162.008Z"
+            fill="#FFF9E6"
+          />
+          <path
+            d="M48.8873 162.008H92.2197L92.2197 50.2161H48.8873L48.8873 162.008Z"
+            fill="#FFEBB2"
+          />
+          <path
+            d="M71.9142 162.008H92.2197L92.2197 50.2161H71.9142L71.9142 162.008Z"
+            fill="#FFBF05"
+          />
+          <path d="M30.1338 47.906L61.5498 5.76678H61.8791L93.2951 47.906" fill="#FFF9E6" />
+          <path d="M61.549 5.76678L46.374 26.1155H77.0534L61.8784 5.76678H61.549Z" fill="#FFBF05" />
+          <path
+            d="M39.8315 184.624C38.1762 184.624 36.8242 183.278 36.8242 181.61V164.744C36.8242 163.085 38.1675 161.73 39.8315 161.73C41.4954 161.73 42.8388 163.077 42.8388 164.744V181.61C42.8388 183.269 41.4954 184.624 39.8315 184.624Z"
+            fill="#0E3654"
+          />
+          <path
+            d="M39.8315 205.772C38.1762 205.772 36.8242 204.425 36.8242 202.758V190.886C36.8242 189.227 38.1675 187.872 39.8315 187.872C41.4954 187.872 42.8388 189.218 42.8388 190.886V202.758C42.8388 204.417 41.4954 205.772 39.8315 205.772Z"
+            fill="#0E3654"
+          />
+          <path
+            d="M61.7143 225C60.059 225 58.707 223.654 58.707 221.986V213.475C58.707 211.816 60.0503 210.461 61.7143 210.461C63.3783 210.461 64.7216 211.808 64.7216 213.475V221.986C64.7216 223.645 63.3783 225 61.7143 225Z"
+            fill="#0E3654"
+          />
+          <path
+            d="M82.0717 176.191C80.4164 176.191 79.0645 174.845 79.0645 173.177V164.744C79.0645 163.085 80.4078 161.73 82.0717 161.73C83.7357 161.73 85.079 163.077 85.079 164.744V173.177C85.079 174.836 83.7357 176.191 82.0717 176.191Z"
+            fill="#0E3654"
+          />
+          <path
+            d="M61.7661 205.772C60.1108 205.772 58.7588 204.425 58.7588 202.758V164.744C58.7588 163.085 60.1021 161.73 61.7661 161.73C63.43 161.73 64.7733 163.077 64.7733 164.744V202.758C64.7733 204.417 63.43 205.772 61.7661 205.772Z"
+            fill="#0E3654"
+          />
+          <path
+            d="M25.5485 167.654H97.9742V44.4494H97.8962L64.7643 0H58.6631L25.5225 44.4494L25.5571 44.4754V167.654H25.5485ZM91.2664 136.353H74.3841V50.2075H91.2664V136.353ZM62.4763 6.14023L89.9751 44.4494H33.175L62.4763 6.14023ZM69.6002 50.2075V136.353H51.3659V50.2075H69.6002ZM32.265 50.2075H46.5733V136.353H32.265V50.2075ZM32.265 142.337H91.2664V160.923H32.265V142.337Z"
+            fill="#0E3654"
+          />
+        </g>
+      </svg>
+    </div>
+    <div class="theme-card flex-1" style="background-color: var(--blue-dark);">
+      <h2 class="text-2xl font-semibold mb-4 text-white">18 EUR / MĒNESĪ</h2>
+      <p class="mb-6 text-white">
+        un lieto visu PIKABU istabu izglītojošo saturu bez termiņa ierobežojuma
+        katru dienu no plkst. 08:00 līdz 21:00
+      </p>
+      <.link href={~p"/subscribe/checkout/#{@plan.id}"} class="theme-cta-btn">
+        Sāc piedzīvojumu
+      </.link>
+    </div>
+  </div>
+</section>
+
+<section class="container mx-auto max-w-6xl yellow-normal rounded-3xl py-20 px-32 mt-32">
+  <p class="text-lg mb-6">
+    Pievieno savu maksāšanas informāciju vienreiz - un nesatraucies par ikmēneša maksājumiem!
+    Apmaksa tiks veikta automātiski līdz brīdim, kad Tu no tās atteiksies savā lietotāja profilā.
+  </p>
+</section>

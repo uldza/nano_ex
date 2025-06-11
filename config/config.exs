@@ -59,48 +59,13 @@ config :logger, :console,
   metadata: [:request_id]
 
 # Subscription plans configuration
-config :nano, :subscription_plans,
-  monthly: %{
-    id: :monthly,
-    stripe_product_id: "prod_S95pACSGSukvj1",
-    stripe_price_id: "price_1REmiOCuqw9GoveV1yDplloG",
-    name: "Monthly Plan",
-    price: 9.99,
-    interval: "month",
-    features: [
-      "Access to all premium video rooms",
-      "Access to chat",
-      "Access to games"
-    ]
-  },
-  quarterly: %{
-    id: :quarterly,
-    stripe_product_id: "prod_S95pACSGSukvj1",
-    stripe_price_id: "price_1REneGCuqw9GoveVhcPNSi0E",
-    name: "Quarterly Plan",
-    price: 24.99,
-    interval: "3 months",
-    features: [
-      "Access to all premium video rooms",
-      "Access to chat",
-      "Access to games",
-      "Save 17% compared to monthly"
-    ]
-  },
-  semiannual: %{
-    id: :semiannual,
-    stripe_product_id: "prod_S95sZEZ9N8o4tv",
-    stripe_price_id: "price_1REngvCuqw9GoveVK12Kaa2a",
-    name: "Semi-Annual Plan",
-    price: 44.99,
-    interval: "6 months",
-    features: [
-      "Access to all premium video rooms",
-      "Access to chat",
-      "Access to games",
-      "Save 25% compared to monthly"
-    ]
-  }
+config :nano, :subscription_plan, %{
+  id: :monthly,
+  stripe_product_id: "prod_S95pACSGSukvj1",
+  stripe_price_id: "price_1REmiOCuqw9GoveV1yDplloG",
+  price: 9.99,
+  interval: "month"
+}
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
