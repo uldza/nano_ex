@@ -20,12 +20,13 @@ defmodule NanoWeb.Router do
     get "/elements", PageController, :elements
     get "/subscribe", PageController, :subscribe
     get "/subscribe/success", PageController, :success
+    get "/subscribe/cancel", PageController, :cancel
     get "/subscribe/checkout/:plan", PageController, :checkout
     post "/stripe/webhook", StripeWebhookController, :webhook
 
     # Newsletter subscription routes
-    get "/subscription", PageController, :subscription_page
-    post "/subscription", PageController, :handle_subscription
+    get "/subscription", PageController, :news_subscription_page
+    post "/subscription", PageController, :handle_news_subscription
 
     # User authentication routes
     delete "/users/log_out", UserSessionController, :delete

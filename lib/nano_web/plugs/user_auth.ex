@@ -221,7 +221,7 @@ defmodule NanoWeb.UserAuth do
   Used for routes that require the user to have an active subscription.
   """
   def require_active_subscription(conn, _opts) do
-    if conn.assigns[:subscription_status] == "active" do
+    if conn.assigns[:subscription_status] in ["active", "trialing"] do
       conn
     else
       conn

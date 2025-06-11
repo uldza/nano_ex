@@ -48,7 +48,7 @@ defmodule Nano.Services.StripeService do
       automatic_tax: %{enabled: true},
       customer_update: %{address: :auto},
       subscription_data: %{
-        trial_period_days: Map.get(plan, :trial_days)
+        trial_period_days: plan.trial_days
       }
     }
 
@@ -141,8 +141,6 @@ defmodule Nano.Services.StripeService do
         :ok
 
       {:error, changeset} ->
-        require IEx
-        IEx.pry()
         {:error, :failed_to_create_subscription}
     end
   end
@@ -181,14 +179,26 @@ defmodule Nano.Services.StripeService do
   defp success_url do
     proto = Application.get_env(:nano, NanoWeb.Endpoint)[:url][:scheme]
     base_url = Application.get_env(:nano, NanoWeb.Endpoint)[:url][:host]
-    port = Application.get_env(:nano, NanoWeb.Endpoint)[:url][:port]
-    "#{proto}://#{base_url}:#{port}/subscribe/success"
+
+    case proto do
+      "https" ->
+        "#{proto}://#{base_url}/subscribe/success"
+
+      "http" ->
+        "#{proto}://#{base_url}:8000/subscribe/success"
+    end
   end
 
   defp cancel_url do
     proto = Application.get_env(:nano, NanoWeb.Endpoint)[:url][:scheme]
     base_url = Application.get_env(:nano, NanoWeb.Endpoint)[:url][:host]
-    port = Application.get_env(:nano, NanoWeb.Endpoint)[:url][:port]
-    "#{proto}://#{base_url}:#{port}/subscribe"
+
+    case proto do
+      "https" ->
+        "#{proto}://#{base_url}/subscribe/cancel"
+
+      "http" ->
+        "#{proto}://#{base_url}:8000/subscribe/cancel"
+    end
   end
 end

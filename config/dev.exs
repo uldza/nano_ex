@@ -16,6 +16,7 @@ config :nano, Nano.Repo,
 config :nano, NanoWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
+  url: [host: "localhost", scheme: "http"],
   http: [ip: {127, 0, 0, 1}, port: 8000],
   check_origin: false,
   code_reloader: true,

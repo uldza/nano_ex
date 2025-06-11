@@ -55,9 +55,9 @@ defmodule NanoWeb.PageController do
             # Handle the checkout completion
             case StripeService.handle_checkout_completed(session) do
               :ok ->
-                # Get rooms based on subscription status
-                rooms = ChatRooms.list_rooms()
-                render(conn, :success, rooms: rooms)
+                conn
+                |> put_flash(:success, "Veiksmīgi pierakstījies")
+                |> redirect(to: ~p"/rooms")
 
               {:error, _reason} ->
                 conn
@@ -93,6 +93,10 @@ defmodule NanoWeb.PageController do
             |> redirect(to: ~p"/subscribe")
         end
     end
+  end
+
+  def cancel(conn, _params) do
+    render(conn, :cancel)
   end
 
   def news_subscription_page(conn, _params) do
