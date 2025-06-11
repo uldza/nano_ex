@@ -46,10 +46,10 @@ defmodule Nano.Services.StripeService do
         "stripe_price_id" => plan.stripe_price_id
       },
       automatic_tax: %{enabled: true},
-      customer_update: %{address: :auto}
-      # subscription_data: %{
-      #  trial_period_days: Map.get(plan, :trial_days)
-      # },
+      customer_update: %{address: :auto},
+      subscription_data: %{
+        trial_period_days: Map.get(plan, :trial_days)
+      }
     }
 
     case Stripe.Checkout.Session.create(session_params) do

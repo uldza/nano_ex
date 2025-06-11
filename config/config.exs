@@ -64,7 +64,8 @@ config :nano, :subscription_plan, %{
   stripe_product_id: "prod_S95pACSGSukvj1",
   stripe_price_id: "price_1REmiOCuqw9GoveV1yDplloG",
   price: 9.99,
-  interval: "month"
+  interval: "month",
+  trial_days: 7
 }
 
 # Use Jason for JSON parsing in Phoenix

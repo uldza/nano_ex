@@ -31,11 +31,6 @@ defmodule NanoWeb.PageController do
           conn
           |> redirect(external: checkout_url)
 
-        {:error, :invalid_plan} ->
-          conn
-          |> put_flash(:error, "Invalid subscription plan")
-          |> redirect(to: ~p"/subscribe")
-
         {:error, _reason} ->
           conn
           |> put_flash(:error, "Failed to create checkout session. Please try again later.")
