@@ -18,3 +18,11 @@
     force: yes
     version: main
   notify: restart nginx
+
+- name: Output directory for Diffie-Hellman parameters exists
+  file:
+    path: "{{ dhparam_file | dirname }}"
+    state: directory
+
+- name: Generate dhparam file for nginx
+  command: "openssl dhparam -out {{ dhparam_file }} 4096"

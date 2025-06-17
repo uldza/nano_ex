@@ -1,0 +1,62 @@
+---
+- name: Ensure user exists
+  user:
+    name: "{{ app_user }}"
+    state: present
+    shell: "/bin/bash"
+    system: false
+
+- name: Install needed packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - sqlite3
+    - git
+    - autoconf
+    - gcc
+    - make
+    - libssl-dev
+    - libncurses-dev
+    - g++
+
+- name: Download asdf manager
+  get_url:
+    url: https://github.com/asdf-vm/asdf/releases/download/v0.18.0/asdf-v0.18.0-linux-amd64.tar.gz
+    dest: /tmp/asdf.tar.gz
+
+- name: Create asdf path
+  file:
+    path: "/opt/asdf"
+    state: directory
+    mode: 0755
+    owner: {{ app_user }}
+    group: {{ app_user }}
+
+- name: Extract asdf manager
+  unarchive:
+    remote_src: true
+    src: /tmp/asdf.tar.gz
+    dest: /opt/asdf/
+    mode: 0755
+    owner: {{ app_user }}
+    group: {{ app_user }}
+
+- name: Add asdf to PATH
+  lineinfile:
+    path: ~/.bash
+    line: 'export PATH="/opt/asdf:$PATH"'
+    state: present
+  notify: restart shell
+
+- name: Add asdf Erlang plugin
+  command: asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git
+
+- name: Add asdf Elixir plugin
+  command: asdf plugin add elixir https://github.com/asdf-vm/asdf-elixir.git
+
+- name: Install Erlang
+  command: asdf install erlang 27.3.4.1
+
+- name: Install Elixir
+  command: asdf install elixir 1.18.4-otp-27

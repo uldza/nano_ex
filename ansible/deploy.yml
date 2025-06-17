@@ -1,6 +1,7 @@
 ---
 - hosts: kood
   user: k00d
+  become: true
   vars:
     app_secret_key: !vault |
           $ANSIBLE_VAULT;1.1;AES256
@@ -45,4 +46,5 @@
     # expected to have {{ app_user }}.crt and {{ app_user }}.ca-bundle
     #app_ca_path: roles/app/files/
   roles:
+    - elixir
     - project

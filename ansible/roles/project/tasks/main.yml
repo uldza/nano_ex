@@ -25,18 +25,7 @@
   command: "date +'%d-%m-%Y'"
   register: run_date
 
-- name: Install needed packages
-  become: true
-  apt:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - apache2-utils
-    - python3-passlib
-    - rsync
-
 - name: Ensure application user exists
-  become: true
   user:
     name: "{{ app_user }}"
     state: present
@@ -44,7 +33,6 @@
     system: false
 
 - name: Create application path
-  become: true
   file:
     path: "{{ app_path }}"
     state: directory
@@ -52,8 +40,15 @@
     owner: "{{ app_user }}"
     group: "{{ app_user }}"
 
+- name: Create application log path
+  file:
+    path: "{{ app_log_path }}"
+    state: directory
+    mode: 0755
+    owner: "{{ app_user }}"
+    group: "{{ app_user }}"
+
 - name: Create application git path
-  become: true
   file:
     path: "{{ app_git_path }}"
     state: directory
@@ -62,39 +57,35 @@
     group: "{{ app_user }}"
 
 - name: Clone the git repository
-  become: true
   git:
     repo: "{{ app_git_repo }}"
     dest: "{{ app_git_path }}"
     version: "main"
 
-- name: Create application log path
-  become: true
-  file:
-    path: "{{ app_log_path }}"
-    state: directory
-    mode: 0755
-    owner: "{{ app_user }}"
-    group: "{{ app_user }}"
+- name: Pull the latest changes from the git repository
+  git:
+    repo: "{{ app_git_repo }}"
+    dest: "{{ app_git_path }}"
+    version: "main"
+    force: true
 
+- name: Make application release
+  command: "make release"
+  cwd: "{{ app_git_path }}"
+  environment:
+    MIX_ENV: prod
+    MIX_ARCHIVE_FORMAT: tar.gz
+    MIX_ARCHIVE_NAME: "{{ app_name }}"
 
-- name: Copy application artefact to remote host
-  become: true
-  copy:
-    src: "../release/{{ app_name }}.tar.gz"
-    dest: /tmp/
-
-- name: Extract application distribution
-  become: true
+- name: Extract application release
   unarchive:
     remote_src: true
-    src: "/tmp/{{ app_name }}.tar.gz"
+    src: "{{ app_git_path }}/release/{{ app_name }}.tar.gz"
     dest: "{{ app_path }}"
     owner: "{{ app_user }}"
     group: "{{ app_user }}"
 
 - name: Set application user as owner for extracted files
-  become: true
   file:
     dest: "{{ app_path }}"
     owner: "{{ app_user }}"
@@ -102,7 +93,6 @@
     recurse: true
 
 - name: Create needed directories for configs and data
-  become: true
   file:
     path: "{{ app_path }}/{{ item }}"
     state: directory
@@ -112,114 +102,6 @@
   with_items:
     - "etc"
     - "data"
-
-- name: Copy geo ip database to remote host
-  become: true
-  copy:
-    src: "{{ geoip_path }}/GeoIP2-City.mmdb"
-    dest: /tmp/
-  when: geoip_path is defined
-
-- name: Copy geo ip db to data directory
-  become: true
-  copy:
-    src: "/tmp/GeoIP2-City.mmdb"
-    dest: "{{ app_path }}/data"
-    owner: "{{ app_user }}"
-    group: "{{ app_user }}"
-    remote_src: true
-    mode: 0644
-  when: geoip_path is defined
-
-- name: Check that the private key exists
-  stat:
-    path: "{{ app_path }}/etc/key.pem"
-  register: key
-
-- name: Create ssh private key for application
-  become: true
-  command: "openssl genrsa -out {{ app_path }}/etc/key.pem 2048"
-  when: not key.stat.exists
-
-- name: Create ssl config for CSRs
-  become: true
-  template:
-    src: "ssl.conf.j2"
-    dest: "{{ app_path }}/etc/ssl.conf"
-    owner: "{{ app_user }}"
-    group: "{{ app_user }}"
-    mode: 0644
-
-- name: Create CSR for application
-  become: true
-  command: "openssl req -new -sha256 -key {{ app_path }}/etc/key.pem -out {{ app_path }}/etc/request.csr -config {{ app_path }}/etc/ssl.conf"
-
-- name: Read CSR contents
-  command: "cat {{ app_path }}/etc/request.csr"
-  register: csr_output
-
-- name: Print CSR output
-  debug:
-    msg: "{{ csr_output.stdout | replace('\n', '') }}"
-
-- name: Concatenate https certs and write to a new file when specified
-  become: true
-  copy:
-    content: "{% for item in files %}{{ lookup('file', item) }}\n{% endfor %}"
-    dest: "{{ app_path }}/etc/{{ app_user }}-{{ run_date.stdout }}.pem"
-    owner: "{{ app_user }}"
-    group: "{{ app_user }}"
-    mode: 0644
-  vars:
-    files:
-      - "{{ app_ca_path }}/{{ app_user }}.crt"
-      - "{{ app_ca_path }}/{{ app_user }}.ca-bundle"
-  when: app_ca_path is defined
-
-- name: Remove old certificate link
-  become: true
-  file:
-    path: "{{ app_path }}/etc/ca.pem"
-    state: absent
-  when: app_ca_path is defined
-
-- name: Link new ceritifcate for nginx
-  become: true
-  file:
-    src: "{{ app_path }}/etc/{{ app_user }}-{{ run_date.stdout }}.pem"
-    dest: "{{ app_path }}/etc/ca.pem"
-    state: link
-  when: app_ca_path is defined
-
-- name: Remove unneded nginx configuration
-  become: true
-  file:
-    path: "/etc/nginx/conf.d/no-ssl.default.conf"
-    state: absent
-
-- name: Add or update user in .htpasswd
-  become: true
-  htpasswd:
-    path: /etc/nginx/.htpasswd
-    name: prometheus
-    password: "{{ stats_password }}"
-    mode: 0644
-    create: yes
-  when: stats_password is defined
-
-- name: Copy nginx configuration for application
-  become: true
-  template:
-    src: "project-nginx.conf.j2"
-    dest: "/etc/nginx/conf.d/{{ app_user }}.conf"
-    mode: 0644
-  notify: reload nginx
-
-- name: Install required app's packages
-  package:
-    name: "{{ item.package }}"
-    state: present
-  loop: "{{ app_required_packages }}"
 
 - name: Add applications env file to systemd
   become: true

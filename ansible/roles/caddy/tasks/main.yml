@@ -1,0 +1,40 @@
+---
+- name: Install required packages for Caddy web server
+  apt:
+    update_cache: yes
+    name:
+      - debian-keyring
+      - debian-archive-keyring
+      - apt-transport-https
+    state: present
+
+- name: Add Cloudsmith repository for Caddy web server
+  apt_key:
+    url: "https://dl.cloudsmith.io/public/caddy/stable/gpg.key"
+    state: present
+
+- name: Add Caddy repository to sources list
+  apt_repository:
+    repo:
+      "deb https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main"
+    state: present
+    filename: caddy-stable
+
+- name: Add Caddy src repository to sources list
+  apt_repository:
+    repo:
+      "deb-src https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main"
+    state: present
+    filename: caddy-stable
+
+- name: Install Caddy web server
+  apt:
+    update_cache: yes
+    name: caddy
+    state: present
+
+- name: Enable and start Caddy service
+  service:
+    name: caddy
+    enabled: yes
+    state: started

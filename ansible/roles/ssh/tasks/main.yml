@@ -17,7 +17,7 @@
 
 - name: Check that the private key exists
   stat:
-    path: "~/.ssh/id_ed25519_k00d.pem"
+    path: "~/.ssh/id_ed25519_k00d.pub"
   register: key
 
 - name: Create ssh key for access to git repository
@@ -31,12 +31,3 @@
 - name: Print ssh public key
   debug:
     msg: "{{ key_output.stdout | replace('\n', '') }}"
-
-- name: Output directory for Diffie-Hellman parameters exists
-  file:
-    path: "{{ dhparam_file | dirname }}"
-    state: directory
-
-- name: Generate dhparam file for web
-  command: "openssl dhparam -out {{ dhparam_file }} 4096"
-

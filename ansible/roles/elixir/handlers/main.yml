@@ -1,0 +1,5 @@
+---
+- name: restart shell
+  shell:
+    cmd: "source /etc/profile && exec $SHELL"
+    executable: /bin/bash

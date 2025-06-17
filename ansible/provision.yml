@@ -11,5 +11,7 @@
    - ufw
    - user
    - ssh
-   - nginx
+   - caddy
+   # - postgres
+   #- nginx
    #- docker

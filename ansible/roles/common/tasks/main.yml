@@ -10,7 +10,6 @@
   with_items:
     - sudo
     - htop
-    - git
     - bash
     - vim
     - curl
