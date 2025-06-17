@@ -1,12 +1,6 @@
 ---
-- name: Ensure user exists
-  user:
-    name: "{{ app_user }}"
-    state: present
-    shell: "/bin/bash"
-    system: false
-
 - name: Install needed packages
+  become: true
   apt:
     name: "{{ item }}"
     state: present
@@ -26,28 +20,49 @@
     dest: /tmp/asdf.tar.gz
 
 - name: Create asdf path
+  become: true
   file:
     path: "/opt/asdf"
     state: directory
     mode: 0755
-    owner: {{ app_user }}
-    group: {{ app_user }}
+    owner: k00d
+    group: k00d
 
 - name: Extract asdf manager
+  become: true
   unarchive:
     remote_src: true
     src: /tmp/asdf.tar.gz
     dest: /opt/asdf/
     mode: 0755
-    owner: {{ app_user }}
-    group: {{ app_user }}
+    owner: k00d
+    group: k00d
+
+- name: Create bash_profile
+  file:
+    path: "~/.bash_profile"
+    state: touch
 
 - name: Add asdf to PATH
   lineinfile:
-    path: ~/.bash
-    line: 'export PATH="/opt/asdf:$PATH"'
+    path: ~/.bash_profile
+    line: 'export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"'
     state: present
   notify: restart shell
+
+- name: Create tool-versions
+  file:
+    path: "~/.tool-versions"
+    state: touch
+
+- name: Add asdf to PATH
+  lineinfile:
+    path: ~/.tool-versions
+    line: 'erlang 27.3.4.1'
+    state: present
+  with_items:
+    - erlang 27.3.4.1
+    - elixir 1.18.4-otp-27
 
 - name: Add asdf Erlang plugin
   command: asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git

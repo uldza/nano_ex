@@ -69,13 +69,11 @@
     version: "main"
     force: true
 
-- name: Make application release
-  command: "make release"
-  cwd: "{{ app_git_path }}"
-  environment:
-    MIX_ENV: prod
-    MIX_ARCHIVE_FORMAT: tar.gz
-    MIX_ARCHIVE_NAME: "{{ app_name }}"
+
+  #environment:
+  #  MIX_ENV: prod
+  #  MIX_ARCHIVE_FORMAT: tar.gz
+  #  MIX_ARCHIVE_NAME: "{{ app_name }}"
 
 - name: Extract application release
   unarchive:
