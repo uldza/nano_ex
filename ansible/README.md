@@ -7,9 +7,12 @@ This is help file for provissioning and deploying this application, but not limi
 You should setup your server and add public key to that, key should be available on the host you
 are calling ansible from.
 
-- install ansible `pip install ansible`
+- python3 -m venv .venv/
+- source .venv/bin/activate
+- install ansible `pip3 install ansible`
+- install passlib pip3 install passlib
 - modify host file to include production servers
-- test ansible by running ansible command from this directory `ansible production -m ping -u root`
+- test ansible by running ansible command from this directory `ansible prod -m ping -u root`
 - run provissioning playbook `ansible-playbook ./provision.yml`
 
 ## Deployment
@@ -30,7 +33,6 @@ This will ask for vault password, its in iCloud keychain `Vault`
 > To decrypt in case you forgot some secret
 
 - echo '$ANSIBLE_VAULT;1.1;AES256 ... with all enters and without witespace' | ansible-vault decrypt --output=stats_password.txt'
-
 
 ## SSL certs request with ansible
 

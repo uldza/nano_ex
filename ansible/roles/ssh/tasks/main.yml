@@ -15,6 +15,23 @@
     state: present
   notify: restart ssh
 
+- name: Check that the private key exists
+  stat:
+    path: "~/.ssh/id_ed25519_k00d.pem"
+  register: key
+
+- name: Create ssh key for access to git repository
+  command: "ssh-keygen -t ed25519 -C \"k00d@unet-1\" -f ~/.ssh/id_ed25519_k00d -N ''"
+  when: not key.stat.exists
+
+- name: Show ssh public key
+  command: "cat ~/.ssh/id_ed25519_k00d.pub"
+  register: key_output
+
+- name: Print ssh public key
+  debug:
+    msg: "{{ key_output.stdout | replace('\n', '') }}"
+
 - name: Output directory for Diffie-Hellman parameters exists
   file:
     path: "{{ dhparam_file | dirname }}"

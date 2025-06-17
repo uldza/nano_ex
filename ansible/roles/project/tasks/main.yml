@@ -15,8 +15,10 @@
       - app_log_path is defined
       - app_secret_key is defined
       - erl_cookie is defined
-      - stats_port is defined
-      - stats_server_ip is defined
+      - app_git_repo is defined
+      - app_git_path is defined
+      #- stats_port is defined
+      #- stats_server_ip is defined
     fail_msg: " 'item' is not defined or empty"
 
 - name: Get todays date
@@ -50,6 +52,22 @@
     owner: "{{ app_user }}"
     group: "{{ app_user }}"
 
+- name: Create application git path
+  become: true
+  file:
+    path: "{{ app_git_path }}"
+    state: directory
+    mode: 0755
+    owner: "{{ app_user }}"
+    group: "{{ app_user }}"
+
+- name: Clone the git repository
+  become: true
+  git:
+    repo: "{{ app_git_repo }}"
+    dest: "{{ app_git_path }}"
+    version: "main"
+
 - name: Create application log path
   become: true
   file:
@@ -58,6 +76,7 @@
     mode: 0755
     owner: "{{ app_user }}"
     group: "{{ app_user }}"
+
 
 - name: Copy application artefact to remote host
   become: true

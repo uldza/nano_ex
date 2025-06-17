@@ -11,6 +11,7 @@
     - sudo
     - htop
     - git
+    - bash
     - vim
     - curl
     - unzip
