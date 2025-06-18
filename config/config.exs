@@ -22,6 +22,17 @@ config :nano, NanoWeb.Endpoint,
   pubsub_server: Nano.PubSub,
   live_view: [signing_salt: "JNi/cA9g"]
 
+# Configures the Kood endpoint
+config :nano, KoodWeb.Endpoint,
+  url: [host: "localhost"],
+  adapter: Bandit.PhoenixAdapter,
+  render_errors: [
+    formats: [html: KoodWeb.ErrorHTML, json: KoodWeb.ErrorJSON],
+    layout: false
+  ],
+  pubsub_server: Nano.PubSub,
+  live_view: [signing_salt: "kood_salt_456"]
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

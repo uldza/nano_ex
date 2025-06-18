@@ -16,10 +16,9 @@ defmodule Nano.Application do
       {Phoenix.PubSub, name: Nano.PubSub},
       # Start the Finch HTTP client for sending emails
       {Finch, name: Nano.Finch},
-      # Start a worker by calling: Nano.Worker.start_link(arg)
-      # {Nano.Worker, arg},
       # Start to serve requests, typically the last entry
-      NanoWeb.Endpoint
+      NanoWeb.Endpoint,
+      KoodWeb.Endpoint
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
@@ -33,6 +32,7 @@ defmodule Nano.Application do
   @impl true
   def config_change(changed, _new, removed) do
     NanoWeb.Endpoint.config_change(changed, removed)
+    KoodWeb.Endpoint.config_change(changed, removed)
     :ok
   end
 

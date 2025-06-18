@@ -14,14 +14,18 @@
         <div class="mb-4" id={dom_id}>
           <div class="flex items-start">
             <div class="flex-1">
-                <%= if msg.type == "emoji" do %>
-                  <div class="px-4 py-2">
-                    <img src={"/images/emoji-#{msg.content}.png"} alt={msg.content} class="w-10 h-10"/>
-                  </div>
-                <% else %>
-                  <div class="rounded-2xl p-4 shadow-lg brown-light-active">
-                    <p class="text-gray-700 text-lg">{msg.content}</p>
-                  </div>
+              <%= if msg.type == "emoji" do %>
+                <div class="px-4 py-2">
+                  <img
+                    src={"/images/emoji-#{msg.content}.png"}
+                    alt={msg.content}
+                    class="w-10 h-10"
+                  />
+                </div>
+              <% else %>
+                <div class="rounded-2xl p-4 shadow-lg brown-light-active">
+                  <p class="text-gray-700 text-lg">{msg.content}</p>
+                </div>
               <% end %>
               <div class="text-sm text-blue-normal mt-1 text-right">
                 {msg.user.username}
@@ -48,7 +52,7 @@
           phx-value-emoji={emoji}
           class="hover:scale-110 transition-transform"
         >
-          <img src={"/images/emoji-#{emoji}.png"} alt={emoji} class="w-14 h-14"/>
+          <img src={"/images/emoji-#{emoji}.png"} alt={emoji} class="w-14 h-14" />
         </button>
       <% end %>
     </div>

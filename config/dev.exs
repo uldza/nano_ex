@@ -27,6 +27,16 @@ config :nano, NanoWeb.Endpoint,
     tailwind: {Tailwind, :install_and_run, [:nano, ~w(--watch)]}
   ]
 
+# Kood endpoint configuration
+config :nano, KoodWeb.Endpoint,
+  url: [host: "localhost", scheme: "http"],
+  http: [ip: {127, 0, 0, 1}, port: 8001],
+  check_origin: false,
+  code_reloader: true,
+  debug_errors: true,
+  secret_key_base: "kood_secret_key_base_for_development_only_change_in_production_1234567890",
+  watchers: []
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed
@@ -62,6 +72,7 @@ config :nano, NanoWeb.Endpoint,
 
 # Enable dev routes for dashboard and mailbox
 config :nano, dev_routes: true
+config :kood, dev_routes: true
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
