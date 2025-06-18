@@ -21,6 +21,8 @@ help:
 run: shell
 
 setup:
+	mix local.hex --force
+	mix local.rebar --force
 	mix setup
 
 compile:

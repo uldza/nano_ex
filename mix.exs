@@ -16,15 +16,6 @@ defmodule Nano.MixProject do
         flags: ["-Wunmatched_returns", :error_handling, :underspecs],
         plt_add_apps: [:mix]
       ],
-      # Releases configuration
-      releases: [
-        {@app,
-         [
-           include_executables_for: [:unix],
-           steps: [:assemble, :tar],
-           applications: [runtime_tools: :permanent]
-         ]}
-      ],
       # To set test coverage threshold
       test_coverage: [
         summary: [

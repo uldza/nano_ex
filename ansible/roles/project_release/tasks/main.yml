@@ -36,5 +36,12 @@
     version: "main"
     force: true
 
+- name: Ensure setup is completed
+  command: "make setup"
+  args:
+    chdir: "{{ app_git_path }}"
+
 - name: Make the release
   command: "make release"
+  args:
+    chdir: "{{ app_git_path }}"
