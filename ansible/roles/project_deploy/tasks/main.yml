@@ -1,22 +1,19 @@
 ---
-
 - name: Check if needed variables are defined
   assert:
     that:
       - app_name is defined
+      - app_git_path is defined
       - app_path is defined
       - app_user is defined
       - app_group is defined
       - app_ecto_repo is defined
       - app_deploy_eval is defined
-      - app_git is defined
       - app_http_port is defined
       - app_domain is defined
       - app_log_path is defined
       - app_secret_key is defined
       - erl_cookie is defined
-      - app_git_repo is defined
-      - app_git_path is defined
       #- stats_port is defined
       #- stats_server_ip is defined
     fail_msg: " 'item' is not defined or empty"
@@ -26,6 +23,7 @@
   register: run_date
 
 - name: Ensure application user exists
+  become: true
   user:
     name: "{{ app_user }}"
     state: present
@@ -33,6 +31,7 @@
     system: false
 
 - name: Create application path
+  become: true
   file:
     path: "{{ app_path }}"
     state: directory
@@ -41,6 +40,7 @@
     group: "{{ app_user }}"
 
 - name: Create application log path
+  become: true
   file:
     path: "{{ app_log_path }}"
     state: directory
@@ -48,34 +48,8 @@
     owner: "{{ app_user }}"
     group: "{{ app_user }}"
 
-- name: Create application git path
-  file:
-    path: "{{ app_git_path }}"
-    state: directory
-    mode: 0755
-    owner: "{{ app_user }}"
-    group: "{{ app_user }}"
-
-- name: Clone the git repository
-  git:
-    repo: "{{ app_git_repo }}"
-    dest: "{{ app_git_path }}"
-    version: "main"
-
-- name: Pull the latest changes from the git repository
-  git:
-    repo: "{{ app_git_repo }}"
-    dest: "{{ app_git_path }}"
-    version: "main"
-    force: true
-
-
-  #environment:
-  #  MIX_ENV: prod
-  #  MIX_ARCHIVE_FORMAT: tar.gz
-  #  MIX_ARCHIVE_NAME: "{{ app_name }}"
-
 - name: Extract application release
+  become: true
   unarchive:
     remote_src: true
     src: "{{ app_git_path }}/release/{{ app_name }}.tar.gz"
@@ -84,6 +58,7 @@
     group: "{{ app_user }}"
 
 - name: Set application user as owner for extracted files
+  become: true
   file:
     dest: "{{ app_path }}"
     owner: "{{ app_user }}"
@@ -91,6 +66,7 @@
     recurse: true
 
 - name: Create needed directories for configs and data
+  become: true
   file:
     path: "{{ app_path }}/{{ item }}"
     state: directory
@@ -111,31 +87,10 @@
     mode: 0644
   notify: systemd daemon reload
 
-- name: Generate setup systemd services for apps
-  become: true
-  template:
-    src: app-setup.service.j2
-    dest: "/usr/lib/systemd/system/app-setup.service"
-    mode: 0644
-  notify: systemd daemon reload
-
 - name: Enable and start setup services
+  become: true
   systemd:
     name: "app-setup.service"
-    state: started
-    enabled: yes
-    daemon_reload: yes
-
-- name: Generate deploy systemd services for apps
-  become: true
-  template:
-    src: app-deploy.service.j2
-    dest: "/usr/lib/systemd/system/app-deploy.service"
-    mode: 0644
-
-- name: Enable deploy services
-  systemd:
-    name: "deploy-{{ item.name }}.service"
     state: started
     enabled: yes
     daemon_reload: yes

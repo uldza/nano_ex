@@ -11,8 +11,8 @@
   systemd:
     daemon_reload: true
 
-- name: reload nginx
+- name: reload web
   become: true
   service:
-    name: nginx
+    name: caddy
     state: reloaded

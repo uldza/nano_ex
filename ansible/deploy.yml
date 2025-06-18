@@ -22,14 +22,13 @@
           62316363366666656236326536336432653536376332646461316134363063313337
     ###
     app_git_repo: "git@github.com:uldza/nano_ex.git"
-    app_git_path: "/opt/kood/git"
+    app_git_path: "/opt/git"
     app_domain: "kood.pro"
     app_user: "kood"
     app_name: "kood"
     app_path: "/opt/{{ app_user }}"
     app_log_path: "/var/log/{{ app_user }}"
     app_local_path: "~/code/nano/"
-    geoip_path: "../priv"
     app_http_port: 8000
     # Change stats server ip to prometheus host
     stats_server_ip: "127.0.0.1"
@@ -47,4 +46,5 @@
     #app_ca_path: roles/app/files/
   roles:
     #- elixir
-    - project
+    - project_release
+    #- project_deploy
