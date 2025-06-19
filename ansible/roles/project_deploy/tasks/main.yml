@@ -2,51 +2,26 @@
 - name: Check if needed variables are defined
   assert:
     that:
-      - app_name is defined
+      - app_git_repo is defined
       - app_git_path is defined
       - app_path is defined
       - app_user is defined
       - app_group is defined
-      - app_ecto_repo is defined
-      - app_deploy_eval is defined
-      - app_http_port is defined
-      - app_domain is defined
-      - app_log_path is defined
-      - app_secret_key is defined
-      - erl_cookie is defined
-      #- stats_port is defined
-      #- stats_server_ip is defined
+      - app_name is defined
     fail_msg: " 'item' is not defined or empty"
 
-- name: Get todays date
-  command: "date +'%d-%m-%Y'"
-  register: run_date
+- name: Pull the latest changes from the git repository
+  git:
+    repo: "{{ app_git_repo }}"
+    dest: "{{ app_git_path }}"
+    ssh_opts: "-i ~/.ssh/id_ed25519_k00d"
+    version: "main"
+    force: true
 
-- name: Ensure application user exists
-  become: true
-  user:
-    name: "{{ app_user }}"
-    state: present
-    shell: "/bin/bash"
-    system: false
-
-- name: Create application path
-  become: true
-  file:
-    path: "{{ app_path }}"
-    state: directory
-    mode: 0755
-    owner: "{{ app_user }}"
-    group: "{{ app_user }}"
-
-- name: Create application log path
-  become: true
-  file:
-    path: "{{ app_log_path }}"
-    state: directory
-    mode: 0755
-    owner: "{{ app_user }}"
-    group: "{{ app_user }}"
+- name: Make the release
+  command: "make release"
+  args:
+    chdir: "{{ app_git_path }}"
 
 - name: Extract application release
   become: true
@@ -55,53 +30,15 @@
     src: "{{ app_git_path }}/release/{{ app_name }}.tar.gz"
     dest: "{{ app_path }}"
     owner: "{{ app_user }}"
-    group: "{{ app_user }}"
+    group: "{{ app_group }}"
 
 - name: Set application user as owner for extracted files
   become: true
   file:
     dest: "{{ app_path }}"
     owner: "{{ app_user }}"
-    group: "{{ app_user }}"
+    group: "{{ app_group }}"
     recurse: true
-
-- name: Create needed directories for configs and data
-  become: true
-  file:
-    path: "{{ app_path }}/{{ item }}"
-    state: directory
-    mode: 0755
-    owner: "{{ app_user }}"
-    group: "{{ app_user }}"
-  with_items:
-    - "etc"
-    - "data"
-
-- name: Add applications env file to systemd
-  become: true
-  template:
-    src: env.j2
-    dest: "{{ app_path }}/etc/env"
-    owner: "{{ app_user }}"
-    group: "{{ app_user }}"
-    mode: 0644
-  notify: systemd daemon reload
-
-- name: Enable and start setup services
-  become: true
-  systemd:
-    name: "app-setup.service"
-    state: started
-    enabled: yes
-    daemon_reload: yes
-
-- name: Add application's systemd file
-  become: true
-  template:
-    src: "app.service.j2"
-    dest: "/usr/lib/systemd/system/{{ app_name }}.service"
-    mode: 0644
-  notify: systemd daemon reload
 
 - name: Stop application service
   become: true

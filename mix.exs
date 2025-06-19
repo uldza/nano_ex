@@ -28,7 +28,10 @@ defmodule Nano.MixProject do
          [
            include_executables_for: [:unix],
            steps: [:assemble, :tar],
-           applications: [runtime_tools: :permanent]
+           applications: [runtime_tools: :permanent],
+           path: "/release",
+           cookie: {:system, "NANO_COOKIE"},
+           name: {:system, "NANO_NODE_NAME"}
          ]}
       ],
       docs: docs(),

@@ -14,20 +14,21 @@ are calling ansible from.
 - modify host file to include production servers
 - test ansible by running ansible command from this directory `ansible prod -m ping -u root`
 - run provissioning playbook `ansible-playbook ./provision.yml`
+- run setup playbook `ansible-playbook ./setup.yml --ask-vault-pass` to setup needed structure and files for the project
 
 ## Deployment
 
-When provissioning is done on the server. One can deploy application.
+When provissioning and setup is done on the server. One can deploy the application.
 
-- checkout correct application tag `git checkout v0.1.3`
-- now run deployment playbook `ansible-playbook --extra-vars app_version=0.1.3 ./deploy.yml --ask-vault-pass`
+- checkout correct application tag `git checkout v0.1.3` if needed
+- run deployment playbook `ansible-playbook --extra-vars app_version=0.1.3 ./deploy.yml`
 
-This will ask for vault password, its in iCloud keychain `Vault`
+This will ask for vault password, its in iCloud passwords for `kood.pro` `Vault`
 
 > [!IMPORTANT]
 > All secrets should be encrypted with the same vault password using following command, before adding to playbook. [OK Vault Guide](https://www.edureka.co/blog/ansible-vault-secure-secrets)
 
-- ansible-vault encrypt_string 'SuperSecretAPIKey' --name 'ai_api_key'
+- ansible-vault encrypt_string 'Some_secret_1' --name 'app_secret_key'
 
 > [!IMPORTANT]
 > To decrypt in case you forgot some secret

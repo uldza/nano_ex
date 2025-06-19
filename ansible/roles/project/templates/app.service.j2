@@ -10,7 +10,7 @@ OnFailure=notify-service-failure@%n
 [Service]
 Type=simple
 User={{ app_user }}
-Group={{ app_user }}
+Group={{ app_group }}
 SyslogIdentifier={{ app_name }}
 WorkingDirectory={{ app_path }}
 Environment=HOME={{ app_path }} SHELL=/bin/bash TERM=xterm

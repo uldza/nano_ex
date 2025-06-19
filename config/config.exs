@@ -7,6 +7,8 @@
 # General application configuration
 import Config
 
+config :iex, default_prompt: "|> nano |>"
+
 config :nano,
   ecto_repos: [Nano.Repo],
   generators: [timestamp_type: :utc_datetime]
@@ -31,7 +33,7 @@ config :nano, KoodWeb.Endpoint,
     layout: false
   ],
   pubsub_server: Nano.PubSub,
-  live_view: [signing_salt: "kood_salt_456"]
+  live_view: [signing_salt: "k00d_s1gnSa!t_#456"]
 
 # Configures the mailer
 #

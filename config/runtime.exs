@@ -21,21 +21,21 @@ if System.get_env("PHX_SERVER") do
 end
 
 config :stripity_stripe,
-  api_key: System.get_env("NANO_STRIPE_API_KEY"),
-  public_key: System.get_env("NANO_STRIPE_PUBLIC_KEY"),
-  webhook_secret: System.get_env("NANO_STRIPE_WEBHOOK_SECRET")
+  api_key: System.get_env("PIKABU_STRIPE_API_KEY"),
+  public_key: System.get_env("PIKABU_STRIPE_PUBLIC_KEY"),
+  webhook_secret: System.get_env("PIKABU_STRIPE_WEBHOOK_SECRET")
 
 if config_env() == :prod do
-  database_path =
-    System.get_env("DATABASE_PATH") ||
+  pikabu_db_path =
+    System.get_env("PIKABU_DB_PATH") ||
       raise """
       environment variable DATABASE_PATH is missing.
       For example: /etc/nano/nano.db
       """
 
   config :nano, Nano.Repo,
-    database: database_path,
-    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "5")
+    database: pikabu_db_path,
+    pool_size: String.to_integer(System.get_env("DB_POOL") || "5")
 
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you
@@ -49,20 +49,20 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  host = System.get_env("PHX_HOST") || "example.com"
-  port = String.to_integer(System.get_env("PORT") || "8000")
+  pikabu_host = System.get_env("PIKABU_HOST") || "example.com"
+  pikabu_port = String.to_integer(System.get_env("PIKABU_PORT") || "8000")
 
   config :nano, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 
   config :nano, NanoWeb.Endpoint,
-    url: [host: host, port: 443, scheme: "https"],
+    url: [host: pikabu_host, port: 443, scheme: "https"],
     http: [
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
       # See the documentation on https://hexdocs.pm/bandit/Bandit.html#t:options/0
       # for details about using IPv6 vs IPv4 and loopback vs public addresses.
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
-      port: port
+      port: pikabu_port
     ],
     secret_key_base: secret_key_base
 

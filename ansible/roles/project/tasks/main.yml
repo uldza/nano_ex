@@ -1,0 +1,110 @@
+---
+- name: Check if needed variables are defined
+  assert:
+    that:
+      - app_name is defined
+      - app_path is defined
+      - app_user is defined
+      - app_group is defined
+      - app_log_path is defined
+      - app_secret_key is defined
+      - erl_cookie is defined
+      - app_git_repo is defined
+      - app_git_path is defined
+      - pikabu_port is defined
+      - pikabu_domain is defined
+      #- stats_port is defined
+      #- stats_server_ip is defined
+    fail_msg: " 'item' is not defined or empty"
+
+- name: Get todays date
+  command: "date +'%d-%m-%Y'"
+  register: run_date
+
+- name: Ensure application user exists
+  become: true
+  user:
+    name: "{{ app_user }}"
+    state: present
+    shell: "/bin/bash"
+    system: false
+
+- name: Ensure ssh key is present for git
+  become: true
+  copy:
+    src: /root/.ssh/{{ item }}
+    dest: /home/k00d/.ssh/{{ item }}
+    owner: k00d
+    group: k00d
+    mode: 0600
+    remote_src: yes
+  with_items:
+    - "id_ed25519_k00d.pub"
+    - "id_ed25519_k00d"
+
+- name: Create application git path
+  become: true
+  file:
+    path: "{{ app_git_path }}"
+    state: directory
+    mode: 0755
+    owner: "k00d"
+    group: "k00d"
+
+- name: Pull the latest changes from the git repository
+  git:
+    repo: "{{ app_git_repo }}"
+    dest: "{{ app_git_path }}"
+    ssh_opts: "-i ~/.ssh/id_ed25519_k00d"
+    version: "main"
+    force: true
+
+- name: Create application path
+  become: true
+  file:
+    path: "{{ app_path }}"
+    state: directory
+    mode: 0755
+    owner: "{{ app_user }}"
+    group: "{{ app_group }}"
+
+- name: Create application log path
+  become: true
+  file:
+    path: "{{ app_log_path }}"
+    state: directory
+    mode: 0755
+    owner: "{{ app_user }}"
+    group: "{{ app_group }}"
+
+- name: Create needed directories for configs and data
+  become: true
+  file:
+    path: "{{ app_path }}/{{ item }}"
+    state: directory
+    mode: 0755
+    owner: "{{ app_user }}"
+    group: "{{ app_group }}"
+  with_items:
+    - "etc"
+    - "data"
+
+- name: Add applications env file to systemd
+  become: true
+  template:
+    src: env.j2
+    dest: "{{ app_path }}/etc/env"
+    owner: "{{ app_user }}"
+    group: "{{ app_group }}"
+    mode: 0644
+  notify: systemd daemon reload
+
+- name: Add application's systemd file
+  become: true
+  template:
+    src: "app.service.j2"
+    dest: "/usr/lib/systemd/system/{{ app_name }}.service"
+    mode: 0644
+  notify: systemd daemon reload
+
+# TODO caddy web configs
