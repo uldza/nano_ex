@@ -27,11 +27,12 @@ defmodule Nano.MixProject do
         {@app,
          [
            include_executables_for: [:unix],
+           include_erts: true,
            steps: [:assemble, :tar],
            applications: [runtime_tools: :permanent],
-           path: "/release",
-           cookie: {:system, "NANO_COOKIE"},
-           name: {:system, "NANO_NODE_NAME"}
+           #cookie: {:system, "NANO_COOKIE"},
+           #name: {:system, "NANO_NODE_NAME"}
+           path: "./release"
          ]}
       ],
       docs: docs(),
@@ -109,9 +110,10 @@ defmodule Nano.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
+      setup: ["deps.get", "assets.setup", "assets.build"],
       lint: ["deps.get", "format --check-formatted", "credo"],
-      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+      "ecto.setup": ["ecto.create", "ecto.migrate"],
+      "ecto.seed": ["run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],

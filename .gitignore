@@ -46,3 +46,5 @@ npm-debug.log
 .env.local
 .vscode/
 .venv/
+lib/
+release/*

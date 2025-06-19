@@ -8,6 +8,7 @@
       - app_user is defined
       - app_group is defined
       - app_name is defined
+      - app_version is defined
     fail_msg: " 'item' is not defined or empty"
 
 - name: Pull the latest changes from the git repository
@@ -18,6 +19,11 @@
     version: "main"
     force: true
 
+- name: Clean the release
+  command: "make clean"
+  args:
+    chdir: "{{ app_git_path }}"
+
 - name: Make the release
   command: "make release"
   args:
@@ -27,7 +33,7 @@
   become: true
   unarchive:
     remote_src: true
-    src: "{{ app_git_path }}/release/{{ app_name }}.tar.gz"
+    src: "{{ app_git_path }}/releases/{{ app_version }}/{{ app_name }}.tar.gz"
     dest: "{{ app_path }}"
     owner: "{{ app_user }}"
     group: "{{ app_group }}"

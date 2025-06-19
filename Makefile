@@ -8,6 +8,7 @@ help:
 	@echo "Please use 'make <target>' where <target> is one of:"
 	@echo "--------------------------------------------------------------------"
 	@echo "  setup          : setup application"
+	@echo "  seed           : seed db for application"
 	@echo "  run            : run application as dev locally"
 	@echo "  ci             : run local ci checks"
 	@echo "  complie        : compile a release code"
@@ -24,6 +25,10 @@ setup:
 	mix local.hex --force
 	mix local.rebar --force
 	mix setup
+	mix ecto.setup
+
+seed:
+	mix ecto.seed
 
 compile:
 	mix compile --warnings-as-errors --force
@@ -55,7 +60,7 @@ clean:
 	mix deps.clean --all
 	rm -rf ${DIR}/_build
 
-release:
+release: setup
 	MIX_ENV=prod mix release --overwrite
 
 tag:

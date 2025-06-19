@@ -21,7 +21,7 @@ are calling ansible from.
 When provissioning and setup is done on the server. One can deploy the application.
 
 - checkout correct application tag `git checkout v0.1.3` if needed
-- run deployment playbook `ansible-playbook --extra-vars app_version=0.1.3 ./deploy.yml`
+- run deployment playbook `ansible-playbook --extra-vars app_version=0.1.0 ./deploy.yml`
 
 This will ask for vault password, its in iCloud passwords for `kood.pro` `Vault`
 
