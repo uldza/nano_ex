@@ -20,12 +20,14 @@
     force: true
 
 - name: Clean the release
-  command: "make clean"
+  shell: make clean
   args:
     chdir: "{{ app_git_path }}"
+  environment:
+    PATH: "{{ ansible_env.HOME }}/.asdf/shims:{ ansible_env.HOME }}/.asdf/:{{ ansible_env.PATH }}"
 
 - name: Make the release
-  command: "make release"
+  command: make release
   args:
     chdir: "{{ app_git_path }}"
 
@@ -33,7 +35,7 @@
   become: true
   unarchive:
     remote_src: true
-    src: "{{ app_git_path }}/releases/{{ app_version }}/{{ app_name }}.tar.gz"
+    src: "{{ app_git_path }}/release/{{ app_name }}-{{ app_version }}.tar.gz"
     dest: "{{ app_path }}"
     owner: "{{ app_user }}"
     group: "{{ app_group }}"

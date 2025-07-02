@@ -20,20 +20,18 @@
     dest: /tmp/asdf.tar.gz
 
 - name: Create asdf path
-  become: true
   file:
-    path: "/opt/asdf"
+    path: "~/.asdf"
     state: directory
     mode: 0755
     owner: k00d
     group: k00d
 
 - name: Extract asdf manager
-  become: true
   unarchive:
     remote_src: true
     src: /tmp/asdf.tar.gz
-    dest: /opt/asdf/
+    dest: ~/.asdf/
     mode: 0755
     owner: k00d
     group: k00d
@@ -43,35 +41,51 @@
     path: "~/.bash_profile"
     state: touch
 
-- name: Add asdf to PATH
+- name: Add asdf to PATH in bash_profile
   lineinfile:
     path: ~/.bash_profile
-    line: 'export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"'
+    line: 'export PATH="$HOME/.asdf/:$PATH"'
     state: present
-  notify: restart shell
+
+- name: Add asdf to PATH in bash_profile
+  lineinfile:
+    path: ~/.bash_profile
+    line: 'export PATH="$HOME/.asdf/shims:$PATH"'
+    state: present
 
 - name: Create tool-versions
   file:
     path: "~/.tool-versions"
     state: touch
 
-- name: Add asdf to PATH
+- name: Add Erlang version to tool-versions
   lineinfile:
     path: ~/.tool-versions
     line: 'erlang 27.3.4.1'
     state: present
-  with_items:
-    - erlang 27.3.4.1
-    - elixir 1.18.4-otp-27
+
+- name: Add Elixir version to tool-versions
+  lineinfile:
+    path: ~/.tool-versions
+    line: 'elixir 1.18.4-otp-27'
+    state: present
 
 - name: Add asdf Erlang plugin
-  command: asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git
+  command: "~/.asdf/asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git"
+  args:
+    creates: "~/.asdf/plugins/erlang"
 
 - name: Add asdf Elixir plugin
-  command: asdf plugin add elixir https://github.com/asdf-vm/asdf-elixir.git
+  command: "~/.asdf/asdf plugin add elixir https://github.com/asdf-vm/asdf-elixir.git"
+  args:
+    creates: "~/.asdf/plugins/elixir"
 
 - name: Install Erlang
-  command: asdf install erlang 27.3.4.1
+  command: "~/.asdf/asdf install erlang 27.3.4.1"
+  args:
+    creates: "~/.asdf/installs/erlang/27.3.4.1"
 
 - name: Install Elixir
-  command: asdf install elixir 1.18.4-otp-27
+  command: "~/.asdf/asdf install elixir 1.18.4-otp-27"
+  args:
+    creates: "~/.asdf/installs/elixir/1.18.4-otp-27"
