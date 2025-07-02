@@ -20,16 +20,18 @@
     force: true
 
 - name: Clean the release
-  shell: make clean
+  command: make clean
   args:
     chdir: "{{ app_git_path }}"
   environment:
-    PATH: "{{ ansible_env.HOME }}/.asdf/shims:{ ansible_env.HOME }}/.asdf/:{{ ansible_env.PATH }}"
+    PATH: "{{ ansible_env.HOME }}/.asdf/shims:{{ ansible_env.HOME }}/.asdf/:{{ ansible_env.PATH }}"
 
 - name: Make the release
   command: make release
   args:
     chdir: "{{ app_git_path }}"
+  environment:
+    PATH: "{{ ansible_env.HOME }}/.asdf/shims:{{ ansible_env.HOME }}/.asdf/:{{ ansible_env.PATH }}"
 
 - name: Extract application release
   become: true
