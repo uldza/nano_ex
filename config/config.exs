@@ -7,7 +7,7 @@
 # General application configuration
 import Config
 
-config :iex, default_prompt: "|> nano |>"
+config :iex, default_prompt: "nano|>"
 
 config :nano,
   ecto_repos: [Nano.Repo],

@@ -14,16 +14,9 @@ defmodule KoodWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/hls/:client/hero.m3u8", PageController, :hls
+    get "/hls/:client/:quality/playlist", PageController, :hls_playlist
+    get "/hls/:client/:quality/:segment", PageController, :hls_segment
   end
 
-  if Application.compile_env(:kood, :dev_routes) do
-    import Phoenix.LiveDashboard.Router
-
-    scope "/dev" do
-      pipe_through :browser
-
-      live_dashboard "/dashboard", metrics: KoodWeb.Telemetry
-      forward "/mailbox", Plug.Swoosh.MailboxPreview
-    end
-  end
 end
