@@ -30,8 +30,6 @@ defmodule Nano.MixProject do
            include_erts: true,
            steps: [:assemble, :tar],
            applications: [runtime_tools: :permanent],
-           #cookie: {:system, "NANO_COOKIE"},
-           #name: {:system, "NANO_NODE_NAME"}
            path: "./release"
          ]}
       ],

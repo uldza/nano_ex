@@ -8,8 +8,7 @@ defmodule NanoWeb.PageController do
   alias Nano.Newsletter.SubscriptionForm
 
   def home(conn, _params) do
-    rooms = ChatRooms.list_rooms()
-    render(conn, :home, rooms: rooms)
+    render(conn, :home)
   end
 
   def elements(conn, _params) do
