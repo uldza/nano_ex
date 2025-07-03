@@ -9,5 +9,6 @@
     app_path: "/opt/{{ app_name }}"
     app_git_repo: "git@github.com:uldza/nano_ex.git"
     app_git_path: "/opt/git"
+    app_eval_cmd: "Nano.Release.migrate"
   roles:
     - project_deploy

@@ -63,3 +63,9 @@
     name: "{{ app_name }}"
     enabled: true
     state: started
+
+- name: Run migrate for the app
+  become: true
+  become_user: {{ app_user }}
+  command: "{{ app_path }}/bin/{{ app_name } eval {{ app_eval_cmd }}"
+  when: app_eval_cmd is defined
