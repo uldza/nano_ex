@@ -1,0 +1,23 @@
+pikabu.lv {
+    # Automatic HTTPS is enabled by default
+
+    # Reverse proxy to Phoenix app
+    reverse_proxy localhost:8000 {
+        # HTTP/2 enabled by default
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+        header_up X-Real-IP {remote_host}
+    }
+
+    # Compression
+    encode gzip zstd
+
+    # Logging
+    log {
+        output file /var/log/caddy/pikabu.lv.log {
+            roll_size 1GB
+            roll_keep 5
+            roll_keep_for 72h
+        }
+    }
+

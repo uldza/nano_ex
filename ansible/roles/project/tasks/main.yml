@@ -107,4 +107,11 @@
     mode: 0644
   notify: systemd daemon reload
 
-# TODO caddy web configs
+- name: Copy WEB configuration
+  become: true
+  template:
+    src: "Caddyfile.j2"
+    dest: "/etc/caddy/Caddyfile"
+    mode: 0644
+  notify: reload web
+
