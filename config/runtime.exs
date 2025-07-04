@@ -29,8 +29,8 @@ if config_env() == :prod do
   pikabu_db_path =
     System.get_env("PIKABU_DB_PATH") ||
       raise """
-      environment variable DATABASE_PATH is missing.
-      For example: /etc/nano/nano.db
+      environment variable PIKABU_DB_PATH is missing.
+      For example: /opt/nano/etc/nano.db
       """
 
   config :nano, Nano.Repo,
