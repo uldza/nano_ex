@@ -59,6 +59,7 @@ docs:
 clean:
 	mix deps.clean --all
 	rm -rf ${DIR}/_build
+	rm -rf ${DIR}/release/*
 
 release:
 	mix deps.get --only prod
