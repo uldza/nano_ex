@@ -66,7 +66,7 @@ release:
 	MIX_ENV=prod mix compile
 	MIX_ENV=prod mix assets.deploy
 	MIX_ENV=prod mix phx.gen.release
-	MIX_ENV=prod mix release
+	MIX_ENV=prod mix release --overwrite
 
 tag:
 	@grep 'version:' mix.exs | sed -e 's/.*version: "\(.*\)",/\1/'
