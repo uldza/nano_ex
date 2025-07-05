@@ -11,6 +11,10 @@ defmodule NanoWeb.PageController do
     render(conn, :home)
   end
 
+  def contacts(conn, _params) do
+    render(conn, :contacts)
+  end
+
   def elements(conn, _params) do
     render(conn, :elements)
   end
