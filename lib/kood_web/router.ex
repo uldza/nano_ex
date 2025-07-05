@@ -18,5 +18,4 @@ defmodule KoodWeb.Router do
     get "/hls/:client/:quality/playlist", PageController, :hls_playlist
     get "/hls/:client/:quality/:segment", PageController, :hls_segment
   end
-
 end

@@ -1,6 +1,4 @@
 defmodule NanoWeb.HtmlComponents do
-
-
   def deco_class(:primary, %{request_path: "/"}), do: "blue-normal"
   def deco_class(:secondary, %{request_path: "/"}), do: "blue-dark"
   def deco_class(:primary, %{request_path: "/admin" <> _}), do: "hidden"

@@ -58,11 +58,12 @@ defmodule KoodWeb.PageController do
     #EXT-X-MEDIA-SEQUENCE:0
     """
 
-    segments_entries = segments
-    |> Enum.map(fn segment ->
-      "#EXTINF:1.0,\n/hls/#{client}/#{quality}/#{segment}.ts"
-    end)
-    |> Enum.join("\n")
+    segments_entries =
+      segments
+      |> Enum.map(fn segment ->
+        "#EXTINF:1.0,\n/hls/#{client}/#{quality}/#{segment}.ts"
+      end)
+      |> Enum.join("\n")
 
     playlist <> segments_entries <> "\n#EXT-X-ENDLIST"
   end

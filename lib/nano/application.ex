@@ -7,6 +7,8 @@ defmodule Nano.Application do
 
   @impl true
   def start(_type, _args) do
+    :ok = setup()
+
     children = [
       NanoWeb.Telemetry,
       Nano.Repo,
@@ -33,6 +35,12 @@ defmodule Nano.Application do
   def config_change(changed, _new, removed) do
     NanoWeb.Endpoint.config_change(changed, removed)
     KoodWeb.Endpoint.config_change(changed, removed)
+    :ok
+  end
+
+  defp setup() do
+    # Run all migrations before starting application
+    Nano.Release.migrate()
     :ok
   end
 
