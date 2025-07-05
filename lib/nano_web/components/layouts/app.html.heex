@@ -2,12 +2,12 @@
 <header class="container relative mx-auto py-4 px-4 flex justify-between items-center">
   <div
     id="deco-1"
-    class="hidden md:block absolute top-0 right-0 yellow-normal [border-bottom-left-radius:4rem] w-[500px] h-[750px] -z-10"
+    class={"hidden md:block absolute top-0 right-0 #{deco_class(:primary, @conn)} [border-bottom-left-radius:4rem] w-[500px] h-[750px] -z-10"}
   >
   </div>
   <div
     id="deco-2"
-    class="hidden md:block absolute top-[1em] right-0 yellow-light-active [border-bottom-left-radius:4rem] w-[490px] h-[750px] -z-20"
+    class={"hidden md:block absolute top-[1em] right-0 #{deco_class(:secondary, @conn)} [border-bottom-left-radius:4rem] w-[490px] h-[750px] -z-20"}
   >
   </div>
   <div id="logo-container" class="flex items-center border-b border-blue-darker w-[75%] pb-6">
