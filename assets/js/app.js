@@ -24,12 +24,13 @@ import topbar from "../vendor/topbar"
 // Hooks
 import ScrollToBottom from "./hooks/scroll_to_bottom"
 import HideLabel from "./hooks/hide_label"
+import ShowVideoRoom from "./hooks/show_video_room"
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
   params: {_csrf_token: csrfToken},
-  hooks: {ScrollToBottom, HideLabel}
+  hooks: {ScrollToBottom, HideLabel, ShowVideoRoom}
 })
 
 // Show progress bar on live navigation and form submits

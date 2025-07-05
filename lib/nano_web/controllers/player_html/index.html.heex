@@ -1,19 +1,38 @@
-<div class="container mx-auto px-4 py-8">
-  <h1 class="text-5xl text-center mt-8 mb-16">Izvēlies tematisko istabu</h1>
+<div id="player-container" class="container mx-auto px-4" phx-hook="ShowVideoRoom">
+  <div id="room-select" class="mb-20 hidden">
+    <h1 id="room-title" class="text-5xl pt-10 mb-6"></h1>
+    <p id="room-details" class="text-lg"></p>
+    <div id="room-link" class="mt-6">
+      <a href="#" id="room-video-link" class="inline-block relative">
+        <img src="/images/video-placeholder.png" alt="Atver istabu" />
+        <span class="btn-ball btn-red absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg">
+          <.icon name="hero-play-circle" class="h-10 w-10 text-white" />
+        </span>
+      </a>
+    </div>
+  </div>
+
+  <h2 class="text-5xl mb-16">Izvēlies tematisko istabu</h2>
 
   <div
     id="lobby-grid"
     class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-white rounded-lg p-2 max-w-6xl mx-auto"
   >
     <%= for room <- @rooms do %>
-      <a
-        href={~p"/rooms/#{room.id}"}
-        class="theme-card border-2 border-blue-darker flex flex-col items-center justify-between aspect-square text-dark hover:shadow-lg transition-shadow duration-200"
+      <div
+        class="theme-card border-2 border-blue-darker flex flex-col items-center justify-between aspect-square text-dark hover:shadow-lg transition-shadow duration-200 cursor-pointer"
         style="background: var(--yellow-light-active);"
+        data-room-id={room.id}
+        data-room-name={room.name}
+        data-room-description={room.description}
+        data-room-video-url={room.video_url}
+        data-room-thumbnail-url={room.video_thumbnail_url}
+        data-room-free-minutes={room.free_minutes}
+        data-room-requires-subscription={room.requires_subscription}
       >
         <img src={room.video_thumbnail_url} alt={room.name} class="mb-4 w-48 h-48 object-contain" />
         <h3 class="text-xl font-bold mb-2 text-center">{room.name}</h3>
-      </a>
+      </div>
     <% end %>
   </div>
 </div>
