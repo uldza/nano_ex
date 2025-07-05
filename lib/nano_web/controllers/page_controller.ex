@@ -12,6 +12,11 @@ defmodule NanoWeb.PageController do
   end
 
   def contacts(conn, _params) do
+    form_data = %{name: "", email: "", about: "", message: ""}
+    render(conn, :contacts, form: Phoenix.Component.to_form(form_data))
+  end
+
+  def contacts_submit(conn, _params) do
     render(conn, :contacts)
   end
 

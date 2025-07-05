@@ -18,6 +18,7 @@ defmodule NanoWeb.Router do
 
     get "/", PageController, :home
     get "/contacts", PageController, :contacts
+    post "/contacts", PageController, :contacts_submit
     get "/elements", PageController, :elements
     get "/subscribe", PageController, :subscribe
     get "/subscribe/success", PageController, :success
