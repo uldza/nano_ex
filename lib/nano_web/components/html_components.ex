@@ -8,6 +8,10 @@ defmodule NanoWeb.HtmlComponents do
   def deco_class(:secondary, _), do: "yellow-light-active"
 
   def cta_link(%{assigns: %{current_user: nil}}), do: "/users/register"
-  def cta_link(%{assigns: %{subscription_status: status}}) when status == "active" or status == "trialing", do: "/rooms"
+
+  def cta_link(%{assigns: %{subscription_status: status}})
+      when status == "active" or status == "trialing",
+      do: "/rooms"
+
   def cta_link(%{assigns: %{subscription_status: _}}), do: "/subscribe"
 end
