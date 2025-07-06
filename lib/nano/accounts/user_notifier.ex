@@ -8,7 +8,7 @@ defmodule Nano.Accounts.UserNotifier do
     email =
       new()
       |> to(recipient)
-      |> from({"Nano", "contact@example.com"})
+      |> from({"Pikabu", "pikabu@pikabu.lv"})
       |> subject(subject)
       |> text_body(body)
 

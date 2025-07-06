@@ -49,7 +49,7 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  pikabu_host = System.get_env("PIKABU_HOST") || "example.com"
+  pikabu_host = System.get_env("PIKABU_HOST") || "kood.pro"
   pikabu_port = String.to_integer(System.get_env("PIKABU_PORT") || "8000")
 
   # ## Configuring the mailer
