@@ -13,6 +13,7 @@
       - app_git_path is defined
       - pikabu_port is defined
       - pikabu_domain is defined
+      - pikabu_stripe_key is defined
       #- stats_port is defined
       #- stats_server_ip is defined
     fail_msg: " 'item' is not defined or empty"

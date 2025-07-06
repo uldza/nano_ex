@@ -74,8 +74,8 @@ config :logger, :console,
 # Subscription plans configuration
 config :nano, :subscription_plan, %{
   id: :monthly,
-  stripe_product_id: "prod_S95pACSGSukvj1",
-  stripe_price_id: "price_1REmiOCuqw9GoveV1yDplloG",
+  stripe_product_id: "prod_SK0a9VujbekQRf",
+  stripe_price_id: "price_1RPMZdQRUlP9ZmPhXAZ00ehB",
   price: 18,
   interval: "month",
   trial_days: 7
