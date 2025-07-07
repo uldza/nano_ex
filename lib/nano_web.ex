@@ -50,6 +50,20 @@ defmodule NanoWeb do
     end
   end
 
+  def view do
+    quote do
+      use Phoenix.Component, global_prefixes: ~w(x-)
+
+      use Phoenix.View,
+        root: "lib/nano_web/templates",
+        namespace: NanoWeb
+
+      import Phoenix.Controller, only: [get_csrf_token: 0]
+
+      unquote(html_helpers())
+    end
+  end
+
   def live_view do
     quote do
       use Phoenix.LiveView

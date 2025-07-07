@@ -4,17 +4,26 @@
     <div class="contact-form relative pt-4">
       <div class="absolute left-0 right-[0.5em] top-0 green-light [border-top-right-radius:4rem] h-[300px] -z-20">
       </div>
+      <div
+        :if={@submit_msg}
+        class="relative green-light-active [border-top-right-radius:4rem] [border-bottom-right-radius:4rem] p-16"
+      >
+        <h2 class="text-3xl mt-20 mb-24 text-green-dark">{@submit_msg}</h2>
+      </div>
       <.form
+        :let={f}
+        :if={@form}
         for={@form}
+        as={:support}
         action={~p"/contacts"}
         method="post"
         class="relative green-light-active [border-top-right-radius:4rem] [border-bottom-right-radius:4rem] p-16"
       >
         <h2 class="text-4xl mb-6 text-green-dark">Raksti mums:</h2>
-        <.input field={@form[:name]} label="Vārds" />
-        <.input field={@form[:email]} label="E-pasts" />
-        <.input field={@form[:about]} label="Temats" />
-        <.input type="textarea" field={@form[:message]} label="Ziņojums" />
+        <.input field={f[:name]} label="Vārds" type="text" required />
+        <.input field={f[:email]} label="E-pasts" type="email" required />
+        <.input field={f[:subject]} label="Temats" type="text" required />
+        <.input type="textarea" field={f[:message]} label="Ziņojums" required />
         <.button class="mt-10 text-right">Sūtīt ziņu</.button>
       </.form>
     </div>

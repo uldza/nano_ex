@@ -6,18 +6,32 @@ defmodule NanoWeb.PageController do
   alias Nano.Accounts
   alias Nano.Newsletter
   alias Nano.Newsletter.SubscriptionForm
+  alias Nano.Schemas.Support
 
   def home(conn, _params) do
     render(conn, :home)
   end
 
   def contacts(conn, _params) do
-    form_data = %{name: "", email: "", about: "", message: ""}
-    render(conn, :contacts, form: Phoenix.Component.to_form(form_data))
+    form_data = Support.new(%{name: "", email: "", subject: "", message: ""})
+    render(conn, :contacts, submit_msg: nil, form: form_data)
   end
 
-  def contacts_submit(conn, _params) do
-    render(conn, :contacts)
+  @spec contacts_submit(
+          Plug.Conn.t(),
+          :invalid | %{optional(:__struct__) => none(), optional(atom() | binary()) => any()}
+        ) :: Plug.Conn.t()
+  def contacts_submit(conn, params) do
+    changeset = Support.changeset(params["support"])
+    IO.inspect(changeset)
+
+    if changeset.valid? do
+      _ = Nano.Email.support_request(changeset.changes)
+      msg = "Paldies! Esam saņēmuši Tavu ziņu! Sniegsim Tev atbildi cik vien ātri iespējams!"
+      render(conn, :contacts, submit_msg: msg, form: nil)
+    else
+      render(conn, :contacts, submit_msg: nil, form: changeset)
+    end
   end
 
   def elements(conn, _params) do
@@ -136,7 +150,7 @@ defmodule NanoWeb.PageController do
             |> render(:subscription_page, form: Phoenix.Component.to_form(changeset))
         end
 
-      {:error, changeset} ->
+      {:error, _changeset} ->
         conn
         |> render(:subscription_page, form: Phoenix.Component.to_form(changeset))
     end
