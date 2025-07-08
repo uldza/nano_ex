@@ -52,7 +52,9 @@ defmodule Nano.Services.StripeService do
       }
     }
 
-    case Stripe.Checkout.Session.create(session_params) do
+    session = Stripe.Checkout.Session.create(session_params)
+
+    case session do
       {:ok, %{url: url}} -> {:ok, url}
       {:error, error} -> {:error, error}
     end
@@ -195,10 +197,10 @@ defmodule Nano.Services.StripeService do
 
     case proto do
       "https" ->
-        "#{proto}://#{base_url}/subscribe/cancel"
+        "#{proto}://#{base_url}/subscribe"
 
       "http" ->
-        "#{proto}://#{base_url}:8000/subscribe/cancel"
+        "#{proto}://#{base_url}:8000/subscribe"
     end
   end
 end

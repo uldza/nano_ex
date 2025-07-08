@@ -22,7 +22,6 @@ defmodule NanoWeb.Router do
     get "/elements", PageController, :elements
     get "/subscribe", PageController, :subscribe
     get "/subscribe/success", PageController, :success
-    get "/subscribe/cancel", PageController, :cancel
     get "/subscribe/checkout/:plan", PageController, :checkout
     post "/stripe/webhook", StripeWebhookController, :webhook
 

@@ -20,11 +20,6 @@ if System.get_env("PHX_SERVER") do
   config :nano, NanoWeb.Endpoint, server: true
 end
 
-config :stripity_stripe,
-  api_key: System.get_env("PIKABU_STRIPE_API_KEY"),
-  public_key: System.get_env("PIKABU_STRIPE_PUBLIC_KEY"),
-  webhook_secret: System.get_env("PIKABU_STRIPE_WEBHOOK_SECRET")
-
 if config_env() == :prod do
   pikabu_db_path =
     System.get_env("PIKABU_DB_PATH") ||
@@ -32,6 +27,11 @@ if config_env() == :prod do
       environment variable PIKABU_DB_PATH is missing.
       For example: /opt/nano/etc/nano.db
       """
+
+  config :stripity_stripe,
+    api_key: System.get_env("PIKABU_STRIPE_API_KEY"),
+    public_key: System.get_env("PIKABU_STRIPE_PUBLIC_KEY"),
+    webhook_secret: System.get_env("PIKABU_STRIPE_WEBHOOK_SECRET")
 
   config :nano, Nano.Repo,
     database: pikabu_db_path,
