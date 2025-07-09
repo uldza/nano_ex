@@ -79,7 +79,7 @@ defmodule NanoWeb.NanoComponents do
       <ul
         id="dropdown"
         tabindex="0"
-        class="hidden absolute top-20 mt-5 left-0 menu menu-sm dropdown-content z-50 rounded-box w-full mt-3 w-52 p-2 shadow"
+        class="hidden absolute bg-white top-20 mt-5 left-0 menu menu-sm dropdown-content z-50 rounded-box w-full mt-3 w-52 p-2 shadow"
       >
         <li :for={menu_item <- @menu}>
           <%= if @active_path == menu_item.href do %>
@@ -107,7 +107,7 @@ defmodule NanoWeb.NanoComponents do
     else
       ~H"""
       <.link class="blue-light text-blue-dark rounded-full" href={@link}>
-        <.icon name={"hero-" <> @icon} class="w-8 h-8" />
+        <.icon name={@icon} class="w-8 h-8" />
       </.link>
       """
     end

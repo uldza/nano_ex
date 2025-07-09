@@ -15,7 +15,7 @@ defmodule NanoWeb.ContentPlug do
       if user do
         user_cta = %{
           link: ~p"/users/settings",
-          icon: "user-circle"
+          icon: "hero-user-circle"
         }
 
         video = %{href: ~p"/rooms", name: "Video"}
