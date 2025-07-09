@@ -19,7 +19,7 @@ defmodule NanoWeb.NanoComponents do
       when status == "active" or status == "trialing",
       do: "/rooms"
 
-  def cta_lin(%{assigns: %{subscription_status: _}}), do: "/subscribe"
+  def cta_link(%{assigns: %{subscription_status: _}}), do: "/subscribe"
 
   @doc """
   Renders top navigations component.
