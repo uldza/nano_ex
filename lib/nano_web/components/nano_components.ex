@@ -58,7 +58,7 @@ defmodule NanoWeb.NanoComponents do
           <.user_link name={@cta[:name]} icon={@cta[:icon]} link={@cta[:link]} />
         </div>
       <% end %>
-      <div class="dropdown md:hidden absolute top-20 right-0">
+      <div class="dropdown md:hidden absolute top-20 right-[6px]">
         <div id="dropdown-button" tabindex="0" role="button" phx-hook="OpenHide" data-el="dropdown">
           <svg
             xmlns="http://www.w3.org/2000/svg"
