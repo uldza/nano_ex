@@ -42,11 +42,11 @@ defmodule NanoWeb.NanoComponents do
         <ul class="flex items-center gap-4">
           <li :for={menu_item <- @menu} class="">
             <%= if @active_path == menu_item.href do %>
-              <.link href={menu_item.href} method={menu_item[:method]} class="theme-btn active">
+              <.link href={menu_item.href} method={menu_item[:method]} class="theme-btn active pt-4">
                 {menu_item.name}
               </.link>
             <% else %>
-              <.link href={menu_item.href} method={menu_item[:method]} class="theme-btn">
+              <.link href={menu_item.href} method={menu_item[:method]} class="theme-btn pt-4">
                 {menu_item.name}
               </.link>
             <% end %>
