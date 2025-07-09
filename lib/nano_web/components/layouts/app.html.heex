@@ -10,50 +10,19 @@
     class={"hidden md:block absolute top-[1em] right-0 #{deco_class(:secondary, @conn)} [border-bottom-left-radius:4rem] w-[490px] h-[750px] -z-20"}
   >
   </div>
-  <div id="logo-container" class="flex items-center border-b border-blue-darker w-[75%] pb-6">
-    <div class="text-3xl font-bold text-blue-normal">
-      <a href="/">
-        <img src="/images/pikabu-logo.png" alt="Pikabu logo" class="h-16" />
-      </a>
+
+  <.navbar id="navigation" menu={@main_menu} active_path={@active_path} cta={@page_cta}>
+    <div id="logo-container" class="flex items-center border-b border-blue-darker w-[95%] pb-6">
+      <div class="text-3xl font-bold text-blue-normal">
+        <a href="/">
+          <img src="/images/pikabu-logo.png" alt="Pikabu logo" class="h-16" />
+        </a>
+      </div>
     </div>
-  </div>
-  <ul class="flex items-center gap-4 absolute right-4 top-1/2 -translate-y-1/2">
-    <%= if @current_user do %>
-      <li class="text-[0.8125rem] leading-6 text-blue-dark">
-        {@current_user.email}
-      </li>
-      <li>
-        <%= if @current_user.role == "admin" do %>
-          <.link href={~p"/admin"} class="theme-cta-btn">
-            Admin
-          </.link>
-        <% else %>
-          <.link href={~p"/users/settings"} class="theme-cta-btn">
-            Settings
-          </.link>
-        <% end %>
-      </li>
-      <li>
-        <.link href={~p"/users/log_out"} method="delete" class="theme-cta-btn">
-          Log out
-        </.link>
-      </li>
-    <% else %>
-      <li>
-        <.link href={~p"/users/register"} class="theme-cta-btn">
-          Register
-        </.link>
-      </li>
-      <li>
-        <.link href={~p"/users/log_in"} class="theme-cta-btn">
-          Log in
-        </.link>
-      </li>
-    <% end %>
-  </ul>
+  </.navbar>
 </header>
 
-<main id="main-content" class="text-dark px-4 py-20 sm:px-6 lg:px-8 min-h-screen">
+<main id="main-content" class="text-dark px-4 md:py-20 sm:px-6 lg:px-8 min-h-screen">
   <.flash_group flash={@flash} />
   {@inner_content}
 </main>

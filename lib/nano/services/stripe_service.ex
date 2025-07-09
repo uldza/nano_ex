@@ -142,7 +142,7 @@ defmodule Nano.Services.StripeService do
       {:ok, _subscription} ->
         :ok
 
-      {:error, changeset} ->
+      {:error, _changeset} ->
         {:error, :failed_to_create_subscription}
     end
   end

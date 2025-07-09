@@ -223,10 +223,9 @@
   display: inline-block;
   padding: 0.7em 2.2em;
   border-radius: 2em;
-  background: var(--blue-normal);
+  background: var(--blue-dark);
   color: #fff;
   font-family: inherit;
-  font-size: 1em;
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.03em;
@@ -238,7 +237,7 @@
 }
 .theme-cta-btn:hover,
 .theme-cta-btn:focus {
-  background: var(--blue-dark);
+  background: var(--blue-dark-hover);
 }
 .theme-cta-btn:active {
   background: var(--blue-dark-active);
@@ -255,12 +254,11 @@
   display: inline-block;
   padding: 0.7em 2.2em;
   border-radius: 2em;
-  background: transparent;
+  background: #fff;
   border: 2px solid var(--blue-normal);
   color: var(--blue-normal);
   font-family: inherit;
-  font-size: 1em;
-  font-weight: 600;
+  font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.03em;
   outline: none;

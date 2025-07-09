@@ -102,7 +102,7 @@ defmodule NanoWeb do
       import Phoenix.HTML
       # Core UI components
       import NanoWeb.CoreComponents
-      import NanoWeb.HtmlComponents
+      import NanoWeb.NanoComponents
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
