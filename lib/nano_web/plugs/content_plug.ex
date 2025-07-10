@@ -40,4 +40,15 @@ defmodule NanoWeb.ContentPlug do
     |> assign(:active_path, path)
     |> assign(:page_cta, cta)
   end
+
+  def meta_data(conn, _opts) do
+    conn
+    |> assign(:site_title, "PIKABU")
+    |> assign(:page_title, " | Bērnu interaktīvā TV")
+    |> assign(
+      :page_descr,
+      "Pirmā interaktīvā izglītības un izklaides platforma bērniem ar izglītojošu un drošu saturu tiešsaistē. Mūsu stāstus katru dienu papildina atjautības uzdevumi un iespēja trenēt atmiņu."
+    )
+    |> assign(:page_keywords, "Bērnu, TV, interaktīva, radošs, izglītojošs saturs")
+  end
 end

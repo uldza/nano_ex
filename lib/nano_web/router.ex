@@ -13,6 +13,7 @@ defmodule NanoWeb.Router do
     plug :put_secure_browser_headers
     plug :fetch_current_user
     plug :main_menu
+    plug :meta_data
   end
 
   scope "/", NanoWeb do

@@ -6,10 +6,10 @@ defmodule NanoWeb.Layouts do
 
   embed_templates "layouts/*"
 
-  def title(%{assigns: %{page_title: title}}), do: title
-  def title(%{assigns: _}), do: ""
+  def title(%{assigns: %{site_title: title}}), do: title
+  def title(%{assigns: _}), do: "KOOD web platform"
   def page_title(%{assigns: %{page_title: title}}), do: title
-  def page_title(_), do: "Get this title set"
+  def page_title(_), do: "|>Get this title set"
   def description(%{assigns: %{page_descr: description}}), do: description
   def description(%{assigns: _}), do: ""
   def keywords(%{assigns: %{page_keywords: keywords}}), do: keywords

@@ -12,6 +12,7 @@ config :iex, default_prompt: "nano|>"
 config :nano,
   ecto_repos: [Nano.Repo],
   generators: [timestamp_type: :utc_datetime],
+  domain: "pikabu.lv",
   mailer_default_from_name: "PIKABU",
   mailer_default_from_email: "no-reply@pikabu.lv",
   support_email: "atbalsts@pikabu.lv",
