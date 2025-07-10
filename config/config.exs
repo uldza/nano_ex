@@ -14,7 +14,7 @@ config :nano,
   generators: [timestamp_type: :utc_datetime],
   mailer_default_from_name: "PIKABU",
   mailer_default_from_email: "no-reply@pikabu.lv",
-  support_email: "pikabu@pikabu.lv",
+  support_email: "atbalsts@pikabu.lv",
   app_name: "PIKABU"
 
 # Configures the endpoint

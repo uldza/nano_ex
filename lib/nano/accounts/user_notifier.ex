@@ -8,7 +8,7 @@ defmodule Nano.Accounts.UserNotifier do
     email =
       new()
       |> to(recipient)
-      |> from({"Pikabu", "noreply@pikabu.lv"})
+      |> from({from_name(), from_email()})
       |> subject(subject)
       |> text_body(body)
 
@@ -21,19 +21,16 @@ defmodule Nano.Accounts.UserNotifier do
   Deliver instructions to confirm account.
   """
   def deliver_confirmation_instructions(user, url) do
-    deliver(user.email, "Confirmation instructions", """
+    deliver(user.email, "Apstiprini pikabu.lv reģistrāciju", """
 
-    ==============================
+    Sveiki #{user.email},
 
-    Hi #{user.email},
-
-    You can confirm your account by visiting the URL below:
+    Vari apstiprināt savu PIKABU kontu apmeklējot:
 
     #{url}
 
-    If you didn't create an account with us, please ignore this.
+    Ja nepieprasīji reģistrāciju, ignorē šo e-pastu.
 
-    ==============================
     """)
   end
 
@@ -41,19 +38,16 @@ defmodule Nano.Accounts.UserNotifier do
   Deliver instructions to reset a user password.
   """
   def deliver_reset_password_instructions(user, url) do
-    deliver(user.email, "Reset password instructions", """
+    deliver(user.email, "Atjauno savu pikabu.lv paroli", """
 
-    ==============================
+    Sveiki #{user.email},
 
-    Hi #{user.email},
-
-    You can reset your password by visiting the URL below:
+    Vari nomainīt savu paroli pikabu.lv apmeklējot:
 
     #{url}
 
-    If you didn't request this change, please ignore this.
+    Ja nepieprasīji paroles atjaunošanu, ignorē šo e-pastu.
 
-    ==============================
     """)
   end
 
@@ -61,19 +55,23 @@ defmodule Nano.Accounts.UserNotifier do
   Deliver instructions to update a user email.
   """
   def deliver_update_email_instructions(user, url) do
-    deliver(user.email, "Update email instructions", """
+    deliver(user.email, "Nomaini pikabu.lv reģistrācijas epastu", """
 
-    ==============================
+    Sveiki #{user.email},
 
-    Hi #{user.email},
-
-    You can change your email by visiting the URL below:
+    Vari nomainīt savu pikabu.lv epastu šeit:
 
     #{url}
 
-    If you didn't request this change, please ignore this.
-
-    ==============================
+    Ja nepieprasīji epasta nomaiņu, ignorē šo e-pastu.
     """)
+  end
+
+  defp from_name do
+    Application.fetch_env!(:nano, :mailer_default_from_name)
+  end
+
+  defp from_email do
+    Application.fetch_env!(:nano, :mailer_default_from_email)
   end
 end
