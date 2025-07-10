@@ -103,7 +103,7 @@ defmodule NanoWeb.AdminController do
 
       conn
       |> put_flash(:info, "Question sent to room successfully.")
-      |> redirect(to: ~p"/admin/rooms/#{room_id}")
+      |> redirect(to: ~p"/admin/rooms/#{room_id}/#questions")
     else
       conn
       |> put_flash(:error, "Cannot send inactive question to room.")

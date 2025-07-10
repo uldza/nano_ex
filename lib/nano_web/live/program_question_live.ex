@@ -53,6 +53,7 @@ defmodule NanoWeb.ProgramQuestionLive do
     if socket.assigns.active_question do
       [answer_num, answer_text] = String.split(answer_str, ":", parts: 2)
       answer_num = String.to_integer(answer_num)
+      answer_correct? = answer_num == socket.assigns.active_question.correct_answer
 
       # Send the answer to admin
       Phoenix.PubSub.broadcast(
@@ -64,13 +65,14 @@ defmodule NanoWeb.ProgramQuestionLive do
             question_id: socket.assigns.active_question.id,
             answer: answer_num,
             answer_text: answer_text,
+            correct: answer_correct?,
             user_id: socket.assigns.current_user.id,
-            user_name: socket.assigns.current_user.email
+            user_name: socket.assigns.current_user.username
           }
         }
       )
 
-      if answer_num == socket.assigns.active_question.correct_answer do
+      if answer_correct? do
         Process.send_after(self(), :clear_feedback, 6000)
         {:noreply, assign(socket, active_question: nil, feedback: "Tu atbildēji pareizi!")}
       else
@@ -91,10 +93,10 @@ defmodule NanoWeb.ProgramQuestionLive do
         <div class="space-y-4">
           <h3 class="text-xl font-bold">{@active_question.question}</h3>
 
-          <div class="grid grid-cols-4 gap-4 px-10">
+          <div class="flex">
             <%= for {num, text} <- @active_question.answers do %>
               <% dims = @answer_dimensions[num] %>
-              <button phx-click="select_answer" phx-value-answer={"#{num}:#{text}"}>
+              <button class="px-2" phx-click="select_answer" phx-value-answer={"#{num}:#{text}"}>
                 <svg
                   width={dims.width}
                   height={dims.height}
